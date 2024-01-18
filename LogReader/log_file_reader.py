@@ -7,11 +7,17 @@ from settings import input_file_directory, output_file_directory
 import os
 
 
-def inputFileValidator(file_name):
+def input_file_validator(file_name):
     return True
 
 
 def get_input_files_list():
     input_files_list = os.listdir(input_file_directory)
-    input_files_list = [file for file in input_files_list if inputFileValidator(file)]
+    input_files_list = [file for file in input_files_list if input_file_validator(file)]
     return input_files_list
+
+
+def find_corresponding_output_file(inputfile):
+    output_files_list = os.listdir(output_file_directory)
+    if inputfile + ".LOG" in output_files_list:
+        return inputfile + ".LOG"

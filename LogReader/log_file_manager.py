@@ -43,6 +43,7 @@ class LogFileManager:
 
         if scf_match:
             self.scf_done = re.findall(r'-\d+.\d+', scf_match[-2])
+            # print(self.scf_done)
             return self.scf_done
 
     def finish(self):

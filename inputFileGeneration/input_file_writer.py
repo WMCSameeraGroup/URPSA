@@ -1,6 +1,7 @@
-from input_template import get_input_template
-from coordinates import generate_coordinates
-from write_input_file import write_input_file
+from inputFileGeneration.input_template import get_input_template
+from inputFileGeneration.coordinates import generate_coordinates
+from inputFileGeneration.write_input_file import generate_input_file
+from settings import input_file_name
 
 
 def setup_input_file(coordinate, template):
@@ -8,7 +9,7 @@ def setup_input_file(coordinate, template):
 
 
 def file_name_generator(number):
-    return "test" + str(number)
+    return input_file_name + str(number) + ".com"
 
 
 def input_file_configuration_and_writing(number, steps=10, s_size=1):
@@ -19,15 +20,17 @@ def input_file_configuration_and_writing(number, steps=10, s_size=1):
     string_to_be_written = setup_input_file(coordinate, template)
     file_name = file_name_generator(number)
 
-    write_input_file(file_name, string_to_be_written)
+    generate_input_file(file_name, string_to_be_written)
 
 
 """ this file is to write when a """
 
 
 def generate_input_files(step_size, number_of_steps):
+    """ this is what you call to generate input files"""
     for i in range(number_of_steps):
         input_file_configuration_and_writing(i, s_size=step_size, steps=number_of_steps)
 
 
-generate_input_files(0.5, 31)
+if __name__ == "__main__":
+    generate_input_files(0.5, 31)

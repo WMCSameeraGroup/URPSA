@@ -53,3 +53,4 @@ class LogFileManager:
 if __name__ == '__main__':
     file_name = "logfile.log"
     log_file = LogFileManager(file_name)
+

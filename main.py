@@ -16,3 +16,7 @@ output_file_list =[]
 for file in input_files:
     run_calculation(file)
     output_file_list.append(LogFileManager(file))
+
+
+
+    # todo : write a file to recored data

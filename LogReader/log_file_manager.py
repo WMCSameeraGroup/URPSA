@@ -1,6 +1,5 @@
 import re
-
-
+from settings import data_file_name
 class LogFileManager:
     def get_data(self):
         self.read_log()
@@ -9,6 +8,7 @@ class LogFileManager:
             if self.is_optimized():
                 if self.is_converged():
                     self.get_scf_done()
+                    self.write_data_to_the_data_file()
                     self.finish()
                 else:
                     print("calculation is not converged properly there is/are imaginary frequencies")
@@ -48,6 +48,11 @@ class LogFileManager:
 
     def finish(self):
         self.text = None
+
+    def write_data_to_the_data_file(self):
+        with open(data_file_name,'a') as file:
+            file.write(f"{self.file}\t{self.scf_done}")
+
 
 
 if __name__ == '__main__':

@@ -1,5 +1,5 @@
 
-def generate_coordinates(atom='H', initial_cords_atom1=[10,0,0], initial_cords_atom2=[0,0,0], step_size=1, num_of_steps=10):
+def generate_coordinates(atom='H', initial_cords_atom1=[10.0,0.0,0.0], initial_cords_atom2=[0.0,0.0,0.0], step_size=1, num_of_steps=10):
     """ returns the list of coordinates in string format"""
     list_of_coordinates = []
     for i in range(num_of_steps):

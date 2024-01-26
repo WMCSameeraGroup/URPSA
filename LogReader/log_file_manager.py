@@ -1,5 +1,5 @@
 import re
-from settings import data_file_name
+from settings import data_file_name,input_file_directory
 class LogFileManager:
     def get_data(self):
         self.read_log()
@@ -16,7 +16,7 @@ class LogFileManager:
                 print("calculation is not optimized")
 
     def read_log(self):
-        with open(self.file, 'r') as log:
+        with open(input_file_directory+'/'+self.file, 'r') as log:
             self.text = log.read()
 
     def __init__(self, file_name):

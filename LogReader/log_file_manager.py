@@ -12,7 +12,7 @@ class LogFileManager:
 
 
     def read_log(self):
-        with open('../'+output_file_directory+'/'+self.file, 'r') as log:
+        with open('../'+input_file_directory+'/'+self.file, 'r') as log:
             self.text = log.read()
 
     def __init__(self, file_name):

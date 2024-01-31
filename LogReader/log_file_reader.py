@@ -8,7 +8,7 @@ import os, re
 
 
 def input_file_validator(file_name):
-    return True
+    return file_name[-3:] =='log'
 
 
 def get_input_files_list():

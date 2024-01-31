@@ -1,6 +1,6 @@
 import re
 from settings import data_file_name, input_file_directory, output_file_directory
-from log_file_reader import find_corresponding_output_file
+
 
 class LogFileManager:
     def get_data(self):

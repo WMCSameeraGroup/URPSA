@@ -3,9 +3,10 @@ import subprocess
 
 
 def run_calculation(input_file):
-    gaussian_command = "g16 " +output_file_directory +'/'+ input_file
+    gaussian_command = "g16 " +output_file_directory +'/'+ input_file +" &"
 
     try:
+        print("running " + input_file)
         # Run Gaussian using subprocess
         process = subprocess.run(gaussian_command, shell=True, check=True, stdout=subprocess.PIPE,
                                  stderr=subprocess.PIPE, text=True)

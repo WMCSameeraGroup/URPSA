@@ -1,12 +1,10 @@
 def get_input_template(number):
     # gonna replace title value
-     return """
-%nprocshared=1
+     return """%nprocshared=1
 %mem=500MB
 %chk=test{0}.chk
 # wb97xd/aug-cc-pvtz 
-
-Opt job	Title{0}
+Title{0}
  
 0   1	\n""".format(number)
 

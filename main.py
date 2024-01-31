@@ -15,7 +15,6 @@ output_file_list =[]
 
 for file in input_files:
     run_calculation(file)
-
     log = LogFileManager(find_corresponding_output_file(file))
     output_file_list.append(log)
 

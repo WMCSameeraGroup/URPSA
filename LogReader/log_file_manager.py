@@ -5,14 +5,16 @@ from settings import data_file_name, input_file_directory, output_file_directory
 class LogFileManager:
     def get_data(self):
         self.read_log()
-
         self.get_scf_done()
         self.write_data_to_the_data_file()
         self.finish()
 
     def log_file_name(self):
         return input_file_directory+'/'+self.file[:-3]+"log"
+
+
     def read_log(self):
+        print(input_file_directory+'/'+self.file)
         with open(input_file_directory+'/'+self.file, 'r') as log:
             self.text = log.read()
 
@@ -28,7 +30,6 @@ class LogFileManager:
 
     def is_optimized(self):
         # Check if the geometry is optimized
-
         pattern = r"Frequencies --\s+(-?\d+\.\d+)"
         result = re.search(pattern, self.text)
         first_frequency = re.findall(r"(-?\d+\.\d+)", result.group())

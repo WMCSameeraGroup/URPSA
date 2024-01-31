@@ -20,5 +20,6 @@ for file in input_files:
     output_file_list.append(log)
 
 
-
+for obj in output_file_list:
+    print(obj.scf_done)
     # todo : write a file to recored data

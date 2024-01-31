@@ -30,11 +30,14 @@ def order_input_files(input_files):
 
 
 def find_corresponding_output_file(inputfile):
-    output_files_list = os.listdir(output_file_directory)
-    if inputfile + ".log" in output_files_list:
-        return inputfile + ".log"
-    if inputfile + ".LOG" in output_files_list:
-        return inputfile + ".LOG"
+    # output_files_list = os.listdir(output_file_directory)
+    # if inputfile + ".log" in output_files_list:
+    #     return inputfile + ".log"
+    # if inputfile + ".LOG" in output_files_list:
+    #     return inputfile + ".LOG"
+
+    return inputfile[:-3]+"log"
+
 
 
 

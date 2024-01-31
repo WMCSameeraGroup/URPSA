@@ -14,7 +14,7 @@ class LogFileManager:
 
 
     def read_log(self):
-        print(input_file_directory+'/'+self.file)
+        print(self.file)
         with open(input_file_directory+'/'+self.file, 'r') as log:
             self.text = log.read()
 

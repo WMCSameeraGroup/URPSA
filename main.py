@@ -1,6 +1,6 @@
 from inputFileGeneration.input_file_writer import generate_input_files
 from settings import step_size, step_count
-from LogReader.log_file_reader import get_input_files_list
+from LogReader.log_file_reader import get_input_files_list,find_corresponding_output_file
 from calculations.calculation_manager import run_calculation
 from LogReader.log_file_manager import LogFileManager
 
@@ -15,7 +15,9 @@ output_file_list =[]
 
 for file in input_files:
     run_calculation(file)
-    output_file_list.append(LogFileManager(file))
+
+    log = LogFileManager(find_corresponding_output_file(file))
+    output_file_list.append(log)
 
 
 

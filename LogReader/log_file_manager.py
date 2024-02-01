@@ -10,12 +10,11 @@ class LogFileManager:
         self.finish()
 
     def log_file_name(self):
-        return input_file_directory+'/'+self.file[:-3]+"log"
-
+        return input_file_directory + '/' + self.file[:-3] + "log"
 
     def read_log(self):
         print(self.file)
-        with open(input_file_directory+'/'+self.file, 'r') as log:
+        with open(input_file_directory + '/' + self.file, 'r') as log:
             self.text = log.read()
 
     def __init__(self, file_name):
@@ -44,18 +43,18 @@ class LogFileManager:
             # print(self.scf_done)
             return self.scf_done
         else:
-            self.scf_done= "could not found"
+            self.scf_done = "could not found"
 
     def finish(self):
         self.text = None
 
     def write_data_to_the_data_file(self):
-        with open(data_file_name,'a') as file:
+        with open(data_file_name, 'a') as file:
             file.write(f"{self.file}\t{self.scf_done} \n")
-
 
 
 if __name__ == '__main__':
     file_name = "logfile.log"
     log_file = LogFileManager(file_name)
 
+# todo: write to a csv file instead of a text/ transfer chk and outputs to a different directory

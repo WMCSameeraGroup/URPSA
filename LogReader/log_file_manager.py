@@ -40,7 +40,7 @@ class LogFileManager:
         scf_match = re.findall(r'SCF Done: .*', self.text)
 
         if scf_match:
-            self.scf_done = re.findall(r'-\d+.\d+', scf_match[-2])
+            self.scf_done = re.findall(r'-\d+.\d+', scf_match[-1])
             # print(self.scf_done)
             return self.scf_done
         else:

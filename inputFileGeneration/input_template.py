@@ -4,6 +4,7 @@ def get_input_template(number):
 %mem=500MB
 %chk=test{0}.chk
 # wb97xd/aug-cc-pvtz 
+
 Title{0}
  
 0   1	\n""".format(number)

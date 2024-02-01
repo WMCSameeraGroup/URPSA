@@ -1,5 +1,5 @@
 import re
-from settings import data_file_name, input_file_directory, output_file_directory
+from settings import data_file_name, input_file_directory
 
 
 class LogFileManager:
@@ -13,7 +13,6 @@ class LogFileManager:
         return input_file_directory + '/' + self.file[:-3] + "log"
 
     def read_log(self):
-        print(self.file)
         with open(input_file_directory + '/' + self.file, 'r') as log:
             self.text = log.read()
 
@@ -32,7 +31,6 @@ class LogFileManager:
         pattern = r"Frequencies --\s+(-?\d+\.\d+)"
         result = re.search(pattern, self.text)
         first_frequency = re.findall(r"(-?\d+\.\d+)", result.group())
-
         return float(first_frequency[0]) > 0
 
     def get_scf_done(self):
@@ -40,7 +38,6 @@ class LogFileManager:
 
         if scf_match:
             self.scf_done = re.findall(r'-\d+.\d+', scf_match[-1])
-            # print(self.scf_done)
             return self.scf_done
         else:
             self.scf_done = "could not found"
@@ -58,3 +55,5 @@ if __name__ == '__main__':
     log_file = LogFileManager(file_name)
 
 # todo: write to a csv file instead of a text/ transfer chk and outputs to a different directory
+
+

@@ -22,4 +22,12 @@ for file in input_files:
 
 for obj in output_file_list:
     print(obj.scf_done)
-    # todo : write a file to recored data
+
+import matplotlib.pyplot as plt
+import numpy as np
+
+from matplotlib.collections import EventCollection
+
+def plot_the_graph(outputFiles):
+    plt.plot([file.scf_done for file in outputFiles][:-1])
+    plt.show()

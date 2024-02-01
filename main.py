@@ -30,4 +30,4 @@ from matplotlib.collections import EventCollection
 
 def plot_the_graph(outputFiles):
     plt.plot([float(file.scf_done) for file in outputFiles][:-1])
-    plt.show()
+    plt.savefig("output.jpg")

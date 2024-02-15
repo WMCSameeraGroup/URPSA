@@ -12,6 +12,15 @@ def file_name_generator(number):
     return input_file_name + str(number) + ".com"
 
 
+
+def input_file_config(number,coordinate_string):
+    """new file generator """
+    template = get_input_template(number)
+    file_name = file_name_generator(number)
+    string_to_be_written = setup_input_file(coordinate_string, template)
+    generate_input_file(file_name, string_to_be_written)
+
+# redundant
 def input_file_configuration_and_writing(number, steps=10, s_size=1):
     # generate the input file for a given number
     coordinate = generate_coordinates(num_of_steps=steps, step_size=s_size)[number]
@@ -25,7 +34,7 @@ def input_file_configuration_and_writing(number, steps=10, s_size=1):
 
 """ this file is to write when a """
 
-
+# redundant
 def generate_input_files(step_size, number_of_steps):
     """ this is what you call to generate input files"""
     for i in range(number_of_steps):

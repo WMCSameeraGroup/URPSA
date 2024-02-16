@@ -29,7 +29,7 @@ step_size = float(file_data.split("\n\n")[1].split()[0])
 step_count = int(float(file_data.split("\n\n")[1].split()[1]))
 
 
-#print(gravity_point(atom_list))
+print(gravity_point(atom_list))
 
 coordinates=coordinate_generation(atom_list,step_count,step_size)
 

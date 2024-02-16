@@ -3,7 +3,7 @@ import subprocess
 
 
 def run_calculation(input_file):
-    gaussian_command = "g16 " +input_file_directory +'/'+ input_file +" &"
+    gaussian_command = "g16 " +input_file_directory +'/'+ input_file
 
     try:
         print("running " + input_file)

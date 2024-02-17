@@ -5,7 +5,7 @@ from settings import input_file_name
 
 
 def setup_input_file(coordinate, template):
-    return template + coordinate + '\n\n\n'
+    return template + coordinate + "H -0.89 -2.00 -0.89\nH -0.89 -2.00 0.89\nO -0.11 -1.00 -0.11"+'\n\n\n'
 
 
 def file_name_generator(number):

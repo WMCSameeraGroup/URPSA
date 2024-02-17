@@ -54,7 +54,15 @@ for obj in output_file_list:
     print(obj.scf_done)
 
 
+import matplotlib.pyplot as plt
 
+def plot_the_graph(outputFiles):
+    data = [float(f.scf_done[0]) for f in outputFiles if f.scf_done != "could not found"][:-1]
+    plt.plot(data)
+    plt.savefig("output.jpg")
+
+
+plot_the_graph(output_file_list)
 
 
 

@@ -24,8 +24,9 @@ def coordinate_generation(atoms,num_steps, step_size):
     for i in range(num_steps):
         #position_matrix = np.add(matrix[:,0]+i*step_size, matrix[:,[1,2]])
         # todo: make the x coords move not the whole molecule  make steps a 3x3 matrix
-        position_matrix = matrix+ i * step_size
-        #print(position_matrix)
+        x_matrix = np.array([[1,0,0], [1,0,0], [1,0,0]])
+        position_matrix = matrix + x_matrix*i * step_size
+        # print(position_matrix)
         list_of_coordinates.append(position_matrix)
     return list_of_coordinates
 

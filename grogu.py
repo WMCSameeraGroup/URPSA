@@ -1,47 +1,27 @@
 import sys
-
 from LogReader.log_file_manager import LogFileManager
 from calculations.calculation_manager import run_calculation
-from calculations.gravitypoint import gravity_point
-from inputFileGeneration.coordinates import coordinate_generation,string_of_atoms_coordinates
-from atoms.atoms import Atom
+from inputFileGeneration.coordinates import coordinate_generation, string_of_atoms_coordinates
 from inputFileGeneration.input_file_writer import input_file_config
-from LogReader.log_file_reader import get_input_files_list,find_corresponding_output_file
+from LogReader.log_file_reader import get_input_files_list, find_corresponding_output_file
+from inputfile import InputFile
 
 file_path = sys.argv[1]
 
-variable_parameters =[]
-file_data=""
-atom_list = []
-# todo: charge and multiplicity from the input file
-
-try:
-    with open(file_path,'r') as file:
-        file_data=file.read()
-except:
-    print(file_path +" not found")
-
-for line in file_data.split("\n\n")[0].split("\n"):
-    line_data=line.split()
-    atom_list.append(Atom(*line_data))
-
-step_size = float(file_data.split("\n\n")[1].split()[0])
-step_count = int(float(file_data.split("\n\n")[1].split()[1]))
+# todo:stop distance
 
 
-print(gravity_point(atom_list))
+system = InputFile(file_path)
 
-coordinates=coordinate_generation(atom_list,step_count,step_size)
+coordinates = coordinate_generation(system.atom_list, system.step_count, system.step_size)
 
 for number, coordinate in enumerate(coordinates):
-    coordinate_string = string_of_atoms_coordinates(atom_list,coordinate)
-    input_file_config(number,coordinate_string)
-
-
+    coordinate_string = string_of_atoms_coordinates(system.atom_list, coordinate)
+    input_file_config(number, coordinate_string, system)
 
 input_files = get_input_files_list()
 
-output_file_list =[]
+output_file_list = []
 
 for file in input_files:
     run_calculation(file)
@@ -49,12 +29,11 @@ for file in input_files:
     log = LogFileManager(find_corresponding_output_file(file))
     output_file_list.append(log)
 
-
 for obj in output_file_list:
     print(obj.scf_done)
 
-
 import matplotlib.pyplot as plt
+
 
 def plot_the_graph(outputFiles):
     data = [float(f.scf_done[0]) for f in outputFiles if f.scf_done != "could not found"][:-1]
@@ -63,7 +42,3 @@ def plot_the_graph(outputFiles):
 
 
 plot_the_graph(output_file_list)
-
-
-
-

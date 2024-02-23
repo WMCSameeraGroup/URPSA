@@ -1,4 +1,4 @@
-def get_input_template(number):
+def get_input_template(number, system):
     # gonna replace title value
      return """%nprocshared=1
 %mem=500MB
@@ -7,7 +7,7 @@ def get_input_template(number):
 
 Title{0}
  
-0   1	\n""".format(number)
+{1}   {2}	\n""".format(number,system.charge,system.multiplicity)
 
 
 if __name__ =="__main__":

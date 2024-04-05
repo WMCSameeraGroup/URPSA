@@ -10,3 +10,5 @@ data_file_name = "data.txt"
 
 step_size = 0.5
 step_count = 21
+
+stop_distance_factor = 0.2

@@ -14,11 +14,14 @@ def run_calculation(input_file):
         # Check if the Gaussian job completed successfully
         if process.returncode == 0:
             print("Gaussian job completed successfully.- {0}".format(input_file))
+            return 0
 
         else:
             print("Error running Gaussian job.")
             print("Error message:\n", process.stderr)
+            return -1
 
     except subprocess.CalledProcessError as e:
         print("Error running Gaussian job.")
         print("Error message:\n", e.stderr)
+        return -2

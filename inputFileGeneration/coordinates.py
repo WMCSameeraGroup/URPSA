@@ -1,5 +1,7 @@
 import numpy as np
+
 from calculations.gravitypoint import gravity_point
+
 
 #redundant
 def generate_coordinates(atom='H', initial_cords_atom1=[10.0,0.0,0.0], initial_cords_atom2=[0.0,0.0,0.0], step_size=1, num_of_steps=10):
@@ -17,16 +19,20 @@ def relative_coordination_matrix(atoms):
     relative_atom_coords = xyz_matrix - gravity_point(atoms)
     return relative_atom_coords
 
+def update_atoms(atoms, matrix):
+    for i,j in zip(atoms,matrix):
+        i.update_coordinates(*j)
+
 def coordinate_generation(atoms,num_steps, step_size):
     list_of_coordinates =[]
     # change atom coords with gravity point
     matrix = relative_coordination_matrix(atoms)
     for i in range(num_steps):
-        #position_matrix = np.add(matrix[:,0]+i*step_size, matrix[:,[1,2]])
-        # todo: make the x coords move not the whole molecule  make steps a 3x3 matrix
-        x_matrix = np.array([[1,0,0], [1,0,0], [1,0,0]])
+        x_matrix = np.array([[1,0,0], [1,0,0], [1,0,0]]) #todo: for n number of atoms
         position_matrix = matrix + x_matrix*i * step_size
+
         # print(position_matrix)
+        # todo: update atoms and check the distance then add
         list_of_coordinates.append(position_matrix)
     return list_of_coordinates
 

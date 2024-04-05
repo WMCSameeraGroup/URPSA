@@ -5,7 +5,7 @@ from settings import input_file_name
 
 
 def setup_input_file(coordinate, template,system):
-    return template + coordinate + system.origin_molecule
+    return template + coordinate + system.origin_molecule +"\n\n\n"
            #"H -0.89 -2.00 -0.89\nH -0.89 -2.00 0.89\nO -0.11 -1.00 -0.11"+'\n\n\n'
 
 

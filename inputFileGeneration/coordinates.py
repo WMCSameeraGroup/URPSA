@@ -1,19 +1,5 @@
 import numpy as np
-
-import atoms.atoms
-import inputfile
 from calculations.gravitypoint import gravity_point
-
-
-#redundant
-def generate_coordinates(atom='H', initial_cords_atom1=[10.0,0.0,0.0], initial_cords_atom2=[0.0,0.0,0.0], step_size=1, num_of_steps=10):
-    """ returns the list of coordinates in string format"""
-    list_of_coordinates = []
-    for i in range(num_of_steps):
-        new_coordinates = [initial_cords_atom1[0] - i * step_size, *initial_cords_atom1[1:]]
-        coordinates = print_coordinates(atom, new_coordinates, initial_cords_atom2)
-        list_of_coordinates.append(coordinates)
-    return list_of_coordinates
 
 
 def relative_coordination_matrix(atoms):
@@ -32,9 +18,6 @@ def coordinate_generation(atom_list, step_count, step_size):
     for i in range(step_count):
         x_matrix = np.array([[1,0,0] for _ in range(len(atom_list))])
         position_matrix = matrix + x_matrix*i * step_size
-
-        # print(position_matrix)
-        # todo: update atoms and check the distance then add
         list_of_coordinates.append(position_matrix)
     return list_of_coordinates
 

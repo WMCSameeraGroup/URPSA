@@ -9,9 +9,11 @@ from calculations.Is_too_close import is_not_highly_repulsive
 
 file_path = sys.argv[1]
 
-system = InputFile(file_path) # read input file and understand data
+system = InputFile(file_path)  # read input file and understand data
 
-coordinates = coordinate_generation(system.atom_list, system.step_count, system.step_size) # coordinate generation
+# todo: implement rotation using molecule package
+
+coordinates = coordinate_generation(system.atom_list, system.step_count, system.step_size)  # coordinate generation
 
 for number, coordinate in enumerate(coordinates):
     coordinate_string = string_of_atoms_coordinates(system.atom_list, coordinate)
@@ -19,7 +21,6 @@ for number, coordinate in enumerate(coordinates):
 
 all_input_files = get_input_files_list()
 output_file_list = []
-
 
 for file in all_input_files:
     if is_not_highly_repulsive(file, len(system.origin_atoms)):

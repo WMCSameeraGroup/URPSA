@@ -7,15 +7,11 @@ from LogReader.log_file_reader import get_input_files_list, find_corresponding_o
 from inputfile import InputFile
 from calculations.Is_too_close import is_not_highly_repulsive
 
-
 file_path = sys.argv[1]
 
-# todo:stop distance
+system = InputFile(file_path) # read input file and understand data
 
-
-system = InputFile(file_path)
-
-coordinates = coordinate_generation(system.atom_list, system.step_count, system.step_size)
+coordinates = coordinate_generation(system.atom_list, system.step_count, system.step_size) # coordinate generation
 
 for number, coordinate in enumerate(coordinates):
     coordinate_string = string_of_atoms_coordinates(system.atom_list, coordinate)
@@ -26,16 +22,15 @@ output_file_list = []
 
 
 for file in all_input_files:
-    if is_not_highly_repulsive(file,len(system.origin_atoms)):
-        if run_calculation(file) != 0: # something went wrong  thus no log file is produced
+    if is_not_highly_repulsive(file, len(system.origin_atoms)):
+        if run_calculation(file) != 0:  # something went wrong  thus no log file is produced
             continue
         print(find_corresponding_output_file(file), file)
         log = LogFileManager(find_corresponding_output_file(file))
         output_file_list.append(log)
     else:
         print(f"{file} is too repulsive to calculate")
-        break # stop if repulsion was encountered
-
+        break  # stop if repulsion was encountered
 
 for obj in output_file_list:
     print(obj.scf_done)

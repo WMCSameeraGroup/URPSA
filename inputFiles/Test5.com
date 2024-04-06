@@ -1,7 +1,7 @@
 %nprocshared=1
 %mem=500MB
-%chk=test5.chk
-# wb97xd/aug-cc-pvtz 
+%chk=inputFilestest5.chk
+# wb97xd/aug-cc-pvtz
 
 Title5
  

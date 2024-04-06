@@ -1,13 +1,16 @@
-def get_input_template(number, system):
+from settings import input_file_directory as inp_dir
+
+
+def get_input_template(number, system, method="wb97xd/aug-cc-pvtz"):
     # gonna replace title value
      return """%nprocshared=1
 %mem=500MB
-%chk=test{0}.chk
-# wb97xd/aug-cc-pvtz 
+%chk={3}test{0}.chk
+# {4}
 
 Title{0}
  
-{1}   {2}	\n""".format(number,system.charge,system.multiplicity)
+{1}   {2}	\n""".format(number,system.charge,system.multiplicity,inp_dir,method)
 
 
 if __name__ =="__main__":

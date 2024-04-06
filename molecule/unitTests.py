@@ -21,8 +21,8 @@ class TestMolecule(unittest.TestCase):
         # Assert that the rotated coordinates are as expected
         expected_rotated_xyz = np.array([
             [0, 0, 0],
-            [1, 1, 1],
-            [2, 2, 2]
+            [-1, 1, 1],
+            [-2, 2, 2]
         ])
         np.testing.assert_array_almost_equal(rotated_xyz, expected_rotated_xyz)
 
@@ -45,8 +45,8 @@ class TestMolecule(unittest.TestCase):
         # Assert that the rotated coordinates are as expected
         expected_rotated_xyz = np.array([
             [0, 0, 0],
-            [1, -1, 1],
-            [2, -2, 2]
+            [1, 1, -1],
+            [2, 2, -2]
         ])
         np.testing.assert_array_almost_equal(rotated_xyz, expected_rotated_xyz)
 

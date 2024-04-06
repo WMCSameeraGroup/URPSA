@@ -1,5 +1,7 @@
 import numpy as np
 
+import atoms.atoms
+import inputfile
 from calculations.gravitypoint import gravity_point
 
 
@@ -23,12 +25,12 @@ def update_atoms(atoms, matrix):
     for i,j in zip(atoms,matrix):
         i.update_coordinates(*j)
 
-def coordinate_generation(atoms,num_steps, step_size):
+def coordinate_generation(atom_list, step_count, step_size):
     list_of_coordinates =[]
     # change atom coords with gravity point
-    matrix = relative_coordination_matrix(atoms)
-    for i in range(num_steps):
-        x_matrix = np.array([[1,0,0], [1,0,0], [1,0,0]]) #todo: for n number of atoms
+    matrix = relative_coordination_matrix(atom_list)
+    for i in range(step_count):
+        x_matrix = np.array([[1,0,0] for _ in range(len(atom_list))])
         position_matrix = matrix + x_matrix*i * step_size
 
         # print(position_matrix)

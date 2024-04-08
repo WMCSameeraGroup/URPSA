@@ -3,8 +3,7 @@ from settings import input_file_directory as inp_dir
 
 def get_input_template(number, system, method="wb97xd/aug-cc-pvtz"): # Todo: a way to specify method
     # gonna replace title value
-     return """%nprocshared=1
-%chk={3}/test{0}.chk
+     return """%chk={3}/test{0}.chk
 # {4}
 
 Title{0}

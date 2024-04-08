@@ -1,11 +1,10 @@
 from inputFileGeneration.input_template import get_input_template
-# from inputFileGeneration.coordinates import generate_coordinates
 from inputFileGeneration.write_input_file import generate_input_file
 from settings import input_file_name
 
 
 def setup_input_file(coordinate, template,system):
-    return template + coordinate + system.origin_molecule +"\n\n\n"
+    return template + coordinate + system.origin_molecule +"\n\n\n\n"
            #"H -0.89 -2.00 -0.89\nH -0.89 -2.00 0.89\nO -0.11 -1.00 -0.11"+'\n\n\n'
 
 
@@ -21,5 +20,3 @@ def input_file_config(number,coordinate_string,system):
     generate_input_file(file_name, string_to_be_written)
 
 
-if __name__ == "__main__":
-    generate_input_files(0.5, 31)

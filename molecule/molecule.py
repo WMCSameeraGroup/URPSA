@@ -1,5 +1,6 @@
 import numpy as np
 
+
 class Molecule:
     atoms = []
     xyz = []
@@ -11,26 +12,42 @@ class Molecule:
     def rotation_xy(self, angle):
         rot_mat = np.array([[np.cos(angle), -np.sin(angle), 0], [np.sin(angle), np.cos(angle), 0], [0, 0, 1]])
         rotated_xyz = np.dot(self.xyz, rot_mat.T)  # Transpose of the rotation matrix for proper multiplication
-        return rotated_xyz
+        self.xyz = rotated_xyz
+        self.setAtomNewCoords()
+        return self
 
     def rotation_yz(self, angle):
         rot_mat = np.array([[1, 0, 0], [0, np.cos(angle), -np.sin(angle)], [0, np.sin(angle), np.cos(angle)]])
         rotated_xyz = np.dot(self.xyz, rot_mat.T)
-        return rotated_xyz
+        self.xyz = rotated_xyz
+        self.setAtomNewCoords()
+        return self
 
     def rotation_xz(self, angle):
         rot_mat = np.array([[np.cos(angle), 0, np.sin(angle)], [0, 1, 0], [-np.sin(angle), 0, np.cos(angle)]])
         rotated_xyz = np.dot(self.xyz, rot_mat.T)
-        return rotated_xyz
+        self.xyz = rotated_xyz
+        self.setAtomNewCoords()
+        return self
 
     def translation_x(self, distance):
         translated_xyz = self.xyz + np.array([distance, 0, 0])
-        return translated_xyz
+        self.xyz = translated_xyz
+        self.setAtomNewCoords()
+        return self
 
     def translation_y(self, distance):
         translated_xyz = self.xyz + np.array([0, distance, 0])
-        return translated_xyz
+        self.xyz = translated_xyz
+        self.setAtomNewCoords()
+        return self
 
     def translation_z(self, distance):
         translated_xyz = self.xyz + np.array([0, 0, distance])
-        return translated_xyz
+        self.xyz = translated_xyz
+        self.setAtomNewCoords()
+        return self
+
+    def setAtomNewCoords(self):
+        for atom, coords in zip(self.atoms, self.xyz):
+            atom.update_coordinates(*coords)

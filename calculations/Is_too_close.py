@@ -24,7 +24,7 @@ def is_too_close(origin_atoms, moving_atoms):
     for i in origin_atoms:
         for j in moving_atoms:
 
-            if i.distance_between(j) < (i.v_radius + j.v_radius)*stop_distance_factor: # stop distance is 0.2 of sum of vandaval radius
+            if i.distance_between(j) < (i.v_radius + j.v_radius)*stop_distance_factor: # todo: stop distance is 0.2 change this by args of sum of vandaval radius
                 print(i.distance_between(j), i, j)
                 return False
     return True

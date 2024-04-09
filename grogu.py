@@ -1,3 +1,4 @@
+import math
 import sys
 from LogReader.log_file_manager import LogFileManager
 from calculations.calculation_manager import run_calculation
@@ -6,6 +7,7 @@ from inputFileGeneration.input_file_writer import input_file_config
 from LogReader.log_file_reader import get_input_files_list, find_corresponding_output_file
 from inputfile import InputFile
 from calculations.Is_too_close import is_not_highly_repulsive
+from molecule.molecule import Molecule
 
 file_path = sys.argv[1]
 
@@ -13,9 +15,11 @@ system = InputFile(file_path)  # read input file and understand data
 
 # todo: implement rotation using molecule package
 
-# change orientations randomly
+# change orientations randomly using molecule module
+molecule = Molecule(system.atom_list)
+molecule.rotation_xy(math.pi/2)
 
-coordinates = coordinate_generation(system.atom_list, system.step_count, system.step_size)  # coordinate generation
+coordinates = coordinate_generation(molecule.atoms, system.step_count, system.step_size)  # coordinate generation
 
 for number, coordinate in enumerate(coordinates):
     coordinate_string = string_of_atoms_coordinates(system.atom_list, coordinate)

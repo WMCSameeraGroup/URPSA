@@ -24,7 +24,7 @@ class TestMolecule(unittest.TestCase):
             [-1, 1, 1],
             [-2, 2, 2]
         ])
-        np.testing.assert_array_almost_equal(rotated_xyz, expected_rotated_xyz)
+        np.testing.assert_array_almost_equal(rotated_xyz.xyz, expected_rotated_xyz)
 
     def test_rotation_yz(self):
         # Apply rotation around YZ plane by pi/2
@@ -36,7 +36,7 @@ class TestMolecule(unittest.TestCase):
             [1, 1, -1],
             [2, 2, -2]
         ])
-        np.testing.assert_array_almost_equal(rotated_xyz, expected_rotated_xyz)
+        np.testing.assert_array_almost_equal(rotated_xyz.xyz, expected_rotated_xyz)
 
     def test_rotation_xz(self):
         # Apply rotation around XZ plane by pi/2
@@ -48,7 +48,7 @@ class TestMolecule(unittest.TestCase):
             [1, 1, -1],
             [2, 2, -2]
         ])
-        np.testing.assert_array_almost_equal(rotated_xyz, expected_rotated_xyz)
+        np.testing.assert_array_almost_equal(rotated_xyz.xyz, expected_rotated_xyz)
 
     def test_translation_x(self):
         # Apply translation along X-axis by 2 units
@@ -60,7 +60,7 @@ class TestMolecule(unittest.TestCase):
             [3, 1, 1],
             [4, 2, 2]
         ])
-        np.testing.assert_array_almost_equal(translated_xyz, expected_translated_xyz)
+        np.testing.assert_array_almost_equal(translated_xyz.xyz, expected_translated_xyz)
 
     def test_translation_y(self):
         # Apply translation along Y-axis by 2 units
@@ -72,7 +72,7 @@ class TestMolecule(unittest.TestCase):
             [1, 3, 1],
             [2, 4, 2]
         ])
-        np.testing.assert_array_almost_equal(translated_xyz, expected_translated_xyz)
+        np.testing.assert_array_almost_equal(translated_xyz.xyz, expected_translated_xyz)
 
     def test_translation_z(self):
         # Apply translation along Z-axis by 2 units
@@ -84,7 +84,7 @@ class TestMolecule(unittest.TestCase):
             [1, 1, 3],
             [2, 2, 4]
         ])
-        np.testing.assert_array_almost_equal(translated_xyz, expected_translated_xyz)
+        np.testing.assert_array_almost_equal(translated_xyz.xyz, expected_translated_xyz)
 
 
 if __name__ == '__main__':

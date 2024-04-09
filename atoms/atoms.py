@@ -18,7 +18,7 @@ class Atom:
     def get_coords(self):
         return [self.x, self.y, self.z]
 
-    def update_coordinates(self,x,y,z):
+    def update_coordinates(self, x, y, z):
         self.x = float(x)
         self.y = float(y)
         self.z = float(z)

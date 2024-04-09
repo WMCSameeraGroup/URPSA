@@ -10,14 +10,22 @@ from calculations.Is_too_close import is_not_highly_repulsive
 from molecule.molecule import Molecule
 
 file_path = sys.argv[1]
+flags = sys.argv[2:]
 
 system = InputFile(file_path)  # read input file and understand data
-
+#################################################################################
 # todo: implement rotation using molecule package
 
 # change orientations randomly using molecule module
+# loop can be used to generate files with different orientations
+if "rotation-step" in flags:
+    pass
+elif "rotation-random" in flags:
+    pass
+
 molecule = Molecule(system.atom_list)
-molecule.rotation_xy(math.pi/2)
+molecule.rotation_xy(math.pi / 2).rotation_yz(math.pi / 4).rotation_xz(math.pi / 6)
+# todo: rewrite the naming system so it would not over right the files
 
 coordinates = coordinate_generation(molecule.atoms, system.step_count, system.step_size)  # coordinate generation
 
@@ -25,6 +33,7 @@ for number, coordinate in enumerate(coordinates):
     coordinate_string = string_of_atoms_coordinates(system.atom_list, coordinate)
     input_file_config(number, coordinate_string, system)
 
+####################################################################################
 all_input_files = get_input_files_list()
 output_file_list = []
 

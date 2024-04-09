@@ -13,6 +13,8 @@ system = InputFile(file_path)  # read input file and understand data
 
 # todo: implement rotation using molecule package
 
+# change orientations randomly
+
 coordinates = coordinate_generation(system.atom_list, system.step_count, system.step_size)  # coordinate generation
 
 for number, coordinate in enumerate(coordinates):

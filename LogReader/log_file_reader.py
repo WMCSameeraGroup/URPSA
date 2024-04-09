@@ -4,7 +4,7 @@
 # todo: make a input and output file manager class/ run this in another thread to read and plot data while same
 #  calculations are done
 
-from settings import input_file_directory, output_file_directory
+from settings import input_file_directory
 import os, re
 
 

@@ -13,6 +13,10 @@ class InputFile:
         self.multiplicity = int(float(self.data.split("\n\n")[3].split()[1]))
         self.origin_molecule = self.data.split("\n\n")[2][1:]
         self.origin_atoms = self.set_origin_atom_list()
+        self.n_iter = int(float(self.data.split("\n\n")[4].split()[0]))
+        self.rotation_random = "random" in self.data.split("\n\n")[4].split()
+        self.rotation_step = [float(i) for i in self.data.split("\n\n")[4].split()[2:]]
+
 
     def set_atom_list(self):
         atom_list = []

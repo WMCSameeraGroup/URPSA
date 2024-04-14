@@ -8,30 +8,41 @@ from LogReader.log_file_reader import get_input_files_list, find_corresponding_o
 from inputfile import InputFile
 from calculations.Is_too_close import is_not_highly_repulsive
 from molecule.molecule import Molecule
+import random
+from utils.transferFiles import move_files_to_timestamped_folder
 
-file_path = sys.argv[1]
-flags = sys.argv[2:]
+try:
+    file_path = sys.argv[1]
+except:
+    print("enter a input file")
 
 system = InputFile(file_path)  # read input file and understand data
+
+# transfer previous file to archives folder
+move_files_to_timestamped_folder()
+
 #################################################################################
-# todo: implement rotation using molecule package
+for iteration in range(system.n_iter):
+    # change orientations randomly using molecule module
+    # loop can be used to generate files with different orientations
 
-# change orientations randomly using molecule module
-# loop can be used to generate files with different orientations
-if "rotation-step" in flags:
-    pass
-elif "rotation-random" in flags:
-    pass
+    molecule = Molecule(system.atom_list)
 
-molecule = Molecule(system.atom_list)
-molecule.rotation_xy(math.pi / 2).rotation_yz(math.pi / 4).rotation_xz(math.pi / 6)
-# todo: rewrite the naming system so it would not over right the files
+    if system.rotation_step:  # Check if 'rotation-step'
+        rotation_step = system.rotation_step * system.n_iter
+        print(rotation_step)
+        molecule.rotation_xy(rotation_step[0]).rotation_yz(rotation_step[1]).rotation_xz(rotation_step[2])
 
-coordinates = coordinate_generation(molecule.atoms, system.step_count, system.step_size)  # coordinate generation
+    elif system.rotation_random:
+        molecule.rotation_xy(random.uniform(0, math.pi)).rotation_yz(random.uniform(0, math.pi)).rotation_xz(
+            random.uniform(0, math.pi))
 
-for number, coordinate in enumerate(coordinates):
-    coordinate_string = string_of_atoms_coordinates(system.atom_list, coordinate)
-    input_file_config(number, coordinate_string, system)
+    coordinates = coordinate_generation(molecule.atoms, system.step_count, system.step_size)  # coordinate generation
+
+    for number, coordinate in enumerate(coordinates):
+        coordinate_string = string_of_atoms_coordinates(system.atom_list, coordinate)
+        input_file_number = iteration * system.step_count + number
+        input_file_config(input_file_number, coordinate_string, system)
 
 ####################################################################################
 all_input_files = get_input_files_list()

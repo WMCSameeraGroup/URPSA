@@ -31,10 +31,31 @@ H 3.96525969 1.54403357 0.00000000
 3 step 10 0 1
 ```
 the last line indicates run the calculations for three times changing rotation in (xy,xz,yz)
+or random orentations can be taken by using random word instead of step
+```
+3 random
+```
 ## How to run the program 
 Create an input file as described above then give the path to the input file
 ```bash
 python3 grogu.py inputfile.txt
+```
+
+
+## change configuration using settings.py file
+the parameters can be changed as you fit
+```python
+input_file_directory = 'inputFiles'
+output_file_directory = 'inputFiles'
+input_file_name = 'Test'
+data_file_name = "data.txt"
+backend = "g16"
+
+step_size = 0.5 
+step_count = 21
+
+stop_distance_factor = 0.4 # factor that multiplies sum of vandervals radius
+
 ```
 
 

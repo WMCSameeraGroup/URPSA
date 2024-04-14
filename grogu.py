@@ -48,16 +48,17 @@ for iteration in range(system.n_iter):
 all_input_files = get_input_files_list()
 output_file_list = []
 
-for file in all_input_files:
-    if is_not_highly_repulsive(file, len(system.origin_atoms)):
-        if run_calculation(file) != 0:  # something went wrong  thus no log file is produced
-            continue
-        print(find_corresponding_output_file(file), file)
-        log = LogFileManager(find_corresponding_output_file(file))
-        output_file_list.append(log)
-    else:
-        print(f"{file} is too repulsive to calculate")
-        break  # stop if repulsion was encountered
+for i in range(system.n_iter):
+    for file in all_input_files[i*system.step_count: (1+i)*system.step_count]:
+        if is_not_highly_repulsive(file, len(system.origin_atoms)):
+            if run_calculation(file) != 0:  # something went wrong  thus no log file is produced
+                continue
+            print(find_corresponding_output_file(file), file)
+            log = LogFileManager(find_corresponding_output_file(file))
+            output_file_list.append(log)
+        else:
+            print(f"{file} is too repulsive to calculate")
+            break  # stop if repulsion was encountered
 
 for obj in output_file_list:
     print(obj.scf_done)

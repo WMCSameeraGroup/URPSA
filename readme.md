@@ -57,8 +57,8 @@ step_count = 21
 stop_distance_factor = 0.4 # factor that multiplies sum of vandervals radius
 
 ```
-
-
+# where to find the output files (com, log, chk)
+default all the files of the current calculations are stored in **inputFile** directory and previous calculations are moved to archives folder
 
 
 

@@ -16,7 +16,7 @@ O -0.78947368 -2.06766914 0.00000000
 H 0.17052632 -2.06766914 0.00000000
 H -1.10992827 -1.16273331 0.00000000
 
- 
+
 1.0 10.0
 
 
@@ -25,10 +25,14 @@ H 5.24571428 0.63909773 0.00000000
 H 3.96525969 1.54403357 0.00000000
 
 
-0 2
-```
+0 3
 
+
+3 step 10 0 1
+```
+the last line indicates run the calculations for three times changing rotation in (xy,xz,yz)
 ## How to run the program 
+Create an input file as described above then give the path to the input file
 ```bash
 python3 grogu.py inputfile.txt
 ```

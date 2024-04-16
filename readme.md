@@ -51,15 +51,19 @@ input_file_name = 'Test'
 data_file_name = "data.txt"
 backend = "g16"
 
+# distance in angstroms gravity point of the molecules are decreased  
 step_size = 0.5 
+# number of steps 
 step_count = 21
 
 stop_distance_factor = 0.4 # factor that multiplies sum of vandervals radius
 
 ```
 # where to find the output files (com, log, chk)
-default all the files of the current calculations are stored in **inputFile** directory and previous calculations are moved to archives folder
+default all the files of the current calculations are stored in **inputFile** directory and previous calculations are moved to **archives** folder
 
 
+### how to use with more than two molecules 
 
+well, change 1 molecule at a time while keeping others as stationary.
 

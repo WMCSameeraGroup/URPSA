@@ -37,6 +37,8 @@ or random orentations can be taken by using random word instead of step
 ```
 ## How to run the program 
 Create an input file as described above then give the path to the input file
+Note: stay in the same directory as grogu.py
+
 ```bash
 python3 grogu.py inputfile.txt
 ```
@@ -67,3 +69,5 @@ default all the files of the current calculations are stored in **inputFile** di
 
 well, change 1 molecule at a time while keeping others as stationary.
 
+!# use gauss view to generate molecules in order to achieve a better result
+!simplify the first statement 

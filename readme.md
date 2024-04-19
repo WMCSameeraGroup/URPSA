@@ -96,8 +96,8 @@ Two water molecules are analysed using the program 3 incremental orientations an
 ```bash
 example1.txt
 ```
-Two water molecules are analysed using the program in 3 random orientations 6 random orientations 5 X 0.5 distance 
+Two water molecules are analysed using the program in 3 random orientations 6 random orientations 0.5 times 5 distance 
 ```bash
 example2.txt
 ```
-One water molecule and carbon dioxide molecule are analysed using the program 6 random orientations 5 X 0.5 distance 
+One water molecule and carbon dioxide molecule are analysed using the program 6 random orientations 5 times 0.5 distance 

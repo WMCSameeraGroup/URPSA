@@ -86,7 +86,7 @@ well, change 1 molecule at a time while keeping others as stationary.
 
 
 ### Examples 
-There are 3 example input files 
+There are 4 example input files 
 ```bash
 H2.txt
 ```

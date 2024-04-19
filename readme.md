@@ -69,7 +69,10 @@ default all the files of the current calculations are stored in **inputFile** di
 
 well, change 1 molecule at a time while keeping others as stationary.
 
-## points to improve 
-# use gauss view to generate molecules in order to achieve a better result
+## points of improvement
 
-#! if the distance is smaller  than the specified then other steps of that iterations are skiped.
+###use gauss view to generate molecules in order to achieve a better result
+
+### if the distance is smaller  than the specified then other steps of that iterations are skiped.
+
+### only data for first 30 atoms are provided. if you are to use other molecules you have to update **atoms/constants**

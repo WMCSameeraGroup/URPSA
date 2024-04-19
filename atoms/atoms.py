@@ -1,6 +1,4 @@
-MASS = {"H":1,"O":16}
-VANDER_WALLS ={"H": 1.20, "O": 1.52}
-
+from .constants import MASS,VANDER_WALLS
 
 class Atom:
 

@@ -76,3 +76,5 @@ well, change 1 molecule at a time while keeping others as stationary.
 ### if the distance is smaller  than the specified then other steps of that iterations are skiped.
 
 ### only data for first 30 atoms are provided. if you are to use other molecules you have to update **atoms/constants**
+
+ currently, changing basis set has to be done by chaining **inputFileGeneration/ 

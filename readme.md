@@ -4,7 +4,20 @@ You can use me to get the energies of molecular pairs in a specific reaction coo
 
  * gaussian 16
  * Python 3.10 above
-
+#How to get started
+clone the repository or download the files as a zip and extract them.\
+enter this line on cli
+```bash
+git clone https://github.com/HesaraMahela/computationalChemistryProject15315.git
+```
+and now its possible to write your own input file or run an example file already written
+so H2.txt is a simple two hydrogen atom based model which requires less calculation time.
+```bash
+python3 grogu.py H2.txt
+```
+After calculations are complete, 
+plot of energies are saved in same directory named **output.jpg**\
+and all the relevant files are saved in **inputFiles/** directory (or **archives/** )
 # input file format 
 At the beginning you can include **symbol x y z** one line for one atom then after first molecule is written two empty lines has to be written to say molecule is completely written.
 Then step size and step count is to be expressed eg: **1 10** \
@@ -90,7 +103,7 @@ There are 4 example input files
 ```bash
 H2.txt
 ```
-Two hydrogen molecules are analyzed with out changing orientation
+Two hydrogen molecules are analyzed without changing orientation
 
 ```bash
 test.txt

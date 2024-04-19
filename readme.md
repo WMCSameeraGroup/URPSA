@@ -47,17 +47,24 @@ python3 grogu.py inputfile.txt
 ## change configuration using settings.py file
 the parameters can be changed as you fit
 ```python
+"""
+general values and configurations are written here
+"""
+
 input_file_directory = 'inputFiles'
 output_file_directory = 'inputFiles'
 input_file_name = 'Test'
 data_file_name = "data.txt"
 backend = "g16"
 
+method = "wb97xd/aug-cc-pvtz"
+
+""" ** these values are overwritten by input file ** """
 # distance in angstroms gravity point of the molecules are decreased  
 step_size = 0.5 
 # number of steps 
 step_count = 21
-
+""" ** ** """
 stop_distance_factor = 0.4 # factor that multiplies sum of vandervals radius
 
 ```
@@ -71,10 +78,26 @@ well, change 1 molecule at a time while keeping others as stationary.
 
 ## points of improvement
 
-###use gauss view to generate molecules in order to achieve a better result
+* use gauss view to generate molecules in order to achieve a better result
 
-### if the distance is smaller  than the specified then other steps of that iterations are skiped.
+* if the distance is smaller  than the specified then other steps of that iterations are skiped.
 
-### only data for first 30 atoms are provided. if you are to use other molecules you have to update **atoms/constants**
+* only data for first 30 atoms are provided. if you are to use other molecules you have to update **atoms/constants**
 
- currently, changing basis set has to be done by chaining **inputFileGeneration/ 
+
+### Examples 
+There are 3 example input files 
+
+```bash
+test.txt
+```
+Two water molecules are analysed using the program 3 incremental orientations and 1 x 10
+
+```bash
+example1.txt
+```
+Two water molecules are analysed using the program in 3 random orientations 6 random orientations 5 X 0.5 distance 
+```bash
+example2.txt
+```
+One water molecule and carbon dioxide molecule are analysed using the program 6 random orientations 5 X 0.5 distance 

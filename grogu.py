@@ -14,7 +14,8 @@ from utils.transferFiles import move_files_to_timestamped_folder
 try:
     file_path = sys.argv[1]
 except:
-    print("enter a input file")
+    print("a input file is not provided")
+    sys.exit()
 
 system = InputFile(file_path)  # read input file and understand data
 

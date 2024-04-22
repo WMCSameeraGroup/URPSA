@@ -69,8 +69,8 @@ import matplotlib.pyplot as plt
 def plot_the_graph(outputFiles):
     data = [float(f.scf_done[0]) for f in outputFiles if f.scf_done != "could not found"][:-1]
     plt.plot(data)
-    plt.title("Energy Vs molecular arrangement ")
-    plt.xlabel("Energy(Hartree)")
+    plt.ylabel("Energy/AU")
+    plt.xlabel("Step")
     plt.savefig("output.jpg")
 
 

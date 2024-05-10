@@ -50,7 +50,7 @@ all_input_files = get_input_files_list()
 output_file_list = []
 
 for i in range(system.n_iter):
-    for file in all_input_files[i*system.step_count: (1+i)*system.step_count]:
+    for file in all_input_files[i * system.step_count: (1 + i) * system.step_count]:
         if is_not_highly_repulsive(file, len(system.origin_atoms)):
             if run_calculation(file) != 0:  # something went wrong  thus no log file is produced
                 continue

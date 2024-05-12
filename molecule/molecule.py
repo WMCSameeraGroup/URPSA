@@ -51,3 +51,6 @@ class Molecule:
     def setAtomNewCoords(self):
         for atom, coords in zip(self.atoms, self.xyz):
             atom.update_coordinates(*coords)
+
+    def get_coordinates_of_atoms(self):
+        return np.array([atom.get_coords() for atom in self.atoms])

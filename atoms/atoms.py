@@ -27,4 +27,7 @@ class Atom:
         diff_z = pow(self.z - other.z, 2)
         return pow(diff_z+diff_x+diff_y, 0.5)
 
+    def unit_position_vector(self):
+        magnitude = (self.x**2 + self.y**2 + self.z**2)**0.5
+        return [self.x/magnitude, self.y/magnitude, self.z/magnitude]
 

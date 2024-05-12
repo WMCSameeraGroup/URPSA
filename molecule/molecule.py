@@ -54,3 +54,6 @@ class Molecule:
 
     def get_coordinates_of_atoms(self):
         return np.array([atom.get_coords() for atom in self.atoms])
+
+    def add_atom(self, atom):
+        self.atoms.append(atom)

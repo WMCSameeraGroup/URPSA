@@ -43,3 +43,7 @@ def spherical_gird_coordinate_generation(molecule, step_count, step_size):
         list_of_coordinates.append(coordinates_of_atoms)
         move_atoms_towards_center(molecule, step_size)
     return list_of_coordinates
+
+
+if __name__ == "__main__":
+    print(spherically_converge_atom(Atom("Si", 1, 1, 1)))

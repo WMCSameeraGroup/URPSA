@@ -31,3 +31,8 @@ class Atom:
         magnitude = (self.x**2 + self.y**2 + self.z**2)**0.5
         return [self.x/magnitude, self.y/magnitude, self.z/magnitude]
 
+    def distance_from_origin(self):
+        diff_x = pow(self.x, 2)
+        diff_y = pow(self.y, 2)
+        diff_z = pow(self.z, 2)
+        return pow(diff_z+diff_x+diff_y, 0.5)

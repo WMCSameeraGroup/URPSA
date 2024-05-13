@@ -12,6 +12,7 @@ from inputFileGeneration.input_file_writer import input_file_config
 from molecule.molecule import Molecule
 from inputFileGeneration.spherical_grid_coordinates import spherical_gird_coordinate_generation
 from system import System
+from utils.transferFiles import move_files_to_timestamped_folder
 
 """
 create silicon atoms in the coordination sphere of atoms
@@ -27,6 +28,9 @@ def plot_the_graph(outputFiles, file_name="output.jpg"):
 
 
 def run(num_of_silicon_atoms=3, radius=10):
+    # transfer previous file to archives folder
+    move_files_to_timestamped_folder()
+
     silicon_atoms = []
     for n in range(num_of_silicon_atoms):
         silicon_atoms.append(Atom("Si", *random_spherical_coordinates_generator(radius)))

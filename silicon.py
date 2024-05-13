@@ -52,12 +52,12 @@ for obj in output_file_list:
 import matplotlib.pyplot as plt
 
 
-def plot_the_graph(outputFiles):
+def plot_the_graph(outputFiles, file_name="output.jpg"):
     data = [float(f.scf_done[0]) for f in outputFiles if f.scf_done != "could not found"][:-1]
     plt.plot(data)
     plt.ylabel("Energy/AU")
     plt.xlabel("Step")
-    plt.savefig("output.jpg")
+    plt.savefig(file_name)
 
 
 plot_the_graph(output_file_list)

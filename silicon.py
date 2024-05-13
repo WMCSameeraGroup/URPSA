@@ -1,4 +1,8 @@
+from LogReader.log_file_manager import LogFileManager
+from LogReader.log_file_reader import get_input_files_list, find_corresponding_output_file
 from atoms.atoms import Atom
+from calculations.Is_too_close import is_not_highly_repulsive
+from calculations.calculation_manager import run_calculation
 from calculations.random_spherical_coords_generator import random_spherical_coordinates_generator
 from inputFileGeneration.coordinates import string_of_atoms_coordinates
 from inputFileGeneration.input_file_writer import input_file_config
@@ -7,7 +11,7 @@ from inputFileGeneration.spherical_grid_coordinates import spherical_gird_coordi
 from system import System
 
 """
-create silicon atoms in the coordination sphere atoms
+create silicon atoms in the coordination sphere of atoms
 """
 
 number_of_silicon_atoms = 3
@@ -27,3 +31,33 @@ for number, coordinate in enumerate(coordinates):
     print(coordinate_string)
     input_file_number = number
     input_file_config(input_file_number, coordinate_string, system)
+
+
+####################################################################################
+all_input_files = get_input_files_list()
+output_file_list = []
+
+for file in all_input_files:
+
+        if run_calculation(file) != 0:  # something went wrong  thus no log file is produced
+            continue
+        print(find_corresponding_output_file(file), file)
+        log = LogFileManager(find_corresponding_output_file(file))
+        output_file_list.append(log)
+
+
+for obj in output_file_list:
+    print(obj.scf_done)
+
+import matplotlib.pyplot as plt
+
+
+def plot_the_graph(outputFiles):
+    data = [float(f.scf_done[0]) for f in outputFiles if f.scf_done != "could not found"][:-1]
+    plt.plot(data)
+    plt.ylabel("Energy/AU")
+    plt.xlabel("Step")
+    plt.savefig("output.jpg")
+
+
+plot_the_graph(output_file_list)

@@ -1,10 +1,10 @@
 from matplotlib import pyplot as plt
-
+import sys
 from LogReader.log_file_manager import LogFileManager
 from LogReader.log_file_reader import get_input_files_list, find_corresponding_output_file
 from atoms.atoms import Atom
 from settings import input_file_directory
-from calculations.Is_too_close import is_not_highly_repulsive
+from calculations.Is_too_close import is_not_highly_repulsive_spherically
 from calculations.calculation_manager import run_calculation
 from calculations.random_spherical_coords_generator import random_spherical_coordinates_generator
 from inputFileGeneration.coordinates import string_of_atoms_coordinates
@@ -27,7 +27,7 @@ def plot_the_graph(outputFiles, file_name="output.jpg"):
     plt.savefig(input_file_directory + "/" + file_name)
 
 
-def run(num_of_silicon_atoms=3, radius=10):
+def run(num_of_silicon_atoms=3, radius=10, number_of_steps=5, step_size=1):
     # transfer previous file to archives folder
     move_files_to_timestamped_folder()
 
@@ -36,7 +36,7 @@ def run(num_of_silicon_atoms=3, radius=10):
         silicon_atoms.append(Atom("Si", *random_spherical_coordinates_generator(radius)))
 
     silicon_cluster = Molecule(silicon_atoms)
-    coordinates = spherical_gird_coordinate_generation(silicon_cluster, 7, 1)
+    coordinates = spherical_gird_coordinate_generation(silicon_cluster, number_of_steps, step_size)
 
     system = System(silicon_atoms, 0, 1)
 
@@ -53,17 +53,23 @@ def run(num_of_silicon_atoms=3, radius=10):
 
     for file in all_input_files:
 
-        if run_calculation(file) != 0:  # something went wrong  thus no log file is produced
-            continue
-        print(find_corresponding_output_file(file), file)
-        log = LogFileManager(find_corresponding_output_file(file))
-        output_file_list.append(log)
+        try:
+            run_calculation(file)
+            print(find_corresponding_output_file(file), file)
+            log = LogFileManager(find_corresponding_output_file(file))
+            output_file_list.append(log)
+        except Exception as e:
+            print(e)
 
     for obj in output_file_list:
         print(obj.scf_done)
     plot_the_graph(output_file_list)
 
 
+num_of_silicon_atoms = int(sys.argv[1])
+radius = int(sys.argv[2])
+number_of_steps = int(sys.argv[3])
+step_size = int(sys.argv[4])
 
+run(num_of_silicon_atoms, radius, number_of_steps, step_size)
 
-run()

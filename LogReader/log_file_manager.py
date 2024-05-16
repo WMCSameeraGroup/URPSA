@@ -7,6 +7,7 @@ class LogFileManager:
         self.read_log()
         self.get_scf_done()
         self.write_data_to_the_data_file()
+        self.is_not_converged()
         self.finish()
 
     def log_file_name(self):
@@ -23,8 +24,6 @@ class LogFileManager:
     def is_valid(self):
         return "Gaussian" in self.text
 
-    def is_converged(self):
-        return "Optimization completed" in self.text
 
     def is_optimized(self):
         # Check if the geometry is optimized
@@ -48,6 +47,13 @@ class LogFileManager:
     def write_data_to_the_data_file(self):
         with open(data_file_name, 'a') as file:
             file.write(f"{self.file}\t{self.scf_done} \n")
+
+    def is_not_converged(self):
+        if "Convergence failure" in self.text:
+            print("failed to converge")
+            return True
+        else:
+            return False
 
 
 if __name__ == '__main__':

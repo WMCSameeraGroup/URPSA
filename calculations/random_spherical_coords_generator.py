@@ -7,7 +7,9 @@ def random_spherical_coordinates_generator(r: float):
     x = uniform(-r, r)
     y_max = (r ** 2 - x ** 2) ** 0.5
     y = uniform(-y_max, y_max)
-    z = (r**2 - x ** 2 - y ** 2) ** 0.5
+    z = (r ** 2 - x ** 2 - y ** 2) ** 0.5
     return x, y, z
 
 
+def log_random_coordinates(x, y, z):
+    pass  # todo: log data to a file or data base

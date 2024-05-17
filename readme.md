@@ -1,3 +1,11 @@
+## silicon.py 
+this program converges N number of silicon atoms randomly placed on a sphere of radius R and converged to center step by step and SCF energies are calculated and plotted.
+```bash
+python3 silicon.py 3 12 10 1
+# python3 silicon.py <number of silicon atoms> <radius of the coordination sphere> <number of steps> <step size>
+```
+
+
 ## Hi this is grogu program 
 You can use me to get the energies of molecular pairs in a specific reaction coordinate by moving one molecule to a molecule where another stationary molecule stays at the origin. 
 ## prerequisites 

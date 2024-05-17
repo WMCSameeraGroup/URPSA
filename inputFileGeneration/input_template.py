@@ -13,5 +13,3 @@ Title{0}
 {1} {2}	\n""".format(number, system.charge, system.multiplicity, inp_dir, calc_method,num_of_cores)
 
 
-if __name__ == "__main__":
-    print(get_input_template(1))

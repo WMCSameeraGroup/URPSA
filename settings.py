@@ -14,5 +14,5 @@ method = "wb97xd/aug-cc-pvtz"
 step_size = 0.5
 step_count = 21
 
-stop_distance_factor = 0.5
+stop_distance_factor = 0.3
 

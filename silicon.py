@@ -3,6 +3,7 @@ import sys
 from LogReader.log_file_manager import LogFileManager
 from LogReader.log_file_reader import get_input_files_list, find_corresponding_output_file
 from atoms.atoms import Atom
+from inputfile import InputFile
 from settings import input_file_directory
 from calculations.Is_too_close import is_not_highly_repulsive_spherically
 from calculations.calculation_manager import run_calculation
@@ -17,6 +18,19 @@ from utils.transferFiles import move_files_to_timestamped_folder
 """
 create silicon atoms in the coordination sphere of atoms
 """
+
+
+try:
+    file_path = sys.argv[1]
+except:
+    print("a input file is not provided")
+    sys.exit()
+
+system = InputFile(file_path)  # read input file and understand data
+
+
+
+
 
 # todo: set multiplicity / use an inputfile
 def plot_the_graph(outputFiles, file_name="output.jpg"):
@@ -35,6 +49,7 @@ def run(num_of_silicon_atoms=3, radius=10, number_of_steps=5, step_size=1):
 
     silicon_atoms = []
     for n in range(num_of_silicon_atoms):
+        #todo: use atoms in the input file
         silicon_atoms.append(Atom("Si", *random_spherical_coordinates_generator(radius)))
 
     silicon_cluster = Molecule(silicon_atoms)
@@ -56,11 +71,13 @@ def run(num_of_silicon_atoms=3, radius=10, number_of_steps=5, step_size=1):
     for file in all_input_files:
 
         try:
-            run_calculation(file)
-            print(find_corresponding_output_file(file), file)
-            # todo: check the repulsion
-            log = LogFileManager(find_corresponding_output_file(file))
-            output_file_list.append(log)
+            if is_not_highly_repulsive_spherically(file):
+                run_calculation(file)
+                print(find_corresponding_output_file(file), file)
+                log = LogFileManager(find_corresponding_output_file(file))
+                output_file_list.append(log)
+            else:
+                print("highly repulsive")
         except Exception as e:
             print(e)
             print("error occurred")
@@ -71,10 +88,10 @@ def run(num_of_silicon_atoms=3, radius=10, number_of_steps=5, step_size=1):
     plot_the_graph(output_file_list)
 
 
-num_of_silicon_atoms = int(sys.argv[1])
-radius = int(sys.argv[2])
-number_of_steps = int(sys.argv[3])
-step_size = int(sys.argv[4])
-
-run(num_of_silicon_atoms, radius, number_of_steps, step_size)
+# num_of_silicon_atoms = int(sys.argv[1])
+# radius = int(sys.argv[2])
+# number_of_steps = int(sys.argv[3])
+# step_size = int(sys.argv[4])
+#
+# run(num_of_silicon_atoms, radius, number_of_steps, step_size)
 

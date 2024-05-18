@@ -35,12 +35,12 @@ def run(num_of_silicon_atoms=3, radius=10, number_of_steps=5, step_size=1):
 
     silicon_atoms = []
     for n in range(num_of_silicon_atoms):
-        silicon_atoms.append(Atom("H", *random_spherical_coordinates_generator(radius)))
+        silicon_atoms.append(Atom("Si", *random_spherical_coordinates_generator(radius)))
 
     silicon_cluster = Molecule(silicon_atoms)
     coordinates = spherical_gird_coordinate_generation(silicon_cluster, number_of_steps, step_size)
 
-    system = System(silicon_atoms, 0, 2)
+    system = System(silicon_atoms, 0, 1)
 
     for number, coordinate in enumerate(coordinates):
         coordinate_string = string_of_atoms_coordinates(silicon_cluster.atoms, coordinate)

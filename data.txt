@@ -67,3 +67,89 @@ Test7.log	['-1.04275090722']
 Test8.log	['-1.05337788309'] 
 Test9.log	['-1.03951870496'] 
 Test0.log	['-152.611475099'] 
+Test1.log	['-152.590497419'] 
+Test0.log	['-0.876538729224'] 
+Test1.log	['-0.887162518483'] 
+Test2.log	['-0.901407216609'] 
+Test3.log	['-0.920612613028'] 
+Test4.log	['-0.946121028811'] 
+Test5.log	['-0.978116015839'] 
+Test6.log	['-1.01339429996'] 
+Test7.log	['-1.04275090722'] 
+Test8.log	['-1.05337788309'] 
+Test9.log	['-1.03951870496'] 
+Test0.log	could not found 
+Test1.log	could not found 
+Test2.log	could not found 
+Test3.log	could not found 
+Test4.log	could not found 
+Test5.log	could not found 
+Test6.log	could not found 
+Test7.log	could not found 
+Test8.log	could not found 
+Test9.log	could not found 
+Test0.log	['-0.876538729224'] 
+Test1.log	['-0.887162518483'] 
+Test2.log	['-0.901407216609'] 
+Test3.log	['-0.920612613028'] 
+Test4.log	['-0.946121028811'] 
+Test5.log	['-0.978116015839'] 
+Test6.log	['-1.01339429996'] 
+Test7.log	['-1.04275090722'] 
+Test8.log	['-1.05337788309'] 
+Test9.log	['-1.03951870496'] 
+Test0.log	['-152.611475099'] 
+Test1.log	['-152.590497419'] 
+Test2.log	['-152.618269046'] 
+Test3.log	['-152.485127639'] 
+Test4.log	['-149.681530365'] 
+Test5.log	['-151.308403447'] 
+Test6.log	['-152.499154897'] 
+Test7.log	['-152.600765084'] 
+Test8.log	['-152.595281849'] 
+Test9.log	['-152.610239363'] 
+Test0.log	['-0.876538729224'] 
+Test1.log	['-0.887162518483'] 
+Test2.log	['-0.901407216609'] 
+Test3.log	['-0.920612613028'] 
+Test4.log	['-0.946121028811'] 
+Test5.log	['-0.978116015839'] 
+Test6.log	['-1.01339429996'] 
+Test7.log	['-1.04275090722'] 
+Test8.log	['-1.05337788309'] 
+Test9.log	['-1.03951870496'] 
+Test0.log	['-1.50840918699'] 
+Test1.log	['-1.50840921494'] 
+Test2.log	['-1.50840918225'] 
+Test3.log	['-1.50840924599'] 
+Test4.log	['-1.50840925893'] 
+Test5.log	['-1.50840929948'] 
+Test6.log	['-1.34269286407'] 
+Test7.log	['-1.50840926116'] 
+Test8.log	['-1.50840925854'] 
+Test9.log	['-1.50840908628'] 
+Test0.log	could not found 
+Test1.log	could not found 
+Test2.log	could not found 
+Test3.log	could not found 
+Test4.log	could not found 
+Test5.log	could not found 
+Test6.log	could not found 
+Test7.log	could not found 
+Test8.log	could not found 
+Test9.log	could not found 
+Test0.log	['-867.891317105'] 
+Test1.log	['-867.979437889'] 
+Test2.log	['-867.980984329'] 
+Test3.log	['-867.942083483'] 
+Test4.log	['-867.972275376'] 
+Test5.log	['-868.014571903'] 
+Test6.log	['-868.073320073'] 
+Test7.log	['-868.151402592'] 
+Test8.log	['-868.245060948'] 
+Test9.log	['-868.116169617'] 
+Test0.log	['-654.204409206'] 
+Test1.log	['-654.213343630'] 
+Test2.log	['-654.198739891'] 
+Test3.log	['-654.233149586'] 
+Test4.log	['-654.277607955'] 

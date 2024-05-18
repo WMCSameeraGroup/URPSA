@@ -57,3 +57,6 @@ class Molecule:
 
     def add_atom(self, atom):
         self.atoms.append(atom)
+
+    def number_of_atoms(self):
+        return len(self.atoms)

@@ -18,9 +18,9 @@ from utils.transferFiles import move_files_to_timestamped_folder
 create silicon atoms in the coordination sphere of atoms
 """
 
-
+# todo: set multiplicity / use an inputfile
 def plot_the_graph(outputFiles, file_name="output.jpg"):
-    data = [float(f.scf_done[0]) for f in outputFiles if f.scf_done != "could not found"]
+    data = [float(f.scf_done[0]) for f in outputFiles if f.scf_done != "could not found"][::-1]
     print("plotting...")
     print(data)
     plt.plot(data)
@@ -58,13 +58,14 @@ def run(num_of_silicon_atoms=3, radius=10, number_of_steps=5, step_size=1):
         try:
             run_calculation(file)
             print(find_corresponding_output_file(file), file)
+            # todo: check the repulsion
             log = LogFileManager(find_corresponding_output_file(file))
             output_file_list.append(log)
         except Exception as e:
             print(e)
             print("error occurred")
             output_file_list.append(0)
-
+        # todo: write an output file
     for obj in output_file_list:
         print(obj.scf_done)
     plot_the_graph(output_file_list)

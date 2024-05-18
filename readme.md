@@ -1,9 +1,70 @@
 ## silicon.py 
-this program converges N number of silicon atoms randomly placed on a sphere of radius R and converged to center step by step and SCF energies are calculated and plotted.
-```bash
-python3 silicon.py 3 12 10 1
-# python3 silicon.py <number of silicon atoms> <radius of the coordination sphere> <number of steps> <step size>
+This program  can converge N number of atoms randomly placed on a sphere of radius R and converged to center step by step and SCF energies are calculated and plotted.
+
+### input file format
+
 ```
+<symbol of the atom> <number of atoms>  # multiple lines can be used 
+<symbol of the atom> <number of atoms>
+                                        # 2 line 
+
+<step size> <step count>
+
+                                        # 2 line
+---------- # line without spaces 
+
+                                        # 2 line  
+<charge> <multiplicity>
+
+                                        # 2 lines
+radius <radius of the sphere>                                   
+```
+
+
+
+```bash
+python3 silicon.py silicon.txt
+```
+This example file has 3 silicon atoms on a sphere of radius 12 ten steps with a step size of 1.
+
+```
+Si 3 
+
+
+1.0 10.0
+
+
+--------
+
+
+0 1
+
+
+radius 12
+```
+
+## example 2
+```bash
+python3 silicon.py carbonSilicon.txt
+```
+
+```
+Si 2
+C 2
+
+
+1.0 5.0
+
+
+--------
+
+
+0 1
+
+
+radius 12
+```
+
 
 
 ## Hi this is grogu program 

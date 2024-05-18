@@ -2,8 +2,8 @@
  Input=inputFiles/Test0.com
  Output=inputFiles/Test0.log
  Initial command:
- /home/mark/gaussian/g16/l1.exe "/home/mark/gaussian/scratch/Gau-2380.inp" -scrdir="/home/mark/gaussian/scratch/"
- Entering Link 1 = /home/mark/gaussian/g16/l1.exe PID=      2382.
+ /home/mark/gaussian/g16/l1.exe "/home/mark/gaussian/scratch/Gau-2412.inp" -scrdir="/home/mark/gaussian/scratch/"
+ Entering Link 1 = /home/mark/gaussian/g16/l1.exe PID=      2414.
   
  Copyright (c) 1988,1990,1992,1993,1995,1998,2003,2009,2016,
             Gaussian, Inc.  All Rights Reserved.
@@ -97,30 +97,38 @@
  ------
  Symbolic Z-matrix:
  Charge =  0 Multiplicity = 1
- Si                    7.22      7.05      6.49 
- Si                   -1.13      10.16     6.29 
- C                    -10.41     0.11      5.97 
- C                     5.78      4.33      9.58 
+ Si                    5.55     -1.46      10.54 
+ Si                    3.64      10.16     5.25 
+ Si                   -0.59      5.13      10.83 
+ Si                    5.22      5.58      9.25 
+ Si                    1.62      7.46      9.26 
+ Si                   -3.3       6.49      9.54 
  
                           Input orientation:                          
  ---------------------------------------------------------------------
  Center     Atomic      Atomic             Coordinates (Angstroms)
  Number     Number       Type             X           Y           Z
  ---------------------------------------------------------------------
-      1         14           0        7.220000    7.050000    6.490000
-      2         14           0       -1.130000   10.160000    6.290000
-      3          6           0      -10.410000    0.110000    5.970000
-      4          6           0        5.780000    4.330000    9.580000
+      1         14           0        5.550000   -1.460000   10.540000
+      2         14           0        3.640000   10.160000    5.250000
+      3         14           0       -0.590000    5.130000   10.830000
+      4         14           0        5.220000    5.580000    9.250000
+      5         14           0        1.620000    7.460000    9.260000
+      6         14           0       -3.300000    6.490000    9.540000
  ---------------------------------------------------------------------
                     Distance matrix (angstroms):
-                    1          2          3          4
+                    1          2          3          4          5
      1  Si   0.000000
-     2  Si   8.912609   0.000000
-     3  C   18.953915  13.682957   0.000000
-     4  C    4.361204   9.620868  17.115975   0.000000
- Stoichiometry    C2Si2
- Framework group  C1[X(C2Si2)]
- Deg. of freedom     6
+     2  Si  12.909555   0.000000
+     3  Si   9.011759   8.621496   0.000000
+     4  Si   7.164817   6.282738   6.037798   0.000000
+     5  Si   9.831058   5.239322   3.574619   4.061342   0.000000
+     6  Si  11.938383   8.946318   3.295118   8.573366   5.022519
+                    6
+     6  Si   0.000000
+ Stoichiometry    Si6
+ Framework group  C1[X(Si6)]
+ Deg. of freedom    12
  Full point group                 C1      NOp   1
  Largest Abelian subgroup         C1      NOp   1
  Largest concise Abelian subgroup C1      NOp   1
@@ -129,26 +137,28 @@
  Center     Atomic      Atomic             Coordinates (Angstroms)
  Number     Number       Type             X           Y           Z
  ---------------------------------------------------------------------
-      1         14           0        5.640634   -1.002058   -0.922887
-      2         14           0       -1.609703    4.023488    0.346407
-      3          6           0      -13.175984   -3.238585   -0.494257
-      4          6           0        3.770479   -3.811420    1.839378
+      1         14           0        7.948866    0.036459   -0.756381
+      2         14           0       -4.148443    4.539958   -0.930208
+      3         14           0       -0.402588   -3.079005    0.569853
+      4         14           0        1.510425    2.630024    1.019708
+      5         14           0       -1.753293    0.221166    0.819591
+      6         14           0       -3.154967   -4.348602   -0.722563
  ---------------------------------------------------------------------
- Rotational constants (GHZ):           0.5932399           0.1537405           0.1264180
+ Rotational constants (GHZ):           0.3012454           0.1808926           0.1189726
  Standard basis: Aug-CC-pVTZ (5D, 7F)
- There are   228 symmetry adapted cartesian basis functions of A   symmetry.
- There are   192 symmetry adapted basis functions of A   symmetry.
-   192 basis functions,   374 primitive gaussians,   228 cartesian basis functions
-    20 alpha electrons       20 beta electrons
-       nuclear repulsion energy        33.1567610601 Hartrees.
- NAtoms=    4 NActive=    4 NUniq=    4 SFac= 1.00D+00 NAtFMM=   60 NAOKFM=F Big=F
+ There are   354 symmetry adapted cartesian basis functions of A   symmetry.
+ There are   300 symmetry adapted basis functions of A   symmetry.
+   300 basis functions,   690 primitive gaussians,   354 cartesian basis functions
+    42 alpha electrons       42 beta electrons
+       nuclear repulsion energy       249.1426512293 Hartrees.
+ NAtoms=    6 NActive=    6 NUniq=    6 SFac= 1.00D+00 NAtFMM=   60 NAOKFM=F Big=F
  Integral buffers will be    131072 words long.
  Raffenetti 2 integral format.
  Two-electron integral symmetry is turned on.
- Nuclear repulsion after empirical dispersion term =       33.1565548626 Hartrees.
+ Nuclear repulsion after empirical dispersion term =      249.1410384994 Hartrees.
  One-electron integrals computed using PRISM.
- NBasis=   192 RedAO= T EigKep=  8.18D-03  NBF=   192
- NBsUse=   192 1.00D-06 EigRej= -1.00D+00 NBFU=   192
+ NBasis=   300 RedAO= T EigKep=  1.46D-03  NBF=   300
+ NBsUse=   300 1.00D-06 EigRej= -1.00D+00 NBFU=   300
  ExpMin= 2.37D-02 ExpMax= 2.55D+05 ExpMxC= 2.46D+03 IAcc=3 IRadAn=         5 AccDes= 0.00D+00
  Harris functional with IExCor= 4639 and IRadAn=       5 diagonalized for initial guess.
  HarFok:  IExCor= 4639 AccDes= 0.00D+00 IRadAn=         5 IDoV= 1 UseB2=F ITyADJ=14
@@ -162,22 +172,9 @@
  Requested convergence on MAX density matrix=1.00D-06.
  Requested convergence on             energy=1.00D-06.
  No special actions if energy rises.
- EnCoef did   100 forward-backward iterations
- EnCoef did   100 forward-backward iterations
- EnCoef did   100 forward-backward iterations
- EnCoef did     9 forward-backward iterations
+ EnCoef did     6 forward-backward iterations
  EnCoef did     4 forward-backward iterations
- Restarting incremental Fock formation.
- Restarting incremental Fock formation.
- Restarting incremental Fock formation.
- Restarting incremental Fock formation.
- Restarting incremental Fock formation.
- Restarting incremental Fock formation.
- >>>>>>>>>> Convergence criterion not met.
- SCF Done:  E(RwB97XD) =  -654.204409206     A.U. after  129 cycles
-            NFock=128  Conv=0.41D-05     -V/T= 2.0034
- Convergence failure -- run terminated.
- Error termination via Lnk1e in /home/mark/gaussian/g16/l502.exe at Sat May 18 12:38:16 2024.
- Job cpu time:       0 days  0 hours 11 minutes  3.0 seconds.
- Elapsed time:       0 days  0 hours 11 minutes  4.6 seconds.
- File lengths (MBytes):  RWF=     22 Int=      0 D2E=      0 Chk=      2 Scr=      1
+ EnCoef did     2 forward-backward iterations
+ EnCoef did     8 forward-backward iterations
+ EnCoef did     2 forward-backward iterations
+ EnCoef did     1 forward-backward iterations

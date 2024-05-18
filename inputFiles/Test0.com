@@ -1,12 +1,13 @@
+%NProcShared=1
 %chk=inputFiles/test0.chk
 # wb97xd/aug-cc-pvtz
 
 Title0
  
-0 1	
-Si -0.02 -6.93 9.80
-Si 9.86 -3.79 5.69
-Si 4.89 7.67 7.82
+0 2	
+H 8.03 7.79 4.36
+H -2.17 7.15 9.39
+H 6.75 2.39 9.63
 
 
 

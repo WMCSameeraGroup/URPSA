@@ -20,7 +20,9 @@ create silicon atoms in the coordination sphere of atoms
 
 
 def plot_the_graph(outputFiles, file_name="output.jpg"):
-    data = [float(f.scf_done[0]) for f in outputFiles if f.scf_done != "could not found"][:-1]
+    data = [float(f.scf_done[0]) for f in outputFiles if f.scf_done != "could not found"]
+    print("plotting...")
+    print(data)
     plt.plot(data)
     plt.ylabel("Energy/AU")
     plt.xlabel("Step")
@@ -33,12 +35,12 @@ def run(num_of_silicon_atoms=3, radius=10, number_of_steps=5, step_size=1):
 
     silicon_atoms = []
     for n in range(num_of_silicon_atoms):
-        silicon_atoms.append(Atom("Si", *random_spherical_coordinates_generator(radius)))
+        silicon_atoms.append(Atom("H", *random_spherical_coordinates_generator(radius)))
 
     silicon_cluster = Molecule(silicon_atoms)
     coordinates = spherical_gird_coordinate_generation(silicon_cluster, number_of_steps, step_size)
 
-    system = System(silicon_atoms, 0, 1)
+    system = System(silicon_atoms, 0, 2)
 
     for number, coordinate in enumerate(coordinates):
         coordinate_string = string_of_atoms_coordinates(silicon_cluster.atoms, coordinate)
@@ -60,6 +62,8 @@ def run(num_of_silicon_atoms=3, radius=10, number_of_steps=5, step_size=1):
             output_file_list.append(log)
         except Exception as e:
             print(e)
+            print("error occurred")
+            output_file_list.append(0)
 
     for obj in output_file_list:
         print(obj.scf_done)

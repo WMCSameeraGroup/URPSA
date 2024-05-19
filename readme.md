@@ -20,7 +20,7 @@ This program  can converge N number of atoms randomly placed on a sphere of radi
 radius <radius of the sphere>                                   
 ```
 
-
+### example 1
 
 ```bash
 python3 silicon.py silicon.txt

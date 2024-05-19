@@ -178,3 +178,33 @@
  EnCoef did     8 forward-backward iterations
  EnCoef did     2 forward-backward iterations
  EnCoef did     1 forward-backward iterations
+ Restarting incremental Fock formation.
+ Rare condition: small coef for last iteration:  0.000D+00
+ Rare condition: small coef for last iteration:  0.000D+00
+ Rare condition: small coef for last iteration:  0.000D+00
+ Rare condition: small coef for last iteration:  0.000D+00
+ Rare condition: small coef for last iteration:  0.000D+00
+ Rare condition: small coef for last iteration:  0.000D+00
+ Rare condition: small coef for last iteration:  0.000D+00
+ Rare condition: small coef for last iteration:  0.000D+00
+ Rare condition: small coef for last iteration:  0.000D+00
+ Rare condition: small coef for last iteration:  0.000D+00
+ Rare condition: small coef for last iteration:  0.000D+00
+ Restarting incremental Fock formation.
+ Rare condition: small coef for last iteration:  0.000D+00
+ Rare condition: small coef for last iteration:  0.000D+00
+ Rare condition: small coef for last iteration:  0.000D+00
+ Rare condition: small coef for last iteration:  0.000D+00
+ Rare condition: small coef for last iteration:  0.000D+00
+ Restarting incremental Fock formation.
+ Restarting incremental Fock formation.
+ Restarting incremental Fock formation.
+ Restarting incremental Fock formation.
+ >>>>>>>>>> Convergence criterion not met.
+ SCF Done:  E(RwB97XD) =  -1736.08170806     A.U. after  129 cycles
+            NFock=128  Conv=0.23D-05     -V/T= 2.0033
+ Convergence failure -- run terminated.
+ Error termination via Lnk1e in /home/mark/gaussian/g16/l502.exe at Sat May 18 15:23:00 2024.
+ Job cpu time:       0 days  1 hours  0 minutes  7.6 seconds.
+ Elapsed time:       0 days  1 hours  0 minutes 21.8 seconds.
+ File lengths (MBytes):  RWF=     51 Int=      0 D2E=      0 Chk=      3 Scr=      1

@@ -6,17 +6,17 @@ This program  can converge N number of atoms randomly placed on a sphere of radi
 ```
 <symbol of the atom> <number of atoms>  # multiple lines can be used 
 <symbol of the atom> <number of atoms>
-                                        # 2 line 
+                                        # 2 empty lines 
 
 <step size> <step count>
 
-                                        # 2 line
+                                        # 2 empty lines
 ---------- # line without spaces 
 
-                                        # 2 line  
+                                        # 2 empty lines
 <charge> <multiplicity>
 
-                                        # 2 lines
+                                        # 2 empty lines
 radius <radius of the sphere>                                   
 ```
 

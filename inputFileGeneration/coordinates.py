@@ -9,8 +9,8 @@ def relative_coordination_matrix(atoms):
 
 
 def update_atoms(atoms, matrix):
-    for i, j in zip(atoms, matrix):
-        i.update_coordinates(*j)
+    for atom, xyz in zip(atoms, matrix):
+        atom.update_coordinates(*xyz)
 
 
 def coordinate_generation(atom_list, step_count, step_size):

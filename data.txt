@@ -391,3 +391,5 @@ Test0.log	could not found
 Test1.log	could not found 
 Test2.log	could not found 
 Test3.log	could not found 
+Test0.log	['-151.071971339'] 
+Test1.log	['-151.071907822'] 

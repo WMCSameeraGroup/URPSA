@@ -7,51 +7,54 @@ from inputFileGeneration.input_file_writer import input_file_config
 from LogReader.log_file_reader import get_input_files_list, find_corresponding_output_file
 from inputfile import InputFile
 from calculations.Is_too_close import is_not_highly_repulsive
-from molecule.molecule import Molecule
+
 import random
 from utils.transferFiles import move_files_to_timestamped_folder
-
+from system.system import System
 try:
     file_path = sys.argv[1]
 except:
     print("a input file is not provided")
     sys.exit()
 
-system = InputFile(file_path)  # read input file and understand data
+controls = InputFile(file_path)  # read input file and understand data
+system = System(controls.charge,controls.multiplicity)
+system.add_molecule(controls.origin_molecule)
 
 # transfer previous file to archives folder
 move_files_to_timestamped_folder()
 
 #################################################################################
-for iteration in range(system.n_iter):
+for iteration in range(controls.n_iter):
     # change orientations randomly using molecule module
     # loop can be used to generate files with different orientations
 
-    molecule = Molecule(system.atom_list)
+    molecule = controls.dynamic_molecule
+    system.add_molecule(molecule)
 
-    if system.rotation_step:  # Check if 'rotation-step'
-        rotation_step = system.rotation_step * system.n_iter
+    if controls.rotation_step:  # Check if 'rotation-step'
+        rotation_step = controls.rotation_step * controls.n_iter
         print(rotation_step)
         molecule.rotation_xy(rotation_step[0]).rotation_yz(rotation_step[1]).rotation_xz(rotation_step[2])
 
-    elif system.rotation_random:
+    elif controls.rotation_random:
         molecule.rotation_xy(random.uniform(0, math.pi)).rotation_yz(random.uniform(0, math.pi)).rotation_xz(
             random.uniform(0, math.pi))
 
-    coordinates = coordinate_generation(molecule.atoms, system.step_count, system.step_size)  # coordinate generation
+    coordinates = coordinate_generation(molecule.atoms, controls.step_count, controls.step_size)  # coordinate generation
 
     for number, coordinate in enumerate(coordinates):
-        coordinate_string = string_of_atoms_coordinates(system.atom_list, coordinate)
-        input_file_number = iteration * system.step_count + number
+        coordinate_string = string_of_atoms_coordinates(system.molecules[1].atoms, coordinate)
+        input_file_number = iteration * controls.step_count + number
         input_file_config(input_file_number, coordinate_string, system)
 
 ####################################################################################
 all_input_files = get_input_files_list()
 output_file_list = []
 
-for i in range(system.n_iter):
-    for file in all_input_files[i * system.step_count: (1 + i) * system.step_count]:
-        if is_not_highly_repulsive(file, len(system.origin_atoms)):
+for i in range(controls.n_iter):
+    for file in all_input_files[i * controls.step_count: (1 + i) * controls.step_count]:
+        if is_not_highly_repulsive(file, system.molecules[0].number_of_atoms()+1):
             if run_calculation(file) != 0:  # something went wrong  thus no log file is produced
                 continue
             print(find_corresponding_output_file(file), file)

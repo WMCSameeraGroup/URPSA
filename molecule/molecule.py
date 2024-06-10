@@ -64,3 +64,9 @@ class Molecule:
 
     def cal_gravity_point(self):
         return gravity_point(self.atoms)
+
+    def to_str(self):
+        str =""
+        for atom in self.atoms:
+            str +=f"{atom.symbol} {atom.x} {atom.y} {atom.z}\n"
+        return str[:-1]

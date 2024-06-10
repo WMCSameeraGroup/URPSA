@@ -1,6 +1,6 @@
 from atoms.atoms import Atom
 from calculations.random_spherical_coords_generator import random_spherical_coordinates_generator
-
+from molecule.molecule import Molecule
 
 class InputFile:
 
@@ -9,12 +9,14 @@ class InputFile:
         self.data = self.read_file()
         self.sphere_radius = self.set_radius()
         self.atom_list = self.set_atom_list()
+        self.dynamic_molecule = self.set_dynamic_molecule()
         self.step_size = float(self.data.split("\n\n")[1].split()[0])
         self.step_count = int(float(self.data.split("\n\n")[1].split()[1]))
         self.charge = int(float(self.data.split("\n\n")[3].split()[0]))
         self.multiplicity = int(float(self.data.split("\n\n")[3].split()[1]))
-        self.origin_molecule = self.set_origin_molecule()
+        self.origin_molecule_str = self.set_origin_molecule_str()
         self.origin_atoms = self.set_origin_atom_list()
+        self.origin_molecule = self.set_origin_molecule()
         self.n_iter = self.set_n_iter()
         self.rotation_random = "random" in self.data.split("\n\n")[4].split()
         self.rotation_step = self.set_rotation_step()
@@ -70,8 +72,13 @@ class InputFile:
         else:
             [0.0, 0.0, 0.0]
 
-    def set_origin_molecule(self):
+    def set_origin_molecule_str(self):
         if not "radius" in self.data.split("\n\n")[4].split():
             return self.data.split("\n\n")[2][1:]
         else:
             return ''
+    def set_origin_molecule(self):
+        return Molecule(self.origin_atoms)
+
+    def set_dynamic_molecule(self):
+        return Molecule(self.atom_list)

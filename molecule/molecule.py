@@ -1,5 +1,5 @@
 import numpy as np
-
+from calculations.gravitypoint import gravity_point
 
 class Molecule:
     atoms = []
@@ -8,6 +8,7 @@ class Molecule:
     def __init__(self, list_of_atoms, *args):
         self.atoms = list_of_atoms
         self.xyz = np.array([atom.get_coords() for atom in self.atoms])
+        self.gravity_point =self.cal_gravity_point()
 
     def rotation_xy(self, angle):
         rot_mat = np.array([[np.cos(angle), -np.sin(angle), 0], [np.sin(angle), np.cos(angle), 0], [0, 0, 1]])
@@ -60,3 +61,6 @@ class Molecule:
 
     def number_of_atoms(self):
         return len(self.atoms)
+
+    def cal_gravity_point(self):
+        return gravity_point(self.atoms)

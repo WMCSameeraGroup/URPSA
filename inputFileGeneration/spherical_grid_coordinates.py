@@ -39,9 +39,9 @@ def spherical_gird_coordinate_generation(molecules, step_count=1, step_size=1):
     :return:
     """
 
-    for i in range(step_count):
-        for molecule in molecules:
-            spherically_converge_to_center(molecule, step_size)
+
+    for molecule in molecules:
+        spherically_converge_to_center(molecule, step_size)
 
 
 

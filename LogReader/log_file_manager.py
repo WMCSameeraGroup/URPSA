@@ -42,6 +42,7 @@ class LogFileManager:
 
         if scf_match:
             self.scf_done = re.findall(r'-\d+.\d+', scf_match[-1])
+            print(self.scf_done)
             return self.scf_done
         else:
             self.scf_done = "could not found"
@@ -132,6 +133,7 @@ class LogFileManager:
                 opt_z_mat += line + "\n"
 
         self.optmized_z_matrix = opt_z_mat
+        print(self.optmized_z_matrix)
         return opt_z_mat
 
 

@@ -67,7 +67,11 @@ class Molecule:
         return len(self.atoms)
 
     def cal_gravity_point(self):
-        return gravity_point(self.atoms)
+        gp= gravity_point(self.atoms)
+        self.x = gp[0]
+        self.y = gp[1]
+        self.z = gp[2]
+        return gp
 
     def to_str(self):
         str = ""

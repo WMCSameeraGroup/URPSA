@@ -9,7 +9,7 @@ data_file_name = "data.txt"
 backend = "g16"
 
 number_of_cores = 2
-method = "opt(maxcycle=300, maxstep=100) HF/3-21g"
+method = "opt(maxcycle=30, maxstep=100) HF/3-21g"
 
 step_size = 0.5
 step_count = 21

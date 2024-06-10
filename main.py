@@ -11,6 +11,7 @@ from calculations.Is_too_close import is_not_highly_repulsive, is_not_highly_rep
 
 import random
 
+from outputFiileWriter.output_writer import OutputWriter
 from settings import input_file_directory
 from utils.transferFiles import move_files_to_timestamped_folder
 from system.system import System
@@ -42,6 +43,9 @@ for iteration in range(controls.step_count):
         except:
             continue
         output_file_list.append(log)
+        # todo: write xyz file
+        system.set_moleculer_coordinates(log.opt_coords)
+        OutputWriter().write_xyz_file(system)
     else:
         print(f"{inputFile} is too repulsive to calculate")
         break  # stop if repulsion was encountered

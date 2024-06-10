@@ -9,14 +9,10 @@ class LogFileManager:
 
     def get_data(self):
         self.read_log()
+        self.opt_coords = self.optimized_coordinates()
         self.get_scf_done()
-        self.write_data_to_the_data_file()
-        self.is_not_converged()
-        self.get_initial_z_matrix()
-        self.get_optimized_parameters()
-        self.get_title()
-        self.get_optimized_z_matrix()
         self.finish()
+
 
     def log_file_name(self):
         return input_file_directory + '/' + self.file[:-3] + "log"
@@ -112,33 +108,23 @@ class LogFileManager:
         self.optimized_parameters = parameters
         return parameters
 
-    def get_optimized_z_matrix(self):
-        lines = self.text.split("\n")
-        section = False
-        in_z_mat = False
-        opt_z_mat = ""
+    def optimized_coordinates(self):
+        coordinates = []
+        # Define the regex pattern to find the "Standard orientation" section
+        pattern = re.compile(
+            r'Standard orientation:[\s\S]*?---------------------------------------------------------------------[\s\S]*?---------------------------------------------------------------------([\s\S]*?)---------------------------------------------------------------------')
 
-        for line in lines:
-            if "!   Optimized Parameters   !" in line:
-                section = True
-                continue
+        # Search for the pattern
+        match = pattern.search(self.text)
+        if match:
+            coordinates_section = match.group(1).strip()
+            # Extract coordinates using regex
+            coord_pattern = re.compile(r'^\s*\d+\s+\d+\s+\d+\s+(-?\d+\.\d+)\s+(-?\d+\.\d+)\s+(-?\d+\.\d+)',
+                                       re.MULTILINE)
+            for coord_match in coord_pattern.finditer(coordinates_section):
+                x, y, z = map(float, coord_match.groups())
+                coordinates.append([x, y, z])
+            return coordinates
+        else:
+            raise ValueError("Optimized coordinates section not found in the log file")
 
-            if section:
-                if "Distance matrix (angstroms):" in line:
-                    in_z_mat = True
-
-                if "********************" in line:
-                    break
-            if in_z_mat:
-                opt_z_mat += line + "\n"
-
-        self.optmized_z_matrix = opt_z_mat
-        print(self.optmized_z_matrix)
-        return opt_z_mat
-
-
-if __name__ == '__main__':
-    file_name = "../outputFiles/logfile.log"
-    log_file = LogFileManager(file_name)
-
-# todo: write to a csv file instead of a text/ transfer chk and outputs to a different directory

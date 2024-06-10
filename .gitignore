@@ -11,3 +11,4 @@ inputFiles/*
 inputFiles/
 outputFiles/
 outputFiles/*
+*.xyz

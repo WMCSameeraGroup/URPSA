@@ -14,6 +14,7 @@ from molecule.molecule import Molecule
 from inputFileGeneration.spherical_grid_coordinates import spherical_gird_coordinate_generation
 
 from utils.transferFiles import move_files_to_timestamped_folder
+from outputFiileWriter.output_writer import OutputWriter
 
 """
 create silicon atoms in the coordination sphere of atoms
@@ -63,6 +64,7 @@ def run(system):
                 print(find_corresponding_output_file(file), file)
                 log = LogFileManager(find_corresponding_output_file(file))
                 output_file_list.append(log)
+                OutputWriter().write_output_file(log)
             else:
                 print("highly repulsive")
         except Exception as e:

@@ -1,9 +1,9 @@
  Entering Gaussian System, Link 0=g16
- Input=inputFiles/Test0.com
- Output=inputFiles/Test0.log
+ Input=inputFiles/Test9.com
+ Output=inputFiles/Test9.log
  Initial command:
- /home/mark/gaussian/g16/l1.exe "/home/mark/gaussian/scratch/Gau-193.inp" -scrdir="/home/mark/gaussian/scratch/"
- Entering Link 1 = /home/mark/gaussian/g16/l1.exe PID=       195.
+ /home/mark/gaussian/g16/l1.exe "/home/mark/gaussian/scratch/Gau-283.inp" -scrdir="/home/mark/gaussian/scratch/"
+ Entering Link 1 = /home/mark/gaussian/g16/l1.exe PID=       285.
   
  Copyright (c) 1988,1990,1992,1993,1995,1998,2003,2009,2016,
             Gaussian, Inc.  All Rights Reserved.
@@ -81,7 +81,7 @@
  ******************************************
  %NProcShared=2
  Will use up to    2 processors via shared memory.
- %chk=inputFiles/test0.chk
+ %chk=inputFiles/test9.chk
  --------------------------------------
  # opt(maxcycle=300, maxstep=100) dftba
  --------------------------------------
@@ -105,20 +105,18 @@
  6/7=2,8=2,9=2,10=2,19=2,28=1/1;
  99/9=1/99;
  ------
- Title0
+ Title9
  ------
  Symbolic Z-matrix:
  Charge =  0 Multiplicity = 3
- O                     0.        0.06      0. 
- H                    -0.43     -0.46      0.68 
- H                     0.41     -0.52     -0.64 
+ O                     9.        0.06      0. 
+ H                     8.57     -0.46      0.68 
+ H                     9.41     -0.52     -0.64 
  O                     4.28571   0.6391    0. 
  H                     5.24571   0.6391    0. 
  H                     3.96526   1.54403   0. 
  
- Add virtual bond connecting atoms O4         and H3         Dist= 7.74D+00.
- Add virtual bond connecting atoms H6         and O1         Dist= 8.00D+00.
- Add virtual bond connecting atoms H6         and H3         Dist= 7.86D+00.
+ Add virtual bond connecting atoms H5         and H2         Dist= 6.74D+00.
 
  GradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGrad
  Berny optimization.
@@ -131,24 +129,16 @@
  --------------------------------------------------------------------------------
  ! R1    R(1,2)                  0.958          estimate D2E/DX2                !
  ! R2    R(1,3)                  0.9561         estimate D2E/DX2                !
- ! R3    R(1,6)                  4.2339         estimate D2E/DX2                !
- ! R4    R(3,4)                  4.0956         estimate D2E/DX2                !
- ! R5    R(3,6)                  4.1605         estimate D2E/DX2                !
- ! R6    R(4,5)                  0.96           estimate D2E/DX2                !
- ! R7    R(4,6)                  0.96           estimate D2E/DX2                !
+ ! R3    R(2,5)                  3.5667         estimate D2E/DX2                !
+ ! R4    R(4,5)                  0.96           estimate D2E/DX2                !
+ ! R5    R(4,6)                  0.96           estimate D2E/DX2                !
  ! A1    A(2,1,3)              109.7768         estimate D2E/DX2                !
- ! A2    A(2,1,6)              127.6369         estimate D2E/DX2                !
- ! A3    A(1,3,4)               97.4418         estimate D2E/DX2                !
- ! A4    A(3,4,5)              161.1384         estimate D2E/DX2                !
- ! A5    A(5,4,6)              109.5            estimate D2E/DX2                !
- ! A6    A(1,6,4)               88.9812         estimate D2E/DX2                !
- ! D1    D(2,1,3,4)           -117.0018         estimate D2E/DX2                !
- ! D2    D(2,1,3,6)           -126.2734         estimate D2E/DX2                !
- ! D3    D(2,1,6,4)             63.6857         estimate D2E/DX2                !
- ! D4    D(1,3,4,5)            162.8269         estimate D2E/DX2                !
- ! D5    D(4,3,6,1)           -136.1159         estimate D2E/DX2                !
- ! D6    D(3,4,5,6)            151.0946         estimate D2E/DX2                !
- ! D7    D(5,4,6,1)            180.0            estimate D2E/DX2                !
+ ! A2    A(1,2,5)               96.6472         estimate D2E/DX2                !
+ ! A3    A(5,4,6)              109.5            estimate D2E/DX2                !
+ ! A4    A(2,5,4)              158.7545         estimate D2E/DX2                !
+ ! D1    D(3,1,2,5)           -116.6906         estimate D2E/DX2                !
+ ! D2    D(1,2,5,4)            161.3247         estimate D2E/DX2                !
+ ! D3    D(6,4,5,2)            148.2554         estimate D2E/DX2                !
  --------------------------------------------------------------------------------
  Trust Radius=1.00D+00 FncErr=1.00D-07 GrdErr=1.00D-07 EigMax=2.50D+02 EigMin=1.00D-04
  Number of steps in this run=    100 maximum allowed number of steps=    100.
@@ -159,9 +149,9 @@
  Center     Atomic      Atomic             Coordinates (Angstroms)
  Number     Number       Type             X           Y           Z
  ---------------------------------------------------------------------
-      1          8           0        0.000000    0.060000    0.000000
-      2          1           0       -0.430000   -0.460000    0.680000
-      3          1           0        0.410000   -0.520000   -0.640000
+      1          8           0        9.000000    0.060000    0.000000
+      2          1           0        8.570000   -0.460000    0.680000
+      3          1           0        9.410000   -0.520000   -0.640000
       4          8           0        4.285714    0.639098    0.000000
       5          1           0        5.245714    0.639098    0.000000
       6          1           0        3.965260    1.544034    0.000000
@@ -171,9 +161,9 @@
      1  O    0.000000
      2  H    0.957967   0.000000
      3  H    0.956086   1.565759   0.000000
-     4  O    4.324662   4.889619   4.095640   0.000000
-     5  H    5.277582   5.821009   5.013705   0.960000   0.000000
-     6  H    4.233868   4.878202   4.160493   0.960000   1.567952
+     4  O    4.749720   4.474988   5.292581   0.000000
+     5  H    3.798686   3.566692   4.369712   0.960000   0.000000
+     6  H    5.248901   5.067759   5.857903   0.960000   1.567952
                     6
      6  H    0.000000
  Stoichiometry    H4O2(3)
@@ -187,20 +177,20 @@
  Center     Atomic      Atomic             Coordinates (Angstroms)
  Number     Number       Type             X           Y           Z
  ---------------------------------------------------------------------
-      1          8           0       -2.189435    0.093674   -0.038001
-      2          1           0       -2.707137   -0.181826    0.719485
-      3          1           0       -1.881641   -0.674845   -0.516270
-      4          8           0        2.131807   -0.065497    0.027051
-      5          1           0        3.077365   -0.225716    0.070058
-      6          1           0        1.972440    0.856973   -0.185672
+      1          8           0       -2.340065    0.109370   -0.038352
+      2          1           0       -2.000930   -0.636375   -0.534891
+      3          1           0       -2.844434   -0.203508    0.711194
+      4          8           0        2.404402   -0.099747    0.040094
+      5          1           0        1.458101    0.054830   -0.007029
+      6          1           0        2.872569    0.708063   -0.183206
  ---------------------------------------------------------------------
- Rotational constants (GHZ):         219.2078038           2.8930919           2.8833100
+ Rotational constants (GHZ):         240.4172176           2.4815957           2.4771138
  Standard basis: VSTO-3G* (5D, 7F)
  There are    12 symmetry adapted cartesian basis functions of A   symmetry.
  There are    12 symmetry adapted basis functions of A   symmetry.
     12 basis functions,    36 primitive gaussians,    12 cartesian basis functions
      9 alpha electrons        7 beta electrons
-       nuclear repulsion energy        21.5387460346 Hartrees.
+       nuclear repulsion energy        21.1506751735 Hartrees.
  Integral buffers will be    131072 words long.
  Regular integral format.
  Two-electron integral symmetry is turned off.
@@ -208,7 +198,7 @@
  Generate DFT-SCTBA integrals.
  Element pair   1   8 not in DFTB parameters.
  Pair not found in DFTBHS.
- Error termination via Lnk1e in /home/mark/gaussian/g16/l302.exe at Sat Jun  8 09:40:23 2024.
- Job cpu time:       0 days  0 hours  0 minutes  0.5 seconds.
- Elapsed time:       0 days  0 hours  0 minutes  0.3 seconds.
+ Error termination via Lnk1e in /home/mark/gaussian/g16/l302.exe at Sat Jun  8 09:40:25 2024.
+ Job cpu time:       0 days  0 hours  0 minutes  0.4 seconds.
+ Elapsed time:       0 days  0 hours  0 minutes  0.2 seconds.
  File lengths (MBytes):  RWF=      6 Int=      0 D2E=      0 Chk=      1 Scr=      1

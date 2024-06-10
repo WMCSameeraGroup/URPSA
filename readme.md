@@ -43,7 +43,7 @@ Si 3
 radius 12
 ```
 
-## example 2
+### example 2
 ```bash
 python3 silicon.py carbonSilicon.txt
 ```

@@ -7,3 +7,7 @@ __pycache__/*
 .idea/*
 archives/
 archives/*
+inputFiles/*
+inputFiles/
+outputFiles/
+outputFiles/*

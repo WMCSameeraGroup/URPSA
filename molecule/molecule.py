@@ -94,9 +94,9 @@ class Molecule:
         self.translation_z(change_in_gravity_points[2])
         self.gravity_point = self.cal_gravity_point()
 
-    def relative_coordination_matrix(self, atoms):
-        xyz_matrix = np.array([atom.get_coords() for atom in atoms])
-        relative_atom_coords = xyz_matrix - gravity_point(atoms)
+    def relative_coordination_matrix(self):
+        xyz_matrix = np.array([atom.get_coords() for atom in self.atoms])
+        relative_atom_coords = xyz_matrix - gravity_point(self.atoms)
         return relative_atom_coords
 
     def distance_between(self, other):

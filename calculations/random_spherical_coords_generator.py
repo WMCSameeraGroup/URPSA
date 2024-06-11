@@ -12,10 +12,6 @@ def random_spherical_coordinates_generator(r: float):
     return x, y, z
 
 
-def log_random_coordinates(x, y, z):
-    pass  # todo: log data to a file or data base
-
-
 def equidistributed_points_generator(r):
     """ this function returns equidistributed points statistically. not exactly """
     z = uniform(-r, r)
@@ -46,6 +42,7 @@ def exact_equidistributed_point_generator(r,N):
             phi = 2*pi*n/d_phi
             coordinates.append(spherical_coordinates_to_xyz(r,theta,phi))
             N_count += 1
+    return coordinates
 
 
 def spherical_coordinates_to_xyz(r,theta,phi):
@@ -54,3 +51,7 @@ def spherical_coordinates_to_xyz(r,theta,phi):
     y = r*sin(theta)*sin(phi)
     z = r*cos(theta)
     return [x,y,z]
+
+
+if __name__=="__main__":
+    print(len(exact_equidistributed_point_generator(2,100)))

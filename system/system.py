@@ -53,9 +53,11 @@ class System:
             molecule.setAtomNewCoords()
 
     def to_str(self):
-        string = f"{self.cal_number_of_atoms()}\n"
+        string = f"{self.cal_number_of_atoms()}\nEnergy: {self.energy}\n"
         for molecule in self.molecules:
             string += molecule.to_str() + "\n"
         return string
 
 
+    def set_scf_done(self,energy):
+        self.energy = energy

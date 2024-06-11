@@ -44,6 +44,7 @@ for iteration in range(controls.step_count):
             continue
         output_file_list.append(log)
         # todo: write xyz file
+        system.set_scf_done(log.scf_done)
         system.set_moleculer_coordinates(log.opt_coords)
         OutputWriter().write_xyz_file(system)
     else:

@@ -24,8 +24,7 @@ except:
 
 controls = InputFile(file_path)  # read input file and understand data
 system = System(controls.charge, controls.multiplicity)
-system.add_molecule(controls.origin_molecule)
-system.add_molecule(controls.dynamic_molecule)
+system.add_list_of_molecules(controls.list_of_molecules)
 
 # transfer previous file to archives folder
 move_files_to_timestamped_folder()

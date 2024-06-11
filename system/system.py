@@ -15,6 +15,9 @@ class System:
     def add_molecule(self, molecule):
         self.molecules.append(molecule)
 
+    def add_list_of_molecules(self, list):
+        self.molecules += list
+
     def cal_number_of_atoms(self):
         count = 0
         for molecule in self.molecules:

@@ -9,7 +9,6 @@ class InputFile:
         self.file = file
         self.config = CustomConfigParser()
         self.config.read(self.file)
-        self.data = self.read_file()
         self.sphere_radius = int(self.config.get('gaussian','sphere_radius'))
         self.step_size = float(self.config.get('gaussian','step_size'))
         self.step_count = int(self.config.get('gaussian','step_count'))

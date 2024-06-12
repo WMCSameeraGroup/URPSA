@@ -12,7 +12,7 @@ def spherically_converge_to_center(molecule, size=1):
     to move the atom in the opposite direction of the position vector (towards origin)
     unit_vector is multiplied by the size and reduced from the position vector
     this will give the new position of the molecule or the atom.
-    :param atom:
+    :param molecule:
     :param size:
     :return [x, y, z]:
     """
@@ -38,7 +38,6 @@ def spherical_gird_coordinate_generation(molecules, step_count=1, step_size=1):
     :param step_size:
     :return:
     """
-
 
     for molecule in molecules:
         spherically_converge_to_center(molecule, step_size)

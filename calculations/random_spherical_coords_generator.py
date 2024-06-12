@@ -15,12 +15,13 @@ def random_spherical_coordinates_generator(r: float):
 def equidistributed_points_generator(r):
     """ this function returns equidistributed points statistically. not exactly """
     z = uniform(-r, r)
-    phi = uniform(-2*pi, 2*pi)
-    x = (r**2 - z**2)**0.5 * cos(phi)
-    y = (r**2 - z**2)**0.5 * sin(phi)
-    return [x,y,z]
+    phi = uniform(-2 * pi, 2 * pi)
+    x = (r ** 2 - z ** 2) ** 0.5 * cos(phi)
+    y = (r ** 2 - z ** 2) ** 0.5 * sin(phi)
+    return x, y, z
 
-def exact_equidistributed_point_generator(r,N):
+
+def exact_equidistributed_point_generator(r, N):
     """
     this function returns a list of x,y,z symmetric coordinates with a length of N
     :param r:
@@ -29,29 +30,28 @@ def exact_equidistributed_point_generator(r,N):
     """
     coordinates = []
     N_count = 0
-    a = (4*pi*r**2)/N
+    a = (4 * pi * r ** 2) / N
     d = a ** 0.5
-    M_theta = round(pi/d)
-    d_theta = pi/M_theta
-    d_phi = a/d_theta
+    M_theta = round(pi / d)
+    d_theta = pi / M_theta
+    d_phi = a / d_theta
 
     for m in range(M_theta):
-        theta = pi*(m+0.5)/M_theta
-        M_phi = round(2*pi*sin(theta)/d_phi)
+        theta = pi * (m + 0.5) / M_theta
+        M_phi = round(2 * pi * sin(theta) / d_phi)
         for n in range(M_phi):
-            phi = 2*pi*n/d_phi
-            coordinates.append(spherical_coordinates_to_xyz(r,theta,phi))
+            phi = 2 * pi * n / d_phi
+            coordinates.append(spherical_coordinates_to_xyz(r, theta, phi))
             N_count += 1
     return coordinates
 
 
-def spherical_coordinates_to_xyz(r,theta,phi):
+def spherical_coordinates_to_xyz(r, theta, phi):
+    x = r * sin(theta) * cos(phi)
+    y = r * sin(theta) * sin(phi)
+    z = r * cos(theta)
+    return [x, y, z]
 
-    x = r*sin(theta)*cos(phi)
-    y = r*sin(theta)*sin(phi)
-    z = r*cos(theta)
-    return [x,y,z]
 
-
-if __name__=="__main__":
-    print(len(exact_equidistributed_point_generator(2,100)))
+if __name__ == "__main__":
+    print(len(exact_equidistributed_point_generator(2, 100)))

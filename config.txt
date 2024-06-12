@@ -3,11 +3,8 @@
 project_name = new_CO2_H20
 input_file_name = Test
 
-[gaussian]
-input_file_name = Test
-number_of_cores = 2
-method = opt(maxcycle=30, maxstep=100) HF/3-21g
-
+[controls]
+update_with_optimized_coordinates = True
 step_size = 0.5
 step_count = 21
 stop_distance_factor = 0.3
@@ -15,10 +12,21 @@ stop_distance_factor = 0.3
 sphere_radius = 10
 n_iterations = 1
 
+# Total_random or statistically_even or False
+spherical_placement = statistically_even
+
+
+[gaussian]
+input_file_name = Test
+number_of_cores = 2
+method = opt(maxcycle=30, maxstep=100) HF/3-21g
+
+
+
 [molecules]
 charge = 0
 multiplicity = 1
-number_of_molecules = 2
+number_of_molecules = 3
 
 0 = O 4.28571428 0.63909773 0.00000000 \
 H 5.24571428 0.63909773 0.00000000 \
@@ -28,3 +36,4 @@ H 3.96525969 1.54403357 0.00000000
 H 0.17052632 -2.06766914 0.00000000 \
 H -1.10992827 -1.16273331 0.00000000
 
+2 = C 2.0 2.0 1.0

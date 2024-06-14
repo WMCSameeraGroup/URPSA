@@ -1,10 +1,10 @@
-from settings import output_file_directory
+from settings import input_file_directory
 
 
 class OutputWriter:
 
     def __init__(self, file="output2.xyz"):
-        self.file = output_file_directory + "/" + file
+        self.file = input_file_directory + "/" + file
 
     def create_if_not(self):
         try:

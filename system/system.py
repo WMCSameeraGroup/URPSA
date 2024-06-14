@@ -1,3 +1,5 @@
+from calculations.random_spherical_coords_generator import random_spherical_coordinates_generator, \
+    equidistributed_points_generator
 from inputFileGeneration.input_file_writer import file_name_generator, setup_input_file
 from inputFileGeneration.input_template import get_input_template
 from inputFileGeneration.write_input_file import generate_input_file
@@ -64,3 +66,25 @@ class System:
 
     def set_scf_done(self,energy):
         self.energy = energy
+
+    def re_orient_molecules(self, controls):
+        if controls.spherical_placement == "False":
+            return False
+        for molecule in self.molecules:
+            if controls.spherical_placement == "Total_random":
+                molecule.update_coordinates(*random_spherical_coordinates_generator(controls.sphere_radius))
+            elif controls.spherical_placement == "statistically_even":
+                molecule.update_coordinates(*equidistributed_points_generator(controls.sphere_radius))
+        return True
+
+
+
+    def change_orientations_of_molecules(self, controls):
+        if controls.spherical_placement == "False":
+            return False
+        for molecule in self.molecules:
+            if controls.change_orientation == "Total_random":
+                molecule.update_coordinates(*random_spherical_coordinates_generator(controls.sphere_radius))
+            elif controls.change_orientation == "statistically_even":
+                molecule.update_coordinates(*equidistributed_points_generator(controls.sphere_radius))
+        return True

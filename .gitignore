@@ -12,3 +12,8 @@ inputFiles/
 outputFiles/
 outputFiles/*
 *.xyz
+*.log
+*.com
+Projects
+Projects/
+Projects/*

@@ -1,6 +1,6 @@
 # This is a comment
 [project]
-project_name = new_CO2_H20
+project_name = new_CO2_H20_2
 input_file_name = Test
 
 [controls]
@@ -10,7 +10,7 @@ step_count = 21
 stop_distance_factor = 0.3
 
 sphere_radius = 10
-n_iterations = 1
+n_iterations = 3
 
 # Total_random or statistically_even or False
 spherical_placement = statistically_even

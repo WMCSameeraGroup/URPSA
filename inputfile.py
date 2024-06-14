@@ -11,13 +11,14 @@ class InputFile:
         self.file = file
         self.config = CustomConfigParser()
         self.config.read(self.file)
+        self.project_name = self.config.get('project', 'project_name')
         self.sphere_radius = int(self.config.get('controls', 'sphere_radius'))
         self.step_size = float(self.config.get('controls', 'step_size'))
         self.step_count = int(self.config.get('controls', 'step_count'))
         self.charge = int(float(self.config.get('molecules', 'charge')))
         self.multiplicity = int(float(self.config.get('molecules', 'multiplicity')))
         self.number_of_molecules = int(self.config.get('molecules', 'number_of_molecules'))
-        self.n_iter = int(self.config.get('molecules', 'number_of_molecules'))
+        self.n_iterations = int(self.config.get('controls', 'n_iterations'))
         # self.rotation_random = "random" in self.data.split("\n\n")[4].split()
         # self.rotation_step = self.set_rotation_step()
         self.spherical_placement = self.config.get('controls', 'spherical_placement')
@@ -26,6 +27,7 @@ class InputFile:
         # update with
         self.update_with_optimized_coordinates = bool(self.config.get('controls', 'update_with_optimized_coordinates'))
         self.is_placed_on_sphere = self.create_spherically_located_molecule_list()
+
 
     def set_molecule_list(self):
         molecule_list = []
@@ -64,6 +66,8 @@ class InputFile:
             elif self.spherical_placement == "statistically_even":
                 molecule.update_coordinates(*equidistributed_points_generator(self.sphere_radius))
         return True
+
+
 
 
 if __name__ == "__main__":

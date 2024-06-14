@@ -18,3 +18,20 @@ def move_files_to_timestamped_folder(source_dir="inputFiles"):
 
     print(f"All files  moved to folder 'Archives/{timestamp}'.")
 
+
+
+def move_files_to_project_folder(dir_name, source_dir="inputFiles"):
+
+    # Create new folder with file name
+    new_folder = os.path.join(os.getcwd(), "Projects", dir_name)
+    os.makedirs(new_folder)
+
+    # Get all files in the source directory
+    files = [f for f in os.listdir(source_dir) if os.path.isfile(os.path.join(source_dir, f))]
+
+    # Move each file to the new folder
+    for file in files:
+        shutil.move(os.path.join(source_dir, file), new_folder)
+
+    print(f"All files  moved to folder.")
+

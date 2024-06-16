@@ -36,3 +36,6 @@ class Atom:
         diff_y = pow(self.y, 2)
         diff_z = pow(self.z, 2)
         return pow(diff_z+diff_x+diff_y, 0.5)
+
+
+

@@ -20,7 +20,7 @@ except:
     sys.exit()
 
 controls = InputFile(file_path)  # read input file and understand data
-system = System(controls.charge, controls.multiplicity)
+system = System(controls.charge, controls.multiplicity, controls.method, controls.cores)
 system.add_list_of_molecules(controls.list_of_molecules)
 
 # transfer previous file to archives folder
@@ -30,7 +30,7 @@ output_file_list =[]
 for iteration in range(controls.step_count):
     spherical_gird_coordinate_generation(system.molecules, controls.step_count, controls.step_size)
     inputFile = system.generate_input_file(iteration)
-    if is_not_highly_repulsive_spherically(inputFile):
+    if is_not_highly_repulsive_spherically(inputFile, controls.stop_distance_factor):
         # if run_calculation(inputFile) != 0:  # something went wrong  thus no log file is produced
         #     continue
         run_calculation(inputFile)

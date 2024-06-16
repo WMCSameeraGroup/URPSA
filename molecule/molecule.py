@@ -87,6 +87,7 @@ class Molecule:
 
     def update_coordinates(self, x, y, z):
         """update coordinates of atoms with movement of gravity point"""
+
         new_gravity_point = [x, y, z]
         change_in_gravity_points = np.array(new_gravity_point) - np.array(self.gravity_point)
         self.translation_x(change_in_gravity_points[0])
@@ -94,10 +95,19 @@ class Molecule:
         self.translation_z(change_in_gravity_points[2])
         self.gravity_point = self.cal_gravity_point()
 
+
     def relative_coordination_matrix(self):
         xyz_matrix = np.array([atom.get_coords() for atom in self.atoms])
         relative_atom_coords = xyz_matrix - gravity_point(self.atoms)
         return relative_atom_coords
+
+    def change_gravity_point(self, gravity_point):
+        """ change the molecule coordinates without the bond distances and angles"""
+        self.xyz = self.relative_coordination_matrix() + gravity_point
+        self.cal_gravity_point()
+        self.setAtomNewCoords()
+
+
 
     def distance_between(self, other):
         diff_x = pow(self.x - other.x, 2)

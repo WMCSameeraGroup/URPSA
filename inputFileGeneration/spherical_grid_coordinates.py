@@ -7,6 +7,7 @@ from molecule.molecule import Molecule
 
 
 def spherically_converge_to_center(molecule, size=1):
+    # todo: this does not work with individual atoms
     """
     initial position (x0,y0,z0) is the initial position vector
     to move the atom in the opposite direction of the position vector (towards origin)

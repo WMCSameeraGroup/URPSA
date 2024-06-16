@@ -38,25 +38,25 @@ def is_not_highly_repulsive(file, n_origin_atoms):
 
 ################################### for spherical #####################################
 
-def is_too_close_spherical(atoms):
+def is_too_close_spherical(atoms, stop_distance_fac):
     for i in atoms:
         for j in atoms:
             if i == j:  # in the case of same atom
                 continue
             if i.distance_between(j) < (
-                    i.v_radius + j.v_radius) * stop_distance_factor:  # todo: stop distance is 0.2 change this by args of sum of vandaval radius
+                    i.v_radius + j.v_radius) * stop_distance_fac:  # todo: stop distance is 0.2 change this by args of sum of vandaval radius
                 print(i.distance_between(j), i, j)
                 return False
     return True
 
 
-def is_not_highly_repulsive_spherically(file):
+def is_not_highly_repulsive_spherically(file,stop_distance_fac=stop_distance_factor):
     """
      convert atoms in .com file to Atom objects using the function 1st return value is redundant
      then checked whether atoms are too close.
     """
     _, atoms = make_atoms_from_input_file(file, 0)
-    return is_too_close_spherical(atoms)
+    return is_too_close_spherical(atoms, stop_distance_fac)
 
 
 

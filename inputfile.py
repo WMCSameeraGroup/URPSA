@@ -15,6 +15,7 @@ class InputFile:
         self.sphere_radius = int(self.config.get('controls', 'sphere_radius'))
         self.step_size = float(self.config.get('controls', 'step_size'))
         self.step_count = int(self.config.get('controls', 'step_count'))
+        self.stop_distance_factor = float(self.config.get('controls', 'stop_distance_factor'))
         self.charge = int(float(self.config.get('molecules', 'charge')))
         self.multiplicity = int(float(self.config.get('molecules', 'multiplicity')))
         self.number_of_molecules = int(self.config.get('molecules', 'number_of_molecules'))
@@ -22,6 +23,8 @@ class InputFile:
         # self.rotation_random = "random" in self.data.split("\n\n")[4].split()
         # self.rotation_step = self.set_rotation_step()
         self.spherical_placement = self.config.get('controls', 'spherical_placement')
+        self.method = self.config.get('gaussian', 'method')
+        self.cores = self.config.get('gaussian', 'number_of_cores')
 
         self.list_of_molecules = self.set_molecule_list()
         # update with

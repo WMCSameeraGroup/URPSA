@@ -15,3 +15,4 @@ outputFiles/*
 *.log
 *.com
 Projects/*
+!Projects

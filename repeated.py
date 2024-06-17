@@ -58,7 +58,7 @@ for i in range(controls.n_iterations):
             if controls.update_with_optimized_coordinates:
                 system.set_moleculer_coordinates(log.opt_coords)
 
-            OutputWriter().write_xyz_file(system)
+            OutputWriter().write_xyz_file(system,log.opt_coords)
         else:
             print(f"{inputFile} is too repulsive to calculate")
             break  # stop if repulsion was encountered

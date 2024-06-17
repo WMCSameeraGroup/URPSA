@@ -114,9 +114,9 @@ class LogFileManager:
             r'Standard orientation:[\s\S]*?---------------------------------------------------------------------[\s\S]*?---------------------------------------------------------------------([\s\S]*?)---------------------------------------------------------------------')
 
         # Search for the pattern
-        match = pattern.search(self.text)
-        if match:
-            coordinates_section = match.group(1).strip()
+        matches = pattern.findall(self.text)
+        if matches:
+            coordinates_section = matches[-1].strip()
             # Extract coordinates using regex
             coord_pattern = re.compile(r'^\s*\d+\s+\d+\s+\d+\s+(-?\d+\.\d+)\s+(-?\d+\.\d+)\s+(-?\d+\.\d+)',
                                        re.MULTILINE)

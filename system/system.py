@@ -51,12 +51,14 @@ class System:
 
     def set_moleculer_coordinates(self, opt_xyz):
         """change molecules to new optimized coordinates """
+        # todo: something is wrong i can feel it
 
         count = 0
         for molecule in self.molecules:
             n_atoms = molecule.number_of_atoms()
             temp_molecule_gravity_point = molecule.gravity_point
             molecule.xyz = opt_xyz[count: n_atoms + count]
+            molecule.setAtomNewCoords()
             molecule.change_gravity_point(temp_molecule_gravity_point)
             count += n_atoms
 
@@ -66,6 +68,25 @@ class System:
         for molecule in self.molecules:
             string += molecule.to_str() + "\n"
         return string
+
+    def string_optimized_coordinates(self,opt_xyz):
+        count = 0
+        string = f"{self.cal_number_of_atoms()}\nEnergy: {self.energy}\n"
+
+        def to_str(symbols, coords):
+            str = ""
+            for symbol, coord in zip(symbols,coords):
+                str += f"{symbol} {coord[0]} {coord[1]} {coord[2]}\n"
+            return str
+
+        for molecule in self.molecules:
+            list_of_atom_symbols =[a.symbol for a in molecule.atoms]
+            n_atoms = molecule.number_of_atoms()
+            string += to_str(list_of_atom_symbols, opt_xyz[count: n_atoms + count])
+            count += n_atoms
+        return string
+
+
 
 
     def set_scf_done(self,energy):

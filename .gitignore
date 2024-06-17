@@ -15,4 +15,6 @@ outputFiles/*
 *.log
 *.com
 /Projects/*
-!/Projects/
+!/Projects/.gitignore
+!/projects/
+!/projects/.keep

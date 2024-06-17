@@ -14,5 +14,5 @@ outputFiles/*
 *.xyz
 *.log
 *.com
-Projects/*
-!Projects
+/Projects/*
+!/Projects/

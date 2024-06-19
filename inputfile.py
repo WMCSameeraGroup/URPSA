@@ -28,7 +28,7 @@ class InputFile:
 
         self.list_of_molecules = self.set_molecule_list()
         # update with
-        self.update_with_optimized_coordinates = bool(self.config.get('controls', 'update_with_optimized_coordinates'))
+        self.update_with_optimized_coordinates = self.config.get('controls', 'update_with_optimized_coordinates')
         self.is_placed_on_sphere = self.create_spherically_located_molecule_list()
 
 

@@ -1,9 +1,11 @@
+import math
+from random import uniform
+
 from calculations.random_spherical_coords_generator import random_spherical_coordinates_generator, \
     equidistributed_points_generator
 from inputFileGeneration.input_file_writer import file_name_generator, setup_input_file
 from inputFileGeneration.input_template import get_input_template
 from inputFileGeneration.write_input_file import generate_input_file
-
 
 
 class System:
@@ -15,6 +17,7 @@ class System:
         self.method = method
         self.number_of_cores = cores
         self.number_of_atoms = self.cal_number_of_atoms()
+        self.iteration = 0
 
     def add_molecule(self, molecule):
         self.molecules.append(molecule)
@@ -48,7 +51,6 @@ class System:
     def additional_gaussian_requirments_implementation_to_inputfile_str(self, string, template, other=""):
         return template + string + other + "\n\n\n\n"
 
-
     def set_moleculer_coordinates(self, opt_xyz):
         """change molecules to new optimized coordinates """
         # todo: something is wrong i can feel it
@@ -62,34 +64,30 @@ class System:
             molecule.change_gravity_point(temp_molecule_gravity_point)
             count += n_atoms
 
-
     def to_str(self):
         string = f"{self.cal_number_of_atoms()}\nEnergy: {self.energy}\n"
         for molecule in self.molecules:
             string += molecule.to_str() + "\n"
         return string
 
-    def string_optimized_coordinates(self,opt_xyz):
+    def string_optimized_coordinates(self, opt_xyz):
         count = 0
         string = f"{self.cal_number_of_atoms()}\nEnergy: {self.energy}\n"
 
         def to_str(symbols, coords):
             str = ""
-            for symbol, coord in zip(symbols,coords):
+            for symbol, coord in zip(symbols, coords):
                 str += f"{symbol} {coord[0]} {coord[1]} {coord[2]}\n"
             return str
 
         for molecule in self.molecules:
-            list_of_atom_symbols =[a.symbol for a in molecule.atoms]
+            list_of_atom_symbols = [a.symbol for a in molecule.atoms]
             n_atoms = molecule.number_of_atoms()
             string += to_str(list_of_atom_symbols, opt_xyz[count: n_atoms + count])
             count += n_atoms
         return string
 
-
-
-
-    def set_scf_done(self,energy):
+    def set_scf_done(self, energy):
         self.energy = energy
 
     def re_orient_molecules(self, controls):
@@ -102,8 +100,6 @@ class System:
                 molecule.update_coordinates(*equidistributed_points_generator(controls.sphere_radius))
         return True
 
-
-
     def change_orientations_of_molecules(self, controls):
         if controls.spherical_placement == "False":
             return False
@@ -113,3 +109,13 @@ class System:
             elif controls.change_orientation == "statistically_even":
                 molecule.update_coordinates(*equidistributed_points_generator(controls.sphere_radius))
         return True
+
+    def random_rotate_molecules(self, method="random"):
+
+        # if method == "stepwise":  # Check if 'rotation-step'
+        #     rotation_step = controls.rotation_step * controls.n_iter
+        #     print(rotation_step)
+        #     molecule.rotation_xy(rotation_step[0]).rotation_yz(rotation_step[1]).rotation_xz(rotation_step[2])
+
+        for molecule in self.molecules:
+            molecule.rotation_xy(uniform(0, math.pi)).rotation_yz(uniform(0, math.pi)).rotation_xz(uniform(0, math.pi))

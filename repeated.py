@@ -38,6 +38,7 @@ setup = Setup(controls.project_name)
 
 for i in range(controls.n_iterations):
     system.re_orient_molecules(controls)
+    system.random_rotate_molecules()
     print(i)
     output_file_list =[]
     #################################################################################
@@ -55,7 +56,8 @@ for i in range(controls.n_iterations):
             output_file_list.append(log)
 
             system.set_scf_done(log.scf_done)
-            if controls.update_with_optimized_coordinates:
+            if controls.update_with_optimized_coordinates == "True":
+                print("update_with_optimized_coordinates")
                 system.set_moleculer_coordinates(log.opt_coords)
 
             OutputWriter().write_xyz_file(system,log.opt_coords)

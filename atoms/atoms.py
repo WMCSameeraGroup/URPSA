@@ -2,15 +2,21 @@ from .constants import MASS,VANDER_WALLS
 
 class Atom:
 
-    def __init__(self,symbol,x,y,z):
+    def __init__(self,symbol,x,y,z, fixed="False"):
         self.symbol = symbol
         self.mass = MASS[symbol]
         self.v_radius = VANDER_WALLS[symbol]
         self.x = float(x)
         self.y = float(y)
         self.z = float(z)
+        if fixed == "fixed":
+            self.is_fixed = True
+        else:
+            self.is_fixed = False
 
     def __str__(self):
+        if self.is_fixed:
+            return f"{self.symbol} -1 {self.x} {self.y} {self.z}"
         return f"{self.symbol} {self.x} {self.y} {self.z}"
 
     def get_coords(self):

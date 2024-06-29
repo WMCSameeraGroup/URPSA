@@ -76,7 +76,7 @@ class Molecule:
     def to_str(self):
         str = ""
         for atom in self.atoms:
-            str += f"{atom.symbol} {atom.x} {atom.y} {atom.z}\n"
+            str += atom.__str__() + "\n"
         return str[:-1]
 
     def __str__(self):

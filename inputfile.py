@@ -31,7 +31,6 @@ class InputFile:
         self.update_with_optimized_coordinates = self.config.get('controls', 'update_with_optimized_coordinates')
         self.is_placed_on_sphere = self.create_spherically_located_molecule_list()
 
-
     def set_molecule_list(self):
         molecule_list = []
         for n in range(self.number_of_molecules):
@@ -69,8 +68,6 @@ class InputFile:
             elif self.spherical_placement == "statistically_even":
                 molecule.update_coordinates(*equidistributed_points_generator(self.sphere_radius))
         return True
-
-
 
 
 if __name__ == "__main__":

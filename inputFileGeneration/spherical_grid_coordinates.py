@@ -34,7 +34,6 @@ def spherical_gird_coordinate_generation(molecules, step_count=1, step_size=1):
     this functions converges atoms to the origin
 
     :param molecules:
-    :param List:
     :param step_count:
     :param step_size:
     :return:

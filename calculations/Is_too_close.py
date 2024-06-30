@@ -38,25 +38,37 @@ def is_not_highly_repulsive(file, n_origin_atoms):
 
 ################################### for spherical #####################################
 
-def is_too_close_spherical(atoms, stop_distance_fac):
-    for i in atoms:
-        for j in atoms:
-            if i == j:  # in the case of same atom
-                continue
+def is_too_close_spherical(atoms1, atoms2, stop_distance_fac):
+    """only atoms in 2 molecules are compered """
+    for i in atoms1:
+        for j in atoms2:
             if i.distance_between(j) < (
-                    i.v_radius + j.v_radius) * stop_distance_fac:  # todo: stop distance is 0.2 change this by args of sum of vandaval radius
+                    i.v_radius + j.v_radius) * stop_distance_fac:
+                # check are they from the same molecule
                 print(i.distance_between(j), i, j)
                 return False
     return True
 
 
-def is_not_highly_repulsive_spherically(file,stop_distance_fac=stop_distance_factor):
+
+
+def is_not_highly_repulsive_spherically(sys, stop_distance_fac=stop_distance_factor):
     """
-     convert atoms in .com file to Atom objects using the function 1st return value is redundant
-     then checked whether atoms are too close.
+    check the distance between atoms of different molecules
     """
-    _, atoms = make_atoms_from_input_file(file, 0)
-    return is_too_close_spherical(atoms, stop_distance_fac)
+    for molecule_1 in sys.molecules:
+        for molecule_2 in sys.molecules:
+            if molecule_2 == molecule_1:
+                # if the same molecule
+                continue
+            if not is_too_close_spherical(molecule_2.atoms, molecule_1.atoms, stop_distance_fac):
+                return False
+
+    return True
+
+
+
+
 
 
 

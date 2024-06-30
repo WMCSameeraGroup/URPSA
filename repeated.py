@@ -45,7 +45,7 @@ for i in range(controls.n_iterations):
     for iteration in range(controls.step_count):
         spherical_gird_coordinate_generation(system.molecules, controls.step_count, controls.step_size)
         inputFile = system.generate_input_file(iteration)
-        if is_not_highly_repulsive_spherically(inputFile, controls.stop_distance_factor):
+        if is_not_highly_repulsive_spherically(system,controls.stop_distance_factor):
             # if run_calculation(inputFile) != 0:  # something went wrong  thus no log file is produced
             #     continue
             run_calculation(inputFile)

@@ -1,17 +1,17 @@
 # This is a comment
 [project]
-project_name = CH3OH+OH (2)
+project_name = CH3OH+OH 1 non-opt 0.4xdistance
 input_file_name = Test
 
 [controls]
-update_with_optimized_coordinates = True
-step_size = 0.2
+update_with_optimized_coordinates = False # set this as false for now
+step_size = 0.1
 step_count = 100
-stop_distance_factor = 0.5
+stop_distance_factor = 0.4
 
 sphere_radius = 7
 # number of iterations needs to run with different orientations
-n_iterations = 4
+n_iterations = 3
 
 # Total_random or statistically_even or False
 spherical_placement = statistically_even
@@ -19,7 +19,7 @@ spherical_placement = statistically_even
 
 [gaussian]
 number_of_cores = 2
-method = opt(maxcycle=300) wb97xd/def2tzvp
+method = HF/6-31G SCF=Tight
 
 
 

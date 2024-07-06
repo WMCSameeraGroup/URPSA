@@ -24,6 +24,7 @@ def plot_the_graph(outputFiles, file_name="output.jpg"):
     plt.ylabel("Energy/AU")
     plt.xlabel("Step")
     plt.savefig(input_file_directory + "/" + file_name)
+    plt.clf()
 
 try:
     file_path = sys.argv[1]

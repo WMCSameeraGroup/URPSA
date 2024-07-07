@@ -26,6 +26,23 @@ def plot_the_graph(outputFiles, file_name="output.jpg"):
     plt.savefig(input_file_directory + "/" + file_name)
     plt.clf()
 
+
+def plot_scatter(outputFiles, file_name="scatter.jpg"):
+    x_coords = []
+    y_coords = []
+    for index, j in enumerate(outputFiles[::-1]):
+        if j.is_converged == 0:
+            x_coords.append(index)
+            y_coords.append(float(j.scf_done))
+            print(index,j.scf_done)
+
+    plt.scatter(x_coords,y_coords)
+    plt.ylabel("Energy/AU")
+    plt.xlabel("Step")
+    plt.savefig(input_file_directory + "/" + file_name)
+    plt.clf()
+
+
 try:
     file_path = sys.argv[1]
 except:
@@ -49,9 +66,10 @@ for i in range(controls.n_iterations):
         if is_not_highly_repulsive_spherically(system,controls.stop_distance_factor):
             # if run_calculation(inputFile) != 0:  # something went wrong  thus no log file is produced
             #     continue
-            run_calculation(inputFile)
+            success = run_calculation(inputFile)
             try:
                 log = LogFileManager(find_corresponding_output_file(inputFile))
+                log.is_converged=success
             except:
                 continue
             output_file_list.append(log)
@@ -67,9 +85,12 @@ for i in range(controls.n_iterations):
             break  # stop if repulsion was encountered
 
     plot_the_graph(output_file_list)
+    plot_scatter(output_file_list)
 
     new_name = controls.project_name + "/" + setup.get_next_folder_name()
     move_files_to_project_folder(new_name)
+
+# need to add another exit condition same position twice then exit
 
 ####################################################################################
 

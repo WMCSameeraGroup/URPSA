@@ -30,7 +30,7 @@ def plot_the_graph(outputFiles, file_name="output.jpg"):
 def plot_scatter(outputFiles, file_name="scatter.jpg"):
     x_coords = []
     y_coords = []
-    for index, j in enumerate(outputFiles[::-1]):
+    for index, j in enumerate(outputFiles):
         if j.is_converged == 0:
             x_coords.append(index)
             y_coords.append(float(j.scf_done))
@@ -91,6 +91,7 @@ for i in range(controls.n_iterations):
     move_files_to_project_folder(new_name)
 
 # need to add another exit condition same position twice then exit
+# some times it replaces the atom and stays there
 
 ####################################################################################
 

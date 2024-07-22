@@ -77,6 +77,7 @@ for i in range(controls.n_iterations):
             system.set_scf_done(log.scf_done)
             if controls.update_with_optimized_coordinates == "True":
                 print("update_with_optimized_coordinates")
+                print(log.opt_coords)
                 system.set_moleculer_coordinates(log.opt_coords)
 
             OutputWriter().write_xyz_file(system,log.opt_coords)

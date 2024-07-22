@@ -1,17 +1,18 @@
 # This is a comment
 [project]
-project_name = CH3OH+OH 4 full-opt calcfc 0.4xdistance
+project_name = test4
 input_file_name = Test
 
 [controls]
-update_with_optimized_coordinates = False # set this as false for now
+# set this as false for now
+update_with_optimized_coordinates = True
 step_size = 0.05
 step_count = 75
 stop_distance_factor = 0.4
 
 sphere_radius = 5
 # number of iterations needs to run with different orientations
-n_iterations = 3
+n_iterations = 1
 
 # Total_random or statistically_even or False
 spherical_placement = statistically_even
@@ -19,14 +20,16 @@ spherical_placement = statistically_even
 
 [gaussian]
 number_of_cores = 2
-method = opt(maxcycle=1200,Tight,CalcFC) HF/6-31G SCF=Tight
+memory = 2GB
+method = opt(maxcycle=1200,CalcFC) B3LYP/6-31++g
+# use dft
 
 
 
 [molecules]
 charge = 0
 multiplicity = 2
-number_of_molecules = 2f
+number_of_molecules = 2
 
 0 = C -0.69272980 -0.81618654 0.00000000 fixed\
 H -0.33605696 -0.31178835 0.87365150\

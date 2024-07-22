@@ -53,16 +53,17 @@ class System:
 
     def set_moleculer_coordinates(self, opt_xyz):
         """change molecules to new optimized coordinates """
-        # todo: something is wrong i can feel it
+        # todo: something is wrong i can feel it.
 
         count = 0
         for molecule in self.molecules:
             n_atoms = molecule.number_of_atoms()
-            temp_molecule_gravity_point = molecule.gravity_point
+            # temp_molecule_gravity_point = molecule.gravity_point
             molecule.xyz = opt_xyz[count: n_atoms + count]
             molecule.setAtomNewCoords()
-            molecule.change_gravity_point(temp_molecule_gravity_point)
+            # molecule.change_gravity_point(temp_molecule_gravity_point)
             count += n_atoms
+        print(self.to_str())
 
     def to_str(self):
         string = f"{self.cal_number_of_atoms()}\nEnergy: {self.energy}\n"
@@ -89,6 +90,8 @@ class System:
 
     def set_scf_done(self, energy):
         self.energy = energy
+
+
 
     def re_orient_molecules(self, controls):
         if controls.spherical_placement == "False":

@@ -2,7 +2,7 @@ from settings import input_file_directory as inp_dir
 
 
 
-def get_input_template(number, system, method,num_of_cores):
+def get_input_template(number, system, method,num_of_cores,memory="2GB"):
     # gonna replace title value
     return """%NProcShared={5}
 %chk={3}/test{0}.chk

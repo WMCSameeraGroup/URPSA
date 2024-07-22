@@ -25,6 +25,7 @@ class InputFile:
         self.spherical_placement = self.config.get('controls', 'spherical_placement')
         self.method = self.config.get('gaussian', 'method')
         self.cores = self.config.get('gaussian', 'number_of_cores')
+        self.memory = self.config.get('gaussian', 'memory')
 
         self.list_of_molecules = self.set_molecule_list()
         # update with

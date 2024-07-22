@@ -63,7 +63,7 @@ class System:
             molecule.setAtomNewCoords()
             # molecule.change_gravity_point(temp_molecule_gravity_point)
             count += n_atoms
-        print(self.to_str())
+
 
     def to_str(self):
         string = f"{self.cal_number_of_atoms()}\nEnergy: {self.energy}\n"

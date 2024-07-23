@@ -1,6 +1,6 @@
 # This is a comment
 [project]
-project_name = test4
+project_name = test opt-success 2
 input_file_name = Test
 
 [controls]
@@ -12,7 +12,7 @@ stop_distance_factor = 0.4
 
 sphere_radius = 5
 # number of iterations needs to run with different orientations
-n_iterations = 1
+n_iterations = 3
 
 # Total_random or statistically_even or False
 spherical_placement = statistically_even
@@ -21,7 +21,7 @@ spherical_placement = statistically_even
 [gaussian]
 number_of_cores = 2
 memory = 2GB
-method = opt(maxcycle=1200,CalcFC) B3LYP/6-31++g
+method = opt(maxcycle=1200) B3LYP/3-21G
 # use dft
 
 

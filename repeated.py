@@ -75,7 +75,7 @@ for i in range(controls.n_iterations):
             output_file_list.append(log)
 
             system.set_scf_done(log.scf_done)
-            if controls.update_with_optimized_coordinates == "True":
+            if controls.update_with_optimized_coordinates == "True" and success == 0:
                 print("update_with_optimized_coordinates")
                 system.set_moleculer_coordinates(log.opt_coords)
 

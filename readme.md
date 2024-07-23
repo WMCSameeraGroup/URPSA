@@ -8,18 +8,19 @@ modify the config file to enter the inputs
 ```buildoutcfg
 # This is a comment
 [project]
-project_name = Benzene_HCl_1
+project_name = test4
 input_file_name = Test
 
 [controls]
-update_with_optimized_coordinates = False
-step_size = 0.1
-step_count = 100
-stop_distance_factor = 0.5
+# set this as false for now
+update_with_optimized_coordinates = True
+step_size = 0.05
+step_count = 75
+stop_distance_factor = 0.4
 
-sphere_radius = 6
+sphere_radius = 5
 # number of iterations needs to run with different orientations
-n_iterations = 3
+n_iterations = 1
 
 # Total_random or statistically_even or False
 spherical_placement = statistically_even
@@ -27,32 +28,28 @@ spherical_placement = statistically_even
 
 [gaussian]
 number_of_cores = 2
-method = opt(maxcycle=300) HF/3-21g
+memory = 2GB
+method = opt(maxcycle=1200) B3LYP/6-31++g
 
 
 
 [molecules]
 charge = 0
-multiplicity = 1
+multiplicity = 2
 number_of_molecules = 2
-# number the molecules from 0 to n-1 
-0 = C                 -2.46415780    0.75268816    0.00000000\
- C                 -1.06899780    0.75268816    0.00000000\
- C                 -0.37145980    1.96043916    0.00000000\
- C                 -1.06911380    3.16894816   -0.00119900\
- C                 -2.46393880    3.16887016   -0.00167800\
- C                 -3.16153980    1.96066416   -0.00068200\
- H                 -3.01391680   -0.19962884    0.00045000\
- H                 -0.51948980   -0.19982484    0.00131500\
- H                  0.72822020    1.96051916    0.00063400\
- H                 -0.51891380    4.12109116   -0.00125800\
- H                 -3.01406080    4.12115116   -0.00263100\
- H                 -4.26114380    1.96084716   -0.00086200
 
+# add the number from 0 to n-1 and put equal sign to declair the moolecule 
+0 = C -0.69272980 -0.81618654 0.00000000 fixed\
+H -0.33605696 -0.31178835 0.87365150\
+H -0.33605696 -0.31178835 -0.87365150\
+H -1.76272980 -0.81617336 0.00000000\
+O -0.21607949 -2.16440926 0.00000000\
+H -0.53442410 -2.61684869 0.78457331
 
 # add \ to the end of a line if the next line continues
-1 = Cl                 4.18458797   -4.30107520   -0.00056443\
- H                  2.89458797   -4.30107520   -0.00056443
+# add fixed at the end of an atom to optimize while 
+1 = O -0.21607949 -2.16440926 0.00000000 fixed\
+H -0.53442410 -2.61684869 0.7845733
 
 ```
 

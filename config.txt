@@ -1,6 +1,6 @@
 # This is a comment
 [project]
-project_name = test opt-success 2
+project_name = test h2
 input_file_name = Test
 
 [controls]
@@ -12,7 +12,7 @@ stop_distance_factor = 0.4
 
 sphere_radius = 5
 # number of iterations needs to run with different orientations
-n_iterations = 3
+n_iterations = 1
 
 # Total_random or statistically_even or False
 spherical_placement = statistically_even
@@ -21,7 +21,7 @@ spherical_placement = statistically_even
 [gaussian]
 number_of_cores = 2
 memory = 2GB
-method = opt(maxcycle=1200) B3LYP/3-21G
+method = opt(maxcycle=1200) wb97xd/6-31++g scf(maxcyc=1200,xqc)
 # use dft
 
 
@@ -31,7 +31,7 @@ charge = 0
 multiplicity = 2
 number_of_molecules = 2
 
-0 = C -0.69272980 -0.81618654 0.00000000 fixed\
+0 = C -0.69272980 -0.81618654 0.00000000\
 H -0.33605696 -0.31178835 0.87365150\
 H -0.33605696 -0.31178835 -0.87365150\
 H -1.76272980 -0.81617336 0.00000000\
@@ -39,7 +39,7 @@ O -0.21607949 -2.16440926 0.00000000\
 H -0.53442410 -2.61684869 0.78457331
 
 # add \ to the end of a line if the next line continues
-1 = O -0.21607949 -2.16440926 0.00000000 fixed\
+1 = O -0.21607949 -2.16440926 0.00000000\
 H -0.53442410 -2.61684869 0.7845733
 
 

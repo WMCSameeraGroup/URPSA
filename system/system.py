@@ -37,8 +37,9 @@ class System:
         string_of_coordinates = self.get_string_of_atoms_and_coordinates()
         template_str = get_input_template(number, self, self.method, self.number_of_cores)
         file_name = file_name_generator(number)
+        com_constraints = self.add_additinal_constrains()
         string_to_be_written = self.additional_gaussian_requirments_implementation_to_inputfile_str(
-            string_of_coordinates, template_str)
+            string_of_coordinates, template_str, com_constraints)
         generate_input_file(file_name, string_to_be_written)
         return file_name
 
@@ -53,8 +54,6 @@ class System:
 
     def set_moleculer_coordinates(self, opt_xyz):
         """change molecules to new optimized coordinates """
-        # todo: something is wrong i can feel it.
-
         count = 0
         for molecule in self.molecules:
             n_atoms = molecule.number_of_atoms()
@@ -63,7 +62,6 @@ class System:
             molecule.setAtomNewCoords()
             # molecule.change_gravity_point(temp_molecule_gravity_point)
             count += n_atoms
-
 
     def to_str(self):
         string = f"{self.cal_number_of_atoms()}\nEnergy: {self.energy}\n"
@@ -90,8 +88,6 @@ class System:
 
     def set_scf_done(self, energy):
         self.energy = energy
-
-
 
     def re_orient_molecules(self, controls):
         if controls.spherical_placement == "False":
@@ -122,3 +118,15 @@ class System:
 
         for molecule in self.molecules:
             molecule.rotation_xy(uniform(0, math.pi)).rotation_yz(uniform(0, math.pi)).rotation_xz(uniform(0, math.pi))
+
+    def add_additinal_constrains(self):
+        string ="\n\n"
+        n=1
+        s=1
+        f=0
+        for molecule in self.molecules:
+            f += len(molecule.atoms)
+            string += f"XCm{n} = XCntr({s}-{f}) Freeze\nYCm{n} = YCntr({s}-{f}) Freeze\nZCm{n} = ZCntr({s}-{f}) Freeze\n\n"
+            n += 1
+            s = f + 1
+        return string

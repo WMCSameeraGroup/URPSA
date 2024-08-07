@@ -124,3 +124,11 @@ class Molecule:
         diff_y = pow(self.y, 2)
         diff_z = pow(self.z, 2)
         return pow(diff_z + diff_x + diff_y, 0.5)
+
+    def calculate_RMSD(self):
+        ref_atom = self.atoms[0]
+        sum_of_distances_square = 0
+        for atom in self.atoms[1:]:
+            sum_of_distances_square += ref_atom.distance_between(atom)**2
+
+        return (sum_of_distances_square/len(self.atoms))**0.5

@@ -124,9 +124,19 @@ class System:
         n=1
         s=1
         f=0
+
+        def two_or_more(s,f):
+            if s+1 ==f:
+                return f"{s},{f}"
+            else:
+                return f"{s}-{f}"
+
+
         for molecule in self.molecules:
             f += len(molecule.atoms)
-            string += f"XCm{n} = XCntr({s}-{f}) Freeze\nYCm{n} = YCntr({s}-{f}) Freeze\nZCm{n} = ZCntr({s}-{f}) Freeze\n\n"
+            string += f"XCm{n} (Freeze) = XCntr({two_or_more(s,f)}) \nYCm{n} (Freeze) = YCntr({two_or_more(s,f)}) \nZCm{n} (Freeze)= ZCntr({two_or_more(s,f)})\n"
             n += 1
             s = f + 1
+
         return string
+

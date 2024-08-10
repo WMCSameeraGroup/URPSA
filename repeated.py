@@ -10,6 +10,7 @@ from calculations.Is_too_close import is_not_highly_repulsive_spherically
 
 from outputFiileWriter.output_writer import OutputWriter
 from settings import input_file_directory
+from system.catogarize_products import add_products
 from utils.transferFiles import move_files_to_timestamped_folder, move_files_to_project_folder
 from system.system import System
 from outputFiileWriter.setup import Setup
@@ -89,6 +90,9 @@ for i in range(controls.n_iterations):
 
     new_name = controls.project_name + "/" + setup.get_next_folder_name()
     move_files_to_project_folder(new_name)
+
+    # find products and label them
+    #add_products(system.list_of_atoms(),output_file_list)
 
 # need to add another exit condition same position twice then exit
 # some times it replaces the atom and stays there

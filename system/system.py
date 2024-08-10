@@ -32,6 +32,12 @@ class System:
         self.number_of_atoms = count
         return count
 
+    def list_of_atoms(self):
+        atom_list = []
+        for molecule in self.molecules:
+            atom_list.extend(molecule.atoms)
+        return atom_list
+
     def generate_input_file(self, number):
         """write input file in the inputFiles dir """
         string_of_coordinates = self.get_string_of_atoms_and_coordinates()
@@ -120,23 +126,29 @@ class System:
             molecule.rotation_xy(uniform(0, math.pi)).rotation_yz(uniform(0, math.pi)).rotation_xz(uniform(0, math.pi))
 
     def add_additinal_constrains(self):
-        string ="\n\n"
-        n=1
-        s=1
-        f=0
+        """ add center of mass constrains using GIC
+            def :  https://gaussian.com/gic/ ,
+                    https://gaussian.com/geom/
+                    https://mattermodeling.stackexchange.com/questions/12004/gaussian-16-relaxed-scan-using-jacobi-coordinates-expressed-using-generalized-i/12005#12005
+        """
+        string = "\n\n"
+        n = 1
+        s = 1
+        f = 0
 
-        def two_or_more(s,f):
-            if s+1 ==f:
+        def two_or_more(s, f):
+            #todo: multi fraction com fixing
+            """replace dash with comma if there are only 2 atoms in a molecule"""
+            if s + 1 == f:
                 return f"{s},{f}"
             else:
                 return f"{s}-{f}"
 
-
         for molecule in self.molecules:
             f += len(molecule.atoms)
-            string += f"XCm{n} (Freeze) = XCntr({two_or_more(s,f)}) \nYCm{n} (Freeze) = YCntr({two_or_more(s,f)}) \nZCm{n} (Freeze)= ZCntr({two_or_more(s,f)})\n"
+            string += f"XCm{n} (Inactive) = XCntr({two_or_more(s, f)}) \nYCm{n} (Inactive) = YCntr({two_or_more(s, f)}) \nZCm{n} (Inactive)= ZCntr({two_or_more(s, f)})\n"
             n += 1
             s = f + 1
+        string += "F1F2(FREEZE)=sqrt[(XCm1-XCm2)^2+(YCm1-YCm2)^2+(ZCm1-ZCm2)^2]*0.529177"
 
         return string
-

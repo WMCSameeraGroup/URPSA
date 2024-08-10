@@ -127,3 +127,5 @@ class LogFileManager:
         else:
             raise ValueError("Optimized coordinates section not found in the log file")
 
+
+

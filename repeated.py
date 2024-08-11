@@ -68,10 +68,13 @@ for i in range(controls.n_iterations):
             # if run_calculation(inputFile) != 0:  # something went wrong  thus no log file is produced
             #     continue
             success = run_calculation(inputFile)
+            print(success)
             try:
                 log = LogFileManager(find_corresponding_output_file(inputFile))
-                log.is_converged=success
-            except:
+                log.is_converged = success
+
+            except Exception as e:
+                print(e)
                 continue
             output_file_list.append(log)
 

@@ -25,6 +25,15 @@ class System:
     def add_list_of_molecules(self, list):
         self.molecules += list
 
+    def set_starting_molecular_orientations(self):
+        self.original_molecular_positions = self.molecules
+
+    def reorient_molecules_to_start(self):
+        self.molecules = self.original_molecular_positions
+
+    def get_starting_molecular_orientations(self):
+        return self.original_molecular_positions
+
     def cal_number_of_atoms(self):
         count = 0
         for molecule in self.molecules:

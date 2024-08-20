@@ -1,18 +1,18 @@
 # This is a comment
 [project]
-project_name = fixed com 13
+project_name = fixed com 23
 input_file_name = Test
 
 [controls]
 # set this as false for now
 update_with_optimized_coordinates = True
-step_size = 0.5
-step_count = 40
-stop_distance_factor = 0.4
+step_size = 0.1
+step_count = 60
+stop_distance_factor = 0.45
 
 sphere_radius = 5
 # number of iterations needs to run with different orientations
-n_iterations = 1
+n_iterations = 4
 
 # Total_random or statistically_even or False
 spherical_placement = statistically_even

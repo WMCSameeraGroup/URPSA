@@ -9,6 +9,7 @@ class Atom:
         self.x = float(x)
         self.y = float(y)
         self.z = float(z)
+        self.starting_positions =[float(x),float(y),float(z) ]
         if fixed == "fixed":
             self.is_fixed = True
         else:
@@ -42,6 +43,13 @@ class Atom:
         diff_y = pow(self.y, 2)
         diff_z = pow(self.z, 2)
         return pow(diff_z+diff_x+diff_y, 0.5)
+
+
+    def reorient_atom_to_start(self):
+        self.x = self.starting_positions[0]
+        self.y = self.starting_positions[1]
+        self.z = self.starting_positions[2]
+        print(self)
 
 
 

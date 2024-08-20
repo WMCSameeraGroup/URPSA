@@ -18,6 +18,7 @@ class System:
         self.number_of_cores = cores
         self.number_of_atoms = self.cal_number_of_atoms()
         self.iteration = 0
+        self.energy = 0.0
 
     def add_molecule(self, molecule):
         self.molecules.append(molecule)
@@ -25,14 +26,9 @@ class System:
     def add_list_of_molecules(self, list):
         self.molecules += list
 
-    def set_starting_molecular_orientations(self):
-        self.original_molecular_positions = self.molecules
-
     def reorient_molecules_to_start(self):
-        self.molecules = self.original_molecular_positions
-
-    def get_starting_molecular_orientations(self):
-        return self.original_molecular_positions
+        for molecule in self.molecules:
+            molecule.reorient_molecule_to_start()
 
     def cal_number_of_atoms(self):
         count = 0
@@ -62,6 +58,8 @@ class System:
         atoms_and_coordinates = ""
         for molecule in self.molecules:
             atoms_and_coordinates += molecule.to_str() + "\n"
+
+        print(atoms_and_coordinates[:-1])
         return atoms_and_coordinates[:-1]
 
     def additional_gaussian_requirments_implementation_to_inputfile_str(self, string, template, other=""):
@@ -146,7 +144,7 @@ class System:
         f = 0
 
         def two_or_more(s, f):
-            #todo: multi fraction com fixing
+            # todo: multi fraction com fixing
             """replace dash with comma if there are only 2 atoms in a molecule"""
             if s + 1 == f:
                 return f"{s},{f}"

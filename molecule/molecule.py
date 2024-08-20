@@ -132,3 +132,7 @@ class Molecule:
             sum_of_distances_square += ref_atom.distance_between(atom)**2
 
         return (sum_of_distances_square/len(self.atoms))**0.5
+
+    def reorient_molecule_to_start(self):
+        for atom in self.atoms:
+            atom.reorient_atom_to_start()

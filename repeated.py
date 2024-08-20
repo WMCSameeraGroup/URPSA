@@ -53,7 +53,6 @@ except:
 controls = InputFile(file_path)  # read input file and understand data
 system = System(controls.charge, controls.multiplicity, controls.method, controls.cores)
 system.add_list_of_molecules(controls.list_of_molecules)
-system.set_starting_molecular_orientations()
 setup = Setup(controls.project_name)
 
 for i in range(controls.n_iterations):
@@ -64,6 +63,7 @@ for i in range(controls.n_iterations):
     system.random_rotate_molecules()
     print(i)
     output_file_list =[]
+    print(system.to_str())
     #################################################################################
     for iteration in range(controls.step_count):
         spherical_gird_coordinate_generation(system.molecules, controls.step_count, controls.step_size)

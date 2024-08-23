@@ -6,7 +6,7 @@ from calculations.random_spherical_coords_generator import random_spherical_coor
 from inputFileGeneration.input_file_writer import file_name_generator, setup_input_file
 from inputFileGeneration.input_template import get_input_template
 from inputFileGeneration.write_input_file import generate_input_file
-
+import logging
 
 class System:
 
@@ -19,6 +19,7 @@ class System:
         self.number_of_atoms = self.cal_number_of_atoms()
         self.iteration = 0
         self.energy = 0.0
+        initial_xyz =[]
 
     def add_molecule(self, molecule):
         self.molecules.append(molecule)

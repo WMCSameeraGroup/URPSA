@@ -57,6 +57,7 @@ class Molecule:
         for atom, coords in zip(self.atoms, self.xyz):
             atom.update_coordinates(*coords)
 
+
     def get_coordinates_of_atoms(self):
         return np.array([atom.get_coords() for atom in self.atoms])
 
@@ -109,6 +110,7 @@ class Molecule:
 
 
 
+
     def distance_between(self, other):
         diff_x = pow(self.x - other.x, 2)
         diff_y = pow(self.y - other.y, 2)
@@ -136,3 +138,4 @@ class Molecule:
     def reorient_molecule_to_start(self):
         for atom in self.atoms:
             atom.reorient_atom_to_start()
+        self.cal_gravity_point()

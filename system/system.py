@@ -157,6 +157,11 @@ class System:
             string += f"XCm{n} (Inactive) = XCntr({two_or_more(s, f)}) \nYCm{n} (Inactive) = YCntr({two_or_more(s, f)}) \nZCm{n} (Inactive)= ZCntr({two_or_more(s, f)})\n"
             n += 1
             s = f + 1
-        string += "F1F2(FREEZE)=sqrt[(XCm1-XCm2)^2+(YCm1-YCm2)^2+(ZCm1-ZCm2)^2]*0.529177"
 
+        n_mol=len(self.molecules)
+        for i in range(n_mol - 1):
+            i += 1
+            for j in range(n_mol - i):
+                j += 1
+                string += f"F{i}F{i + j}(FREEZE)=sqrt[(XCm{i}-XCm{i + j + 1})^2+(YCm{i}-YCm{i + j + 1})^2+(ZCm{i}-ZCm{i + j + 1})^2]*0.529177\n"
         return string

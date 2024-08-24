@@ -52,13 +52,13 @@ except:
 
 controls = InputFile(file_path)  # read input file and understand data
 system = System(controls.charge, controls.multiplicity, controls.method, controls.cores)
-system.add_list_of_molecules(controls.list_of_molecules)
 setup = Setup(controls.project_name)
 
 for i in range(controls.n_iterations):
     # todo: update the original geometry from the input file
     # thats the error
-    system.reorient_molecules_to_start()
+    system.remove_all_molecules()
+    system.add_list_of_molecules(controls.list_of_molecules)
     system.re_orient_molecules(controls)
     system.random_rotate_molecules()
     print(i)

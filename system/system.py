@@ -19,14 +19,15 @@ class System:
         self.number_of_atoms = self.cal_number_of_atoms()
         self.iteration = 0
         self.energy = 0.0
-        initial_xyz =[]
+
 
     def add_molecule(self, molecule):
         self.molecules.append(molecule)
 
     def add_list_of_molecules(self, list):
         self.molecules += list
-
+    def remove_all_molecules(self):
+        self.molecules=[]
     def reorient_molecules_to_start(self):
         for molecule in self.molecules:
             molecule.reorient_molecule_to_start()
@@ -158,10 +159,12 @@ class System:
             n += 1
             s = f + 1
 
-        n_mol=len(self.molecules)
+        n_mol = len(self.molecules)
         for i in range(n_mol - 1):
             i += 1
             for j in range(n_mol - i):
                 j += 1
-                string += f"F{i}F{i + j}(FREEZE)=sqrt[(XCm{i}-XCm{i + j + 1})^2+(YCm{i}-YCm{i + j + 1})^2+(ZCm{i}-ZCm{i + j + 1})^2]*0.529177\n"
+                string += f"F{i}F{i + j}(FREEZE)=sqrt[(XCm{i}-XCm{i + j})^2+(YCm{i}-YCm{i + j})^2+(ZCm{i}-ZCm{i + j})^2]*0.529177\n"
         return string
+
+

@@ -49,7 +49,7 @@ class Atom:
         self.x = self.starting_positions[0]
         self.y = self.starting_positions[1]
         self.z = self.starting_positions[2]
-        print(self)
+
 
 
 

@@ -61,7 +61,6 @@ class System:
         for molecule in self.molecules:
             atoms_and_coordinates += molecule.to_str() + "\n"
 
-        print(atoms_and_coordinates[:-1])
         return atoms_and_coordinates[:-1]
 
     def additional_gaussian_requirments_implementation_to_inputfile_str(self, string, template, other=""):

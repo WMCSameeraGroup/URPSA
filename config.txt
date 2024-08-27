@@ -1,6 +1,6 @@
 # This is a comment
 [project]
-project_name = stable code 4
+project_name = stable code 6
 input_file_name = Test
 
 [controls]

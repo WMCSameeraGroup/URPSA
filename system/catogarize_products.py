@@ -24,7 +24,7 @@ def add_products(atoms,outputfile_list):
     index=find_the_formation_of_products(outputfile_list)
     atom_list = get_atom_list(atoms, outputfile_list[index].opt_coords)
     molecules = find_products(atom_list)
-    print(len(molecules))
+
 
 
 def find_the_formation_of_products(file_list):

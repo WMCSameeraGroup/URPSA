@@ -47,7 +47,7 @@ def plot_scatter(outputFiles, file_name="scatter.jpg"):
 try:
     file_path = sys.argv[1]
 except:
-    print("a input file is not provided")
+    print("a valid input file is not provided")
     sys.exit()
 
 controls = InputFile(file_path)  # read input file and understand data
@@ -64,7 +64,6 @@ for i in range(controls.n_iterations):
     system.random_rotate_molecules()
     print(i)
     output_file_list =[]
-    print(system.to_str())
     #################################################################################
     for iteration in range(controls.step_count):
         spherical_gird_coordinate_generation(system.molecules, controls.step_count, controls.step_size)

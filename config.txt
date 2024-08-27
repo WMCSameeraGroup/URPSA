@@ -1,16 +1,16 @@
 # This is a comment
 [project]
-project_name = stable code 1
+project_name = stable code 4
 input_file_name = Test
 
 [controls]
 # set this as false for now
 update_with_optimized_coordinates = True
-step_size = 0.25
+step_size = 0.2
 step_count = 30
 stop_distance_factor = 0.4
 
-sphere_radius = 5
+sphere_radius = 4
 # number of iterations needs to run with different orientations
 n_iterations = 10
 
@@ -22,7 +22,7 @@ spherical_placement = statistically_even
 number_of_cores = 10
 memory = 2GB
 #method = #N b3lyp/3-21g opt=AddGIC  nosymm
-method =#N opt(maxcycle=200,AddGIC) wb97xd/6-31g* scf(maxcyc=200,xqc) nosymm
+method =#N opt(maxcycle=1200,AddGIC) wb97xd/6-31g* scf(maxcyc=1200,xqc) nosymm
 #method =#N opt(maxcycle=200,AddGIC) HF/3-21g* scf(maxcyc=200,xqc) nosymm
 # use dft
 

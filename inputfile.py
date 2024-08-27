@@ -37,6 +37,8 @@ class InputFile:
         for n in range(self.number_of_molecules):
             string = self.config.get('molecules', str(n))
             molecule_list.append(self.set_molecule(string))
+
+        self.list_of_molecules =molecule_list
         return molecule_list
 
     def set_molecule(self, string):

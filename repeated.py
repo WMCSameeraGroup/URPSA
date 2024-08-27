@@ -58,6 +58,7 @@ for i in range(controls.n_iterations):
     # todo: update the original geometry from the input file
     # thats the error
     system.remove_all_molecules()
+    controls.set_molecule_list()
     system.add_list_of_molecules(controls.list_of_molecules)
     system.re_orient_molecules(controls)
     system.random_rotate_molecules()

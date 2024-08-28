@@ -10,11 +10,10 @@ from calculations.Is_too_close import is_not_highly_repulsive_spherically
 
 from outputFiileWriter.output_writer import OutputWriter
 from settings import input_file_directory
-from system.catogarize_products import add_products
-from utils.transferFiles import move_files_to_timestamped_folder, move_files_to_project_folder
+from utils.transferFiles import move_files_to_project_folder
 from system.system import System
 from outputFiileWriter.setup import Setup
-
+from productCatogarization.catogarize_products import get_products_list
 
 import matplotlib.pyplot as plt
 
@@ -94,6 +93,7 @@ for i in range(controls.n_iterations):
 
     plot_the_graph(output_file_list)
     plot_scatter(output_file_list)
+    get_products_list(system.set_list_of_atom_symbols(), output_file_list)
 
     new_name = controls.project_name + "/" + setup.get_next_folder_name()
     move_files_to_project_folder(new_name)

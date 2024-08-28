@@ -34,6 +34,12 @@ class Atom:
         diff_z = pow(self.z - other.z, 2)
         return pow(diff_z+diff_x+diff_y, 0.5)
 
+    def distance_from_center_of_mass(self,COM):
+        diff_x = pow(self.x - COM[0], 2)
+        diff_y = pow(self.y - COM[1], 2)
+        diff_z = pow(self.z - COM[2], 2)
+        return pow(diff_z + diff_x + diff_y, 0.5)
+
     def unit_position_vector(self):
         magnitude = (self.x**2 + self.y**2 + self.z**2)**0.5
         return [self.x/magnitude, self.y/magnitude, self.z/magnitude]

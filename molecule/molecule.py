@@ -63,6 +63,7 @@ class Molecule:
 
     def add_atom(self, atom):
         self.atoms.append(atom)
+        self.cal_gravity_point()
 
     def number_of_atoms(self):
         return len(self.atoms)
@@ -128,10 +129,10 @@ class Molecule:
         return pow(diff_z + diff_x + diff_y, 0.5)
 
     def calculate_RMSD(self):
-        ref_atom = self.atoms[0]
+        """ center of mass is used as the reference point to avoid the bias"""
         sum_of_distances_square = 0
-        for atom in self.atoms[1:]:
-            sum_of_distances_square += ref_atom.distance_between(atom)**2
+        for atom in self.atoms:
+            sum_of_distances_square += atom.distance_from_center_of_mass(self.gravity_point)**2
 
         return (sum_of_distances_square/len(self.atoms))**0.5
 
@@ -139,3 +140,4 @@ class Molecule:
         for atom in self.atoms:
             atom.reorient_atom_to_start()
         self.cal_gravity_point()
+

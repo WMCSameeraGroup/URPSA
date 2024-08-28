@@ -21,6 +21,7 @@ class System:
         self.energy = 0.0
 
 
+
     def add_molecule(self, molecule):
         self.molecules.append(molecule)
 
@@ -41,9 +42,12 @@ class System:
 
     def list_of_atoms(self):
         atom_list = []
+
         for molecule in self.molecules:
             atom_list.extend(molecule.atoms)
+        print(atom_list)
         return atom_list
+
 
     def generate_input_file(self, number):
         """write input file in the inputFiles dir """
@@ -166,4 +170,7 @@ class System:
                 string += f"F{i}F{i + j}(FREEZE)=sqrt[(XCm{i}-XCm{i + j})^2+(YCm{i}-YCm{i + j})^2+(ZCm{i}-ZCm{i + j})^2]*0.529177\n"
         return string
 
+
+    def set_list_of_atom_symbols(self):
+        return [a.symbol for a in self.list_of_atoms()]
 

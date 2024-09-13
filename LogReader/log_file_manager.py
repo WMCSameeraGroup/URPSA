@@ -1,10 +1,10 @@
 import re
-from settings import data_file_name, input_file_directory
 
 
 class LogFileManager:
-    def __init__(self, file_name):
+    def __init__(self, file_name, input_file_directory):
         self.file = file_name
+        self.input_file_directory =input_file_directory
         self.get_data()
 
     def get_data(self):
@@ -15,10 +15,10 @@ class LogFileManager:
 
 
     def log_file_name(self):
-        return input_file_directory + '/' + self.file[:-3] + "log"
+        return self.input_file_directory + '/' + self.file[:-3] + "log"
 
     def read_log(self):
-        with open(input_file_directory + '/' + self.file, 'r') as log:
+        with open(self.input_file_directory + '/' + self.file, 'r') as log:
             self.text = log.read()
 
     def is_valid(self):
@@ -44,7 +44,7 @@ class LogFileManager:
         self.text = None
 
     def write_data_to_the_data_file(self):
-        with open(data_file_name, 'a') as file:
+        with open("data.txt", 'a') as file:
             file.write(f"{self.file}\t{self.scf_done} \n")
 
     def is_not_converged(self):

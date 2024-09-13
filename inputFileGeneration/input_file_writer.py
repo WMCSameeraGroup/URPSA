@@ -1,13 +1,13 @@
 from inputFileGeneration.input_template import get_input_template
 from inputFileGeneration.write_input_file import generate_input_file
-from settings import input_file_name
+
 
 
 def setup_input_file(coordinate, template, system):
     return template + coordinate + system.molecules[0].to_str() + "\n\n\n\n"
 
 
-def file_name_generator(number):
+def file_name_generator(number,input_file_name="Test"):
     return input_file_name + str(number) + ".com"
 
 

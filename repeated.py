@@ -8,8 +8,6 @@ from calculations.Is_too_close import is_not_highly_repulsive_spherically
 
 from outputFiileWriter.output_writer import OutputWriter
 from utils.ploting import plot_scatter, plot_the_graph
-from settings import input_file_directory
-from utils.transferFiles import move_files_to_project_folder
 from system.system import System
 from outputFiileWriter.setup import Setup
 from productCatogarization.catogarize_products import products_writer
@@ -24,6 +22,7 @@ controls = InputFile(file_path)  # read input file and understand data
 system = System(controls.charge, controls.multiplicity, controls.method, controls.cores)
 setup = Setup(controls.project_name)
 
+
 for i in range(controls.n_iterations):
     system.remove_all_molecules()
     controls.set_molecule_list()
@@ -32,15 +31,16 @@ for i in range(controls.n_iterations):
     system.random_rotate_molecules()
     print(i)
     output_file_list = []
+    new_name = "Projects/"+controls.project_name + "/" + setup.get_next_folder_name()
     #################################################################################
     for iteration in range(controls.step_count):
         spherical_gird_coordinate_generation(system.molecules, controls.step_count, controls.step_size)
-        inputFile = system.generate_input_file(iteration)
+        inputFile = system.generate_input_file(iteration,new_name)
         if is_not_highly_repulsive_spherically(system, controls.stop_distance_factor):
-            success = run_calculation(inputFile)
+            success = run_calculation("g16",inputFile,new_name)
             print(success)
             try:
-                log = LogFileManager(find_corresponding_output_file(inputFile))
+                log = LogFileManager(find_corresponding_output_file(inputFile),new_name)
                 log.is_converged = success
 
             except Exception as e:
@@ -56,18 +56,18 @@ for i in range(controls.n_iterations):
                 print("update_with_optimized_coordinates")
                 system.set_moleculer_coordinates(log.opt_coords)
 
-            OutputWriter().write_xyz_file(system, log.opt_coords)
+            OutputWriter(new_name).write_xyz_file(system, log.opt_coords)
         else:
             print(f"{inputFile} is too repulsive to calculate")
             break  # stop if repulsion was encountered
 
-    plot_the_graph(output_file_list, input_file_directory)
-    plot_scatter(output_file_list, input_file_directory)
+    plot_the_graph(output_file_list, new_name)
+    plot_scatter(output_file_list, new_name)
     # find products and label them
-    products = products_writer()
+    products = products_writer(new_name)
     products.get_products_list(system.set_list_of_atom_symbols(), output_file_list)
 
-    new_name = controls.project_name + "/" + setup.get_next_folder_name()
-    move_files_to_project_folder(new_name)
+    # new_name = controls.project_name + "/" + setup.get_next_folder_name()
+    # move_files_to_project_folder(new_name)
 
 ####################################################################################

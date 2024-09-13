@@ -1,9 +1,9 @@
 from atoms.atoms import Atom
-from settings import input_file_directory
 
 
-def make_atoms_from_input_file(file, n_origin_atoms):
-    data = read_com(file).split("\n\n")
+
+def make_atoms_from_input_file(file, n_origin_atoms,input_file_directory):
+    data = read_com(file,input_file_directory).split("\n\n")
     atoms_strings = data[1].split('\n')[3:]
     atoms = []
     for atom_string in atoms_strings:
@@ -11,12 +11,12 @@ def make_atoms_from_input_file(file, n_origin_atoms):
     return atoms[0:n_origin_atoms], atoms[n_origin_atoms:]
 
 
-def read_com(file):
+def read_com(file,input_file_directory):
     if "/" in file:  # if full path is given
         with open(file, 'r') as com:
             return com.read()
     else:
-        with open(input_file_directory + '/' + file, 'r') as com:
+        with open(input_file_directory() + '/' + file, 'r') as com:
             return com.read()
 
 

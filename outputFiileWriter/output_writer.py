@@ -1,9 +1,9 @@
-from settings import input_file_directory
+
 
 
 class OutputWriter:
 
-    def __init__(self, file="output2.xyz"):
+    def __init__(self, input_file_directory,file="output2.xyz"):
         self.file = input_file_directory + "/" + file
 
     def create_if_not(self):
@@ -15,7 +15,6 @@ class OutputWriter:
                 pass
 
     def write_xyz_file(self, sys, opt_xyz):
-        if self.file == "output2.xyz":
-            self.create_if_not()
-            with open(self.file, "a") as f:
-                f.write(sys.string_optimized_coordinates(opt_xyz))
+        self.create_if_not()
+        with open(self.file, "a") as f:
+            f.write(sys.string_optimized_coordinates(opt_xyz))

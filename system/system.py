@@ -48,15 +48,15 @@ class System:
             atom_list.extend(molecule.atoms)
         return atom_list
 
-    def generate_input_file(self, number):
+    def generate_input_file(self, number,input_file_directory):
         """write input file in the inputFiles directory """
         string_of_coordinates = self.get_string_of_atoms_and_coordinates()
-        template_str = get_input_template(number, self, self.method, self.number_of_cores)
+        template_str = get_input_template(number, self, self.method, self.number_of_cores,input_file_directory)
         file_name = file_name_generator(number)
         com_constraints = self.add_additinal_constrains()
         string_to_be_written = self.additional_gaussian_requirments_implementation_to_inputfile_str(
             string_of_coordinates, template_str, com_constraints)
-        generate_input_file(file_name, string_to_be_written)
+        generate_input_file(file_name,input_file_directory ,string_to_be_written)
         return file_name
 
     def get_string_of_atoms_and_coordinates(self):

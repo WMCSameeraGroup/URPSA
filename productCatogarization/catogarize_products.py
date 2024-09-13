@@ -1,10 +1,10 @@
 from atoms.atoms import Atom
 from molecule.molecule import Molecule
-from settings import input_file_directory
+
 
 
 class products_writer:
-    def __init__(self, file="products.txt"):
+    def __init__(self, input_file_directory, file="products.txt"):
         self.file = input_file_directory + "/" + file
 
     def get_the_molecular_string(self, molecules):

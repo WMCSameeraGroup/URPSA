@@ -1,5 +1,5 @@
 from atoms.atoms import Atom
-from settings import stop_distance_factor, input_file_directory
+from settings import input_file_directory
 
 
 def make_atoms_from_input_file(file, n_origin_atoms):
@@ -20,7 +20,7 @@ def read_com(file):
             return com.read()
 
 
-def is_too_close(origin_atoms, moving_atoms):
+def is_too_close(origin_atoms, moving_atoms, stop_distance_factor=0.5):
     for i in origin_atoms:
         for j in moving_atoms:
 

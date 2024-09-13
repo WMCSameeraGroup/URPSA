@@ -52,7 +52,7 @@ def is_too_close_spherical(atoms1, atoms2, stop_distance_fac):
 
 
 
-def is_not_highly_repulsive_spherically(sys, stop_distance_fac=stop_distance_factor):
+def is_not_highly_repulsive_spherically(sys, stop_distance_fac=0.5):
     """
     check the distance between atoms of different molecules
     """

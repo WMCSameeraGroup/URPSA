@@ -127,5 +127,12 @@ class LogFileManager:
         else:
             raise ValueError("Optimized coordinates section not found in the log file")
 
+    def last_lines(self):
+        lines=""
 
+        with open(self.log_file_name(), 'r') as file:
+            read = file.readlines()
+            for line in range(-10,-3):
+                lines+=str(read[line])
+        return lines
 

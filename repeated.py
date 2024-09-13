@@ -9,38 +9,13 @@ from calculations.Is_too_close import is_not_highly_repulsive_spherically
 
 
 from outputFiileWriter.output_writer import OutputWriter
+from utils.ploting import plot_scatter,plot_the_graph
 from settings import input_file_directory
 from utils.transferFiles import move_files_to_project_folder
 from system.system import System
 from outputFiileWriter.setup import Setup
-from productCatogarization.catogarize_products import get_products_list
-
+from productCatogarization.catogarize_products import products_writer
 import matplotlib.pyplot as plt
-
-
-def plot_the_graph(outputFiles, file_name="output.jpg"):
-    data = [float(f.scf_done) for f in outputFiles if f.scf_done != "could not found"][::-1]
-    plt.plot(data)
-    plt.ylabel("Energy/AU")
-    plt.xlabel("Step")
-    plt.savefig(input_file_directory + "/" + file_name)
-    plt.clf()
-
-
-def plot_scatter(outputFiles, file_name="scatter.jpg"):
-    x_coords = []
-    y_coords = []
-    for index, j in enumerate(outputFiles):
-        if j.is_converged == 0:
-            x_coords.append(index)
-            y_coords.append(float(j.scf_done))
-            print(index,j.scf_done)
-
-    plt.scatter(x_coords,y_coords)
-    plt.ylabel("Energy/AU")
-    plt.xlabel("Step")
-    plt.savefig(input_file_directory + "/" + file_name)
-    plt.clf()
 
 
 try:
@@ -48,6 +23,9 @@ try:
 except:
     print("a valid input file is not provided")
     sys.exit()
+
+# todo: this code cant be run by multiple instances at the same time file system has to change or
+#  directly hv to work with the project files rather that input files
 
 controls = InputFile(file_path)  # read input file and understand data
 system = System(controls.charge, controls.multiplicity, controls.method, controls.cores)
@@ -82,6 +60,9 @@ for i in range(controls.n_iterations):
             output_file_list.append(log)
 
             system.set_scf_done(log.scf_done)
+            if success != 0:
+                print(log.last_lines())
+
             if controls.update_with_optimized_coordinates == "True" and success == 0:
                 print("update_with_optimized_coordinates")
                 system.set_moleculer_coordinates(log.opt_coords)
@@ -91,9 +72,10 @@ for i in range(controls.n_iterations):
             print(f"{inputFile} is too repulsive to calculate")
             break  # stop if repulsion was encountered
 
-    plot_the_graph(output_file_list)
-    plot_scatter(output_file_list)
-    get_products_list(system.set_list_of_atom_symbols(), output_file_list)
+    plot_the_graph(output_file_list,input_file_directory)
+    plot_scatter(output_file_list, input_file_directory)
+    products= products_writer()
+    products.get_products_list(system.set_list_of_atom_symbols(), output_file_list)
 
     new_name = controls.project_name + "/" + setup.get_next_folder_name()
     move_files_to_project_folder(new_name)

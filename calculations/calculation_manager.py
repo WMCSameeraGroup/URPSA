@@ -24,5 +24,5 @@ def run_calculation(input_file): # todo: change commands to orca as well
 
         except subprocess.CalledProcessError as e:
             print("Error running Gaussian job.")
-            print("Error message:\n", e.stderr)
+            #print("Error message:\n", e.stderr)
             return -2

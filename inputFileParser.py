@@ -13,16 +13,17 @@ class CustomConfigParser:
             for line in file:
                 line = line.strip()
 
-                # Ignore comments
+                # comments
                 if line.startswith('#') or line.startswith(';') or not line:
                     continue
 
-                # Section header
+                # Section
                 section_match = re.match(r'\[(.*?)\]', line)
                 if section_match:
                     current_section = section_match.group(1)
                     self.data[current_section] = {}
                     continue
+
 
                 # Key-Value pair
                 key_value_match = re.match(r'([^=]+)=(.*)', line)

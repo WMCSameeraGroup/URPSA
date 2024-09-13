@@ -2,7 +2,7 @@
 ## How to install 
 
 ```bash 
-git clone https://github.com/HesaraMahela/computationalChemistryProject15315.git
+https://github.com/WMCSameeraGroup/URPSA.git
 ```
 Use the command or download the file and extract the folder.
 

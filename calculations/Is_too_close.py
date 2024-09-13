@@ -25,7 +25,7 @@ def is_too_close(origin_atoms, moving_atoms):
         for j in moving_atoms:
 
             if i.distance_between(j) < (
-                    i.v_radius + j.v_radius) * stop_distance_factor:  # todo: stop distance is 0.2 change this by args of sum of vandaval radius
+                    i.v_radius + j.v_radius) * stop_distance_factor:
                 print(i.distance_between(j), i, j)
                 return False
     return True
@@ -67,10 +67,3 @@ def is_not_highly_repulsive_spherically(sys, stop_distance_fac=stop_distance_fac
     return True
 
 
-
-
-
-
-
-if __name__ == "__main__":
-    print(is_not_highly_repulsive_spherically("../inputFiles/Test0.com"))

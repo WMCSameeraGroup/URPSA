@@ -3,10 +3,11 @@ from random import uniform
 
 from calculations.random_spherical_coords_generator import random_spherical_coordinates_generator, \
     equidistributed_points_generator
-from inputFileGeneration.input_file_writer import file_name_generator, setup_input_file
+from inputFileGeneration.input_file_writer import file_name_generator
 from inputFileGeneration.input_template import get_input_template
 from inputFileGeneration.write_input_file import generate_input_file
-import logging
+
+
 
 class System:
 
@@ -20,15 +21,15 @@ class System:
         self.iteration = 0
         self.energy = 0.0
 
-
-
     def add_molecule(self, molecule):
         self.molecules.append(molecule)
 
     def add_list_of_molecules(self, list):
         self.molecules += list
+
     def remove_all_molecules(self):
-        self.molecules=[]
+        self.molecules = []
+
     def reorient_molecules_to_start(self):
         for molecule in self.molecules:
             molecule.reorient_molecule_to_start()
@@ -45,12 +46,10 @@ class System:
 
         for molecule in self.molecules:
             atom_list.extend(molecule.atoms)
-        #print(atom_list)
         return atom_list
 
-
     def generate_input_file(self, number):
-        """write input file in the inputFiles dir """
+        """write input file in the inputFiles directory """
         string_of_coordinates = self.get_string_of_atoms_and_coordinates()
         template_str = get_input_template(number, self, self.method, self.number_of_cores)
         file_name = file_name_generator(number)
@@ -75,10 +74,8 @@ class System:
         count = 0
         for molecule in self.molecules:
             n_atoms = molecule.number_of_atoms()
-            # temp_molecule_gravity_point = molecule.gravity_point
             molecule.xyz = opt_xyz[count: n_atoms + count]
             molecule.setAtomNewCoords()
-            # molecule.change_gravity_point(temp_molecule_gravity_point)
             count += n_atoms
 
     def to_str(self):
@@ -127,13 +124,7 @@ class System:
                 molecule.update_coordinates(*equidistributed_points_generator(controls.sphere_radius))
         return True
 
-    def random_rotate_molecules(self, method="random"):
-
-        # if method == "stepwise":  # Check if 'rotation-step'
-        #     rotation_step = controls.rotation_step * controls.n_iter
-        #     print(rotation_step)
-        #     molecule.rotation_xy(rotation_step[0]).rotation_yz(rotation_step[1]).rotation_xz(rotation_step[2])
-
+    def random_rotate_molecules(self):
         for molecule in self.molecules:
             molecule.rotation_xy(uniform(0, math.pi)).rotation_yz(uniform(0, math.pi)).rotation_xz(uniform(0, math.pi))
 
@@ -149,7 +140,6 @@ class System:
         f = 0
 
         def two_or_more(s, f):
-            # todo: multi fraction com fixing
             """replace dash with comma if there are only 2 atoms in a molecule"""
             if s + 1 == f:
                 return f"{s},{f}"
@@ -170,7 +160,5 @@ class System:
                 string += f"F{i}F{i + j}(FREEZE)=sqrt[(XCm{i}-XCm{i + j})^2+(YCm{i}-YCm{i + j})^2+(ZCm{i}-ZCm{i + j})^2]*0.529177\n"
         return string
 
-
     def set_list_of_atom_symbols(self):
         return [a.symbol for a in self.list_of_atoms()]
-

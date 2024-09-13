@@ -16,9 +16,8 @@ class products_writer:
 
     def save_products(self,molecules: [Molecule]):
         """
-        todo:saving this cant be saved in the input folder it needs to be there through out the
-        need to save input orientation, products observed and their RMSDs
-        :return:
+        save number of atoms, RMSD, xyz coordinates for each molecule observed.
+        :return None:
         """
         string = self.get_the_molecular_string(molecules)
         self.write_products_file(string)
@@ -77,7 +76,8 @@ class products_writer:
 
                 for atom_in_molecule in molecule.atoms:
                     for alone_atom in atomlist:
-                        # Assuming each atom has a method distance_between() and a property v_radius
+                        # Assuming if atoms are in the same molecule then atoms are closer than the sum of v_radius
+                        # between their distance
                         if atom_in_molecule.distance_between(alone_atom) < factor * (
                                 atom_in_molecule.v_radius + alone_atom.v_radius):
                             to_remove.append(alone_atom)

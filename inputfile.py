@@ -51,15 +51,6 @@ class InputFile:
                 print("incorrect format in inputfile ")
         return Molecule(atom_list)
 
-    # def set_origin_atom_list(self):
-    #     atom_list = []
-    #     for line in (self.data.split("\n\n")[2].split("\n")[1:]):
-    #         line_data = line.split()
-    #         if len(line_data) >= 4:  # linear convergence
-    #             atom_list.append(Atom(*line_data))
-    #         else:  # spherical convergence
-    #             return []
-    #     return atom_list
 
     def create_spherically_located_molecule_list(self):
 

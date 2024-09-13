@@ -2,8 +2,7 @@ import unittest
 import numpy as np
 
 from calculations.random_spherical_coords_generator import random_spherical_coordinates_generator
-from molecule import Molecule
-from spherical_grid_coordinates import spherically_converge_to_center, spherical_gird_coordinate_generation
+from spherical_grid_coordinates import spherically_converge_to_center
 from atoms.atoms import Atom
 
 

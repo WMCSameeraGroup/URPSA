@@ -2,7 +2,7 @@ from settings import input_file_directory,backend
 import subprocess
 
 
-def run_calculation(input_file): # todo: change commands to orca as well
+def run_calculation(input_file):
     if backend == "g16":
         gaussian_command = "g16 " +input_file_directory +'/'+ input_file
 
@@ -24,5 +24,4 @@ def run_calculation(input_file): # todo: change commands to orca as well
 
         except subprocess.CalledProcessError as e:
             print("Error running Gaussian job.")
-            #print("Error message:\n", e.stderr)
             return -2

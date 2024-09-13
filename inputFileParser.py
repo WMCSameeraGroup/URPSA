@@ -38,8 +38,13 @@ class CustomConfigParser:
                         multiline_value = value[:-1].strip() + '\n'
                         continue
                     else:
-                        self.data[current_section][key] = value
-                        continue
+                        try:
+                            self.data[current_section][key] = value
+                            continue
+                        except Exception as e:
+                            print(F"Error in the config file: {e}")
+                            exit()
+
 
                 # Continuation of a multiline value
                 if multiline_key and current_section:

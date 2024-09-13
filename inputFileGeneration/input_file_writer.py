@@ -5,12 +5,9 @@ from settings import input_file_name
 
 def setup_input_file(coordinate, template, system):
     return template + coordinate + system.molecules[0].to_str() + "\n\n\n\n"
-    # "H -0.89 -2.00 -0.89\nH -0.89 -2.00 0.89\nO -0.11 -1.00 -0.11"+'\n\n\n'
 
 
 def file_name_generator(number):
-    # todo : change this thing not to overight everything\built an archive folder to put previous calculations and add time to name
-    #
     return input_file_name + str(number) + ".com"
 
 

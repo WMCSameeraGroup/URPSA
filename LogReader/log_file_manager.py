@@ -25,8 +25,6 @@ class LogFileManager:
         return "Gaussian" in self.text
 
     def is_optimized_exp(self):
-        # Check if the geometry is optimized
-        # todo: fix this
         pattern = r"Frequencies --\s+(-?\d+\.\d+)"
         result = re.search(pattern, self.text)
         first_frequency = re.findall(r"(-?\d+\.\d+)", result.group())

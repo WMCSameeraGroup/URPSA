@@ -1,9 +1,6 @@
 """ go to log files directory starts reading them and log files from log files folder then
  grab the data required.
  """
-# todo: make a input and output file manager class/ run this in another thread to read and plot data while same
-#  calculations are done
-
 from settings import input_file_directory
 import os, re
 

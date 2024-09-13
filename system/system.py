@@ -45,7 +45,7 @@ class System:
 
         for molecule in self.molecules:
             atom_list.extend(molecule.atoms)
-        print(atom_list)
+        #print(atom_list)
         return atom_list
 
 

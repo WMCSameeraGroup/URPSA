@@ -10,18 +10,19 @@ class products_writer:
     def get_the_molecular_string(self, molecules):
         string = ''
         for molecule in molecules:
-            string += str(molecule.calculate_RMSD()) +"\n"+ molecule.to_str() +"\n"
+            string += f"{molecule.number_of_atoms()}\nRMSD {molecule.calculate_RMSD()}" +"\n"+ molecule.to_str() +"\n"
 
         return string
 
     def save_products(self,molecules: [Molecule]):
         """
-        todo:saving
+        todo:saving this cant be saved in the input folder it needs to be there through out the
         need to save input orientation, products observed and their RMSDs
         :return:
         """
         string = self.get_the_molecular_string(molecules)
         self.write_products_file(string)
+
 
 
 
@@ -54,7 +55,6 @@ class products_writer:
     def find_the_formation_of_products(self,file_list):
         """ find the minimum energy point"""
         minimum_index = 0
-        i = 0
         for j,i in enumerate(file_list):
             if i.is_converged == 0 and i.scf_done <= file_list[minimum_index].scf_done:
                 minimum_index = j

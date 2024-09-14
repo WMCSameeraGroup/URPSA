@@ -27,7 +27,7 @@ class products_writer:
 
     def get_products_list(self, symbols, output_file_list):
         if len(output_file_list)>0:
-            self.add_products(symbols,output_file_list)
+            return self.add_products(symbols,output_file_list)
         else:
             print("no output file is produced")
 
@@ -49,6 +49,9 @@ class products_writer:
             print(f"setp-{index} RMSD- {molecule.calculate_RMSD()}")
 
         self.save_products(molecules)
+        return molecules
+
+
 
 
     def find_the_formation_of_products(self,file_list):

@@ -1,8 +1,7 @@
-# from settings import input_file_directory,backend
 import subprocess
+from settings import backend
 
-
-def run_calculation(backend,input_file,input_file_directory):
+def run_calculation(input_file,input_file_directory):
     if backend == "g16":
         gaussian_command = "g16 " +input_file_directory +'/'+ input_file
 

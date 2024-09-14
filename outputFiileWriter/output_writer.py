@@ -1,6 +1,3 @@
-
-
-
 class OutputWriter:
 
     def __init__(self, input_file_directory,file="output2.xyz"):

@@ -1,13 +1,13 @@
 # This is a comment
 [project]
-project_name = test48901
+project_name = test48919
 input_file_name = Test
 
 [controls]
 # set this as false for now
 update_with_optimized_coordinates = True
-step_size = 0.1
-step_count = 30
+step_size = 0.2
+step_count = 10
 stop_distance_factor = 0.4
 
 sphere_radius = 4
@@ -19,7 +19,7 @@ spherical_placement = statistically_even
 
 
 [gaussian]
-number_of_cores = 10
+number_of_cores = 2
 memory = 2GB
 #method = #N b3lyp/3-21g opt=AddGIC  nosymm
 #method =#N opt(maxcycle=600,AddGIC) wb97xd/6-31g* scf(maxcyc=600,xqc) nosymm

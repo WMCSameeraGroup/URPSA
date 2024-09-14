@@ -11,6 +11,7 @@ from utils.ploting import plot_scatter, plot_the_graph
 from system.system import System
 from outputFiileWriter.setup import Setup
 from productCatogarization.catogarize_products import products_writer
+from productCatogarization.collection_of_products import productsManager
 
 try:
     file_path = sys.argv[1]
@@ -22,7 +23,7 @@ controls = InputFile(file_path)  # read input file and understand data
 system = System(controls.charge, controls.multiplicity, controls.method, controls.cores)
 setup = Setup(controls.project_name)
 
-
+products_collection = productsManager("Projects/"+controls.project_name+"/")
 for i in range(controls.n_iterations):
     system.remove_all_molecules()
     controls.set_molecule_list()
@@ -32,12 +33,13 @@ for i in range(controls.n_iterations):
     print(i)
     output_file_list = []
     new_name = "Projects/"+controls.project_name + "/" + setup.get_next_folder_name()
+
     #################################################################################
     for iteration in range(controls.step_count):
         spherical_gird_coordinate_generation(system.molecules, controls.step_count, controls.step_size)
         inputFile = system.generate_input_file(iteration,new_name)
         if is_not_highly_repulsive_spherically(system, controls.stop_distance_factor):
-            success = run_calculation("g16",inputFile,new_name)
+            success = run_calculation(inputFile,new_name)
             print(success)
             try:
                 log = LogFileManager(find_corresponding_output_file(inputFile),new_name)
@@ -65,8 +67,9 @@ for i in range(controls.n_iterations):
     plot_scatter(output_file_list, new_name)
     # find products and label them
     products = products_writer(new_name)
-    products.get_products_list(system.set_list_of_atom_symbols(), output_file_list)
+    products_molecules=products.get_products_list(system.set_list_of_atom_symbols(), output_file_list)
 
+    products_collection.write_product(i,products_molecules)
     # new_name = controls.project_name + "/" + setup.get_next_folder_name()
     # move_files_to_project_folder(new_name)
 

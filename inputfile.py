@@ -65,4 +65,4 @@ class InputFile:
 
 
 if __name__ == "__main__":
-    print(InputFile('config.txt').list_of_molecules)
+    print(InputFile('exampleInput.txt').list_of_molecules)

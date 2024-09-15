@@ -20,10 +20,11 @@ except:
     sys.exit()
 
 controls = InputFile(file_path)  # read input file and understand data
-system = System(controls.charge, controls.multiplicity, controls.method, controls.cores)
+system = System(controls.charge, controls.multiplicity, controls.method, controls.cores, controls.memory)
 setup = Setup(controls.project_name)
 
-products_collection = productsManager("Projects/"+controls.project_name+"/")
+
+products_collection = productsManager(controls.project_name+"/")
 for i in range(controls.n_iterations):
     system.remove_all_molecules()
     controls.set_molecule_list()
@@ -32,8 +33,8 @@ for i in range(controls.n_iterations):
     system.random_rotate_molecules()
     print(i)
     output_file_list = []
-    new_name = "Projects/"+controls.project_name + "/" + setup.get_next_folder_name()
-
+    # new_name = "Projects/"+controls.project_name + "/" + setup.get_next_folder_name()
+    new_name = controls.project_name + "/" + setup.get_next_folder_name()
     #################################################################################
     for iteration in range(controls.step_count):
         spherical_gird_coordinate_generation(system.molecules, controls.step_count, controls.step_size)
@@ -70,7 +71,10 @@ for i in range(controls.n_iterations):
     products_molecules=products.get_products_list(system.set_list_of_atom_symbols(), output_file_list)
 
     products_collection.write_product(i,products_molecules)
-    # new_name = controls.project_name + "/" + setup.get_next_folder_name()
-    # move_files_to_project_folder(new_name)
+    print("number of similar products found")
+    print(products_collection.check_number_of_times_same_products_were_observed(i,products_molecules))
+
+
+    # todo:if n times same molecules were found exit the loop
 
 ####################################################################################

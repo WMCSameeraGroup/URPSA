@@ -2,14 +2,15 @@
 
 
 
-def get_input_template(number, system, method,num_of_cores,inp_dir,memory="2GB"):
+def get_input_template(number, system,inp_dir):
     # gonna replace title value
-    return """%NProcShared={5}
-%chk={3}/test{0}.chk
-{4}
+    return f"""%NProcShared={system.number_of_cores}
+%Mem={system.memory}
+%chk={inp_dir}/test{number}.chk
+{system.method}
 
-Title{0}
+Title{number}
  
-{1} {2}	\n""".format(number, system.charge, system.multiplicity, inp_dir, method,num_of_cores)
+{system.charge} {system.multiplicity}	\n"""
 
 

@@ -11,7 +11,7 @@ from inputFileGeneration.write_input_file import generate_input_file
 
 class System:
 
-    def __init__(self, charge, multiplicity, method, cores):
+    def __init__(self, charge, multiplicity, method, cores,memory):
         self.molecules = []
         self.charge = charge
         self.multiplicity = multiplicity
@@ -20,6 +20,7 @@ class System:
         self.number_of_atoms = self.cal_number_of_atoms()
         self.iteration = 0
         self.energy = 0.0
+        self.memory = memory
 
     def add_molecule(self, molecule):
         self.molecules.append(molecule)
@@ -51,7 +52,7 @@ class System:
     def generate_input_file(self, number,input_file_directory):
         """write input file in the inputFiles directory """
         string_of_coordinates = self.get_string_of_atoms_and_coordinates()
-        template_str = get_input_template(number, self, self.method, self.number_of_cores,input_file_directory)
+        template_str = get_input_template(number, self, input_file_directory)
         file_name = file_name_generator(number)
         com_constraints = self.add_additinal_constrains()
         string_to_be_written = self.additional_gaussian_requirments_implementation_to_inputfile_str(

@@ -1,4 +1,4 @@
-##Unbiased Reaction Path Search Algorithm (URPSA)
+## Unbiased Reaction Path Search Algorithm (URPSA)
 ## How to install 
 
 ```bash 
@@ -11,7 +11,8 @@ To run the program you need to specify the path of the configuration file to the
 
 the following command can be used to run the program
 ```bash
-python3 repeated.py config.txt
+export $URPSA="/<path-to-URPSA-directory>/repeated.py"
+python3 $URPSA exampleInput.txt
 ```
 
 ## Input change
@@ -23,7 +24,7 @@ predefined variables are placed on the left hand side and the values are defined
 [section]
 variable = value
 ```
-modify the config file to enter the inputs (*Molecules*, step_size, step_count, and etc )
+modify the input file to enter the inputs (*Molecules*, step_size, step_count, and etc )
 ```buildoutcfg
 # This is a comment
 [project]
@@ -78,4 +79,4 @@ H -0.53442410 -2.61684869 0.7845733
 ```
 
 ## output data
-project outputs are saved in the *Projects* directory 
+project outputs are saved in a directory inside the pwd

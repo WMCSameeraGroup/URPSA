@@ -1,6 +1,6 @@
 # This is a comment
 [project]
-project_name = test48919
+project_name = test48923
 input_file_name = Test
 
 [controls]
@@ -12,7 +12,7 @@ stop_distance_factor = 0.4
 
 sphere_radius = 4
 # number of iterations needs to run with different orientations
-n_iterations = 3
+n_iterations = 10
 
 # Total_random or statistically_even or False
 spherical_placement = statistically_even

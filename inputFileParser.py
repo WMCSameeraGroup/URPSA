@@ -62,7 +62,7 @@ class CustomConfigParser:
 
 if __name__ == "__main__":
     config = CustomConfigParser()
-    config.read('config.txt')
+    config.read('exampleInput.txt')
     value = config.get('General', 'key2')
     print(value)
 

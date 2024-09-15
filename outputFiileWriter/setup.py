@@ -6,7 +6,8 @@ import sys
 class Setup:
 
     def __init__(self,name):
-        self.project_dir = "Projects/"+name
+        # self.project_dir = "Projects/"+name
+        self.project_dir = name
         self.project_exists()
 
     def project_exists(self):

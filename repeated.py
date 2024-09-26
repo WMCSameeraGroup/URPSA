@@ -35,12 +35,16 @@ for i in range(controls.n_iterations):
     output_file_list = []
     # new_name = "Projects/"+controls.project_name + "/" + setup.get_next_folder_name()
     new_name = controls.project_name + "/" + setup.get_next_folder_name()
+    is_all_calculations_converged = True
     #################################################################################
     for iteration in range(controls.step_count):
         spherical_gird_coordinate_generation(system.molecules, controls.step_count, controls.step_size)
         inputFile = system.generate_input_file(iteration,new_name)
         if is_not_highly_repulsive_spherically(system, controls.stop_distance_factor):
             success = run_calculation(inputFile,new_name)
+            if success !=0:
+                is_all_calculations_converged = False
+                break
             print(success)
             try:
                 log = LogFileManager(find_corresponding_output_file(inputFile),new_name)
@@ -63,17 +67,20 @@ for i in range(controls.n_iterations):
         else:
             print(f"{inputFile} is too repulsive to calculate")
             break  # stop if repulsion was encountered
-
     plot_the_graph(output_file_list, new_name)
     plot_scatter(output_file_list, new_name)
-    # find products and label them
-    products = products_writer(new_name)
-    products_molecules=products.get_products_list(system.set_list_of_atom_symbols(), output_file_list)
 
-    products_collection.write_product(i,products_molecules)
-    print("number of similar products found")
-    print(products_collection.check_number_of_times_same_products_were_observed(i,products_molecules))
+    if is_all_calculations_converged:
+        # find products and label them
+        products = products_writer(new_name)
+        products_molecules=products.get_products_list(system.set_list_of_atom_symbols(), output_file_list)
 
+        products_collection.write_product(i,products_molecules)
+        print("number of similar products found")
+        print(products_collection.check_number_of_times_same_products_were_observed(i,products_molecules))
+    else:
+        # todo: delete the file or do something
+        pass
 
     # todo:if n times same molecules were found exit the loop
 

@@ -65,6 +65,7 @@ class products_writer:
 
 
     def get_molecules(self, atomlist, factor=1):
+        """ separate system into individual molecules"""
         list_of_molecules = []
 
         while len(atomlist) > 0:

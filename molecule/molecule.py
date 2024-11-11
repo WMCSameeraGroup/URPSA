@@ -21,6 +21,9 @@ class Molecule:
         self.setAtomNewCoords()
         return self
 
+    def print_center_of_mass(self):
+        print([self.x,self.y,self.z])
+
     def rotation_yz(self, angle):
         rot_mat = np.array([[1, 0, 0], [0, np.cos(angle), -np.sin(angle)], [0, np.sin(angle), np.cos(angle)]])
         rotated_xyz = np.dot(self.xyz, rot_mat.T)

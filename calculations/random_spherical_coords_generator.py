@@ -54,4 +54,4 @@ def spherical_coordinates_to_xyz(r, theta, phi):
 
 
 if __name__ == "__main__":
-    print(len(exact_equidistributed_point_generator(2, 100)))
+    print(exact_equidistributed_point_generator(2, 100))

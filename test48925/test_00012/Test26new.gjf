@@ -1,0 +1,42 @@
+%nprocshared=2
+%mem=2GB
+%chk=C:\Users\Gaming\PycharmProjects\computationalChemistryProj1\test48925\test_00012\Test26new.chk
+# opt=(calcfc,ts,maxcycle=200) hf/3-21g* nosymm geom=connectivity
+scf=(maxcyc=200,xqc)
+
+Title26
+
+0 2
+ C                  0.32494701   -0.08188398   -0.78867434
+ H                  0.50086701   -0.19225898   -1.84941534
+ H                  0.06815401    0.95307302   -0.61411634
+ H                  1.16515701   -0.38110898   -0.20253734
+ O                 -0.87486099   -0.84146998   -0.39531534
+ H                 -0.98435099   -1.64096298   -0.93083634
+ O                 -1.38301768    0.55008336   -2.27712196
+ H                 -1.47852768    0.04471236   -1.42014496
+
+ 1 2 1.0 3 1.0 4 1.0 5 1.0
+ 2
+ 3
+ 4
+ 5 6 1.0
+ 6
+ 7 8 1.0
+ 8
+
+XCm1 (Inactive) = XCntr(1-6)
+YCm1 (Inactive) = YCntr(1-6)
+ZCm1 (Inactive)= ZCntr(1-6)
+XCm2 (Inactive) = XCntr(7,8)
+YCm2 (Inactive) = YCntr(7,8)
+ZCm2 (Inactive)= ZCntr(7,8)
+F1F2(FREEZE)=sqrt[(XCm1-XCm2)^2+(YCm1-YCm2)^2+(ZCm1-ZCm2)^2]*0.529177
+
+
+
+
+
+
+
+

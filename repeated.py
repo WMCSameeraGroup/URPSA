@@ -31,9 +31,9 @@ for i in range(controls.n_iterations):
     system.add_list_of_molecules(controls.list_of_molecules)
     system.re_orient_molecules(controls)
     system.random_rotate_molecules()
-    print(i)
     output_file_list = []
-    # new_name = "Projects/"+controls.project_name + "/" + setup.get_next_folder_name()
+    print(i)
+    new_name = "Projects/"+controls.project_name + "/" + setup.get_next_folder_name()
     new_name = controls.project_name + "/" + setup.get_next_folder_name()
     is_all_calculations_converged = True
     #################################################################################

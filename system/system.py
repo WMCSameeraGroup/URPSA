@@ -111,23 +111,27 @@ class System:
         for molecule in self.molecules:
             if controls.spherical_placement == "Total_random":
                 molecule.update_coordinates(*random_spherical_coordinates_generator(controls.sphere_radius))
+
             elif controls.spherical_placement == "statistically_even":
                 molecule.update_coordinates(*equidistributed_points_generator(controls.sphere_radius))
+                #molecule.print_center_of_mass()
         return True
 
-    def change_orientations_of_molecules(self, controls):
-        if controls.spherical_placement == "False":
-            return False
-        for molecule in self.molecules:
-            if controls.change_orientation == "Total_random":
-                molecule.update_coordinates(*random_spherical_coordinates_generator(controls.sphere_radius))
-            elif controls.change_orientation == "statistically_even":
-                molecule.update_coordinates(*equidistributed_points_generator(controls.sphere_radius))
-        return True
+    # def change_orientations_of_molecules(self, controls):
+    #     if controls.spherical_placement == "False":
+    #         return False
+    #     for molecule in self.molecules:
+    #         if controls.change_orientation == "Total_random":
+    #             molecule.update_coordinates(*random_spherical_coordinates_generator(controls.sphere_radius))
+    #         elif controls.change_orientation == "statistically_even":
+    #             molecule.update_coordinates(*equidistributed_points_generator(controls.sphere_radius))
+    #     return True
 
     def random_rotate_molecules(self):
+
         for molecule in self.molecules:
             molecule.rotation_xy(uniform(0, math.pi)).rotation_yz(uniform(0, math.pi)).rotation_xz(uniform(0, math.pi))
+
 
     def add_additinal_constrains(self):
         """ add center of mass constrains using GIC
@@ -149,7 +153,11 @@ class System:
 
         for molecule in self.molecules:
             f += len(molecule.atoms)
-            string += f"XCm{n} (Inactive) = XCntr({two_or_more(s, f)}) \nYCm{n} (Inactive) = YCntr({two_or_more(s, f)}) \nZCm{n} (Inactive)= ZCntr({two_or_more(s, f)})\n"
+            if len(molecule.atoms)==1:
+                string += f"XCm{n} (Inactive) = XCntr({s}) \nYCm{n} (Inactive) = YCntr({s}) \nZCm{n} (Inactive)= ZCntr({s})\n"
+
+            else:
+                string += f"XCm{n} (Inactive) = XCntr({two_or_more(s, f)}) \nYCm{n} (Inactive) = YCntr({two_or_more(s, f)}) \nZCm{n} (Inactive)= ZCntr({two_or_more(s, f)})\n"
             n += 1
             s = f + 1
 

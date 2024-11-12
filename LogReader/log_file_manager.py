@@ -35,7 +35,7 @@ class LogFileManager:
         scf_match = re.findall(r'SCF Done: .*', self.text)
 
         if scf_match:
-            self.scf_done = re.findall(r'-\d+.\d+', scf_match[-1])[0]
+            self.scf_done = re.findall(r'-?\d+\.\d+', scf_match[-1])[0]
             return self.scf_done
         else:
             self.scf_done = "could not found"

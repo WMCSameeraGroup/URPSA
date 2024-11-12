@@ -9,10 +9,11 @@ update_with_optimized_coordinates = True
 step_size = 0.1
 step_count = 400
 stop_distance_factor = 0.2
+stress_release = 0:10:400
 
 sphere_radius = 20
 # number of iterations needs to run with different orientations
-n_iterations = 2
+n_iterations = 5
 
 # Total_random or statistically_even or False
 spherical_placement = statistically_even

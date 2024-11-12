@@ -1,6 +1,8 @@
 import math
 from random import uniform
 
+from PIL.ImImagePlugin import number
+
 from calculations.random_spherical_coords_generator import random_spherical_coordinates_generator, \
     equidistributed_points_generator
 from inputFileGeneration.input_file_writer import file_name_generator
@@ -11,7 +13,7 @@ from inputFileGeneration.write_input_file import generate_input_file
 
 class System:
 
-    def __init__(self, charge, multiplicity, method, cores,memory):
+    def __init__(self, charge, multiplicity, method, cores,memory, stress_release):
         self.molecules = []
         self.charge = charge
         self.multiplicity = multiplicity
@@ -21,6 +23,7 @@ class System:
         self.iteration = 0
         self.energy = 0.0
         self.memory = memory
+        self.stress_release = stress_release
 
     def add_molecule(self, molecule):
         self.molecules.append(molecule)
@@ -54,7 +57,7 @@ class System:
         string_of_coordinates = self.get_string_of_atoms_and_coordinates()
         template_str = get_input_template(number, self, input_file_directory)
         file_name = file_name_generator(number)
-        com_constraints = self.add_additinal_constrains()
+        com_constraints = self.add_additinal_constrains(number)
         string_to_be_written = self.additional_gaussian_requirments_implementation_to_inputfile_str(
             string_of_coordinates, template_str, com_constraints)
         generate_input_file(file_name,input_file_directory ,string_to_be_written)
@@ -133,7 +136,7 @@ class System:
             molecule.rotation_xy(uniform(0, math.pi)).rotation_yz(uniform(0, math.pi)).rotation_xz(uniform(0, math.pi))
 
 
-    def add_additinal_constrains(self):
+    def add_additinal_constrains(self,number):
         """ add center of mass constrains using GIC
             def :  https://gaussian.com/gic/ ,
                     https://gaussian.com/geom/
@@ -143,6 +146,8 @@ class System:
         n = 1
         s = 1
         f = 0
+        if number in self.stress_release:
+            return string
 
         def two_or_more(s, f):
             """replace dash with comma if there are only 2 atoms in a molecule"""

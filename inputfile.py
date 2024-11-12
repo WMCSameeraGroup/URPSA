@@ -20,6 +20,7 @@ class InputFile:
         self.multiplicity = int(float(self.config.get('molecules', 'multiplicity')))
         self.number_of_molecules = int(self.config.get('molecules', 'number_of_molecules'))
         self.n_iterations = int(self.config.get('controls', 'n_iterations'))
+        self.stress_release = self.set_stress_release()
         # self.rotation_random = "random" in self.data.split("\n\n")[4].split()
         # self.rotation_step = self.set_rotation_step()
         self.spherical_placement = self.config.get('controls', 'spherical_placement')
@@ -62,6 +63,13 @@ class InputFile:
             elif self.spherical_placement == "statistically_even":
                 molecule.update_coordinates(*equidistributed_points_generator(self.sphere_radius))
         return True
+
+    def set_stress_release(self):
+        comm = self.config.get('controls', 'stress_release')
+        start = comm.split(":")[0]
+        step = comm.split(":")[1]
+        end = comm.split(":")[2]
+        return [i for i in range(int(start), int(end), int(step))]
 
 
 if __name__ == "__main__":

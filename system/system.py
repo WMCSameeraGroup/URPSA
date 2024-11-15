@@ -13,7 +13,7 @@ from inputFileGeneration.write_input_file import generate_input_file
 
 class System:
 
-    def __init__(self, charge, multiplicity, method, cores,memory, stress_release):
+    def __init__(self, charge, multiplicity, method, cores,memory, stress_release, additinal_constraints):
         self.molecules = []
         self.charge = charge
         self.multiplicity = multiplicity
@@ -24,6 +24,7 @@ class System:
         self.energy = 0.0
         self.memory = memory
         self.stress_release = stress_release
+        self.additinal_constrains = additinal_constraints
 
     def add_molecule(self, molecule):
         self.molecules.append(molecule)
@@ -147,6 +148,9 @@ class System:
         s = 1
         f = 0
         if number in self.stress_release:
+            return string
+        elif self.additinal_constrains:
+            string += self.additinal_constrains
             return string
 
         def two_or_more(s, f):

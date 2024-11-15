@@ -32,6 +32,7 @@ class InputFile:
         # update with
         self.update_with_optimized_coordinates = self.config.get('controls', 'update_with_optimized_coordinates')
         self.is_placed_on_sphere = self.create_spherically_located_molecule_list()
+        self.additional_constraints = self.set_additional_constraints()
 
     def set_molecule_list(self):
         molecule_list = []
@@ -41,6 +42,10 @@ class InputFile:
 
         self.list_of_molecules =molecule_list
         return molecule_list
+
+    def set_additional_constraints(self):
+        string = self.config.get('Additional', "constraints").replace("/-", "=")
+        return string
 
     def set_molecule(self, string):
         atom_list = []

@@ -20,7 +20,7 @@ except:
     sys.exit()
 
 controls = InputFile(file_path)  # read input file and understand data
-system = System(controls.charge, controls.multiplicity, controls.method, controls.cores, controls.memory,controls.stress_release)
+system = System(controls.charge, controls.multiplicity, controls.method, controls.cores, controls.memory,controls.stress_release, controls.additional_constraints)
 setup = Setup(controls.project_name)
 
 
@@ -44,7 +44,7 @@ for i in range(controls.n_iterations):
             success = run_calculation(inputFile,new_name)
             if success !=0:
                 is_all_calculations_converged = False
-                break
+
             print(success)
             try:
                 log = LogFileManager(find_corresponding_output_file(inputFile),new_name)

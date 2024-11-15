@@ -1,6 +1,6 @@
 # This is a comment
 [project]
-project_name = test48922
+project_name = test48924
 input_file_name = Test
 
 [controls]
@@ -18,6 +18,8 @@ n_iterations = 100
 # Total_random or statistically_even or False
 spherical_placement = statistically_even
 
+# add COM constraints = True
+ADD_COM_CONST = True
 
 [gaussian]
 number_of_cores = 8
@@ -45,4 +47,11 @@ H -0.53442410 -2.61684869 0.78457331
 1 = O -0.21607949 -2.16440926 0.00000000\
 H -0.53442410 -2.61684869 0.7845733
 
-
+[Additional]
+constraints = XCm1 (Inactive) /- XCntr(1-6) \
+YCm1 (Inactive) /- YCntr(1-6) \
+ZCm1 (Inactive) /- ZCntr(1-6)\
+XCm2 (Inactive)  /- XCntr(7)\
+YCm2 (Inactive)  /- YCntr(7) \
+ZCm2 (Inactive) /- ZCntr(7)\
+F1F2(FREEZE) /- sqrt[(XCm1-XCm2)^2+(YCm1-YCm2)^2+(ZCm1-ZCm2)^2]*0.529177

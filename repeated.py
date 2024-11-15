@@ -20,7 +20,7 @@ except:
     sys.exit()
 
 controls = InputFile(file_path)  # read input file and understand data
-system = System(controls.charge, controls.multiplicity, controls.method, controls.cores, controls.memory,controls.stress_release, controls.additional_constraints)
+system = System(controls)
 setup = Setup(controls.project_name)
 
 

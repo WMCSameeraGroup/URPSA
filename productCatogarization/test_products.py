@@ -8,7 +8,7 @@ class TestMoleculeFunctions(unittest.TestCase):
         symbols = ['H', 'O', 'H']
         opt_coords = [(0, 0, 0), (0, 1, 0), (1, 0, 0)]
 
-        atom_list = products.get_atom_list(symbols, opt_coords)
+        atom_list = get_atom_list(symbols, opt_coords)
 
         self.assertEqual(len(atom_list), 3, "Expected 3 atoms in the list")
         self.assertEqual(atom_list[0].symbol, 'H')
@@ -37,7 +37,7 @@ class TestMoleculeFunctions(unittest.TestCase):
         atoms = [atom1, atom2, atom3, atom4]
 
         # Assuming get_molecules uses the distance and v_radius properties to group atoms into molecules
-        molecules = products.get_molecules(atoms, factor=1)
+        molecules = get_molecules(atoms, factor=1)
 
         self.assertEqual(len(molecules), 3, "Expected 3 molecules formed")
         molecule_sizes = sorted([len(molecule.atoms) for molecule in molecules])

@@ -10,7 +10,6 @@ from inputFileGeneration.input_template import get_input_template
 from inputFileGeneration.write_input_file import generate_input_file
 
 
-
 class System:
 
     def __init__(self, controls):
@@ -25,9 +24,15 @@ class System:
         self.memory = controls.memory
         self.stress_release = controls.stress_release
         self.additinal_constraints = controls.additional_constraints
+        self.controls = controls
 
     def add_molecule(self, molecule):
         self.molecules.append(molecule)
+
+    def replace_molecules(self, molecules):
+        print(molecules)
+        self.remove_all_molecules()
+        self.add_list_of_molecules(molecules)
 
     def add_list_of_molecules(self, list):
         self.molecules += list
@@ -53,7 +58,7 @@ class System:
             atom_list.extend(molecule.atoms)
         return atom_list
 
-    def generate_input_file(self, number,input_file_directory):
+    def generate_input_file(self, number, input_file_directory):
         """write input file in the inputFiles directory """
         string_of_coordinates = self.get_string_of_atoms_and_coordinates()
         template_str = get_input_template(number, self, input_file_directory)
@@ -61,7 +66,7 @@ class System:
         com_constraints = self.add_additinal_constrains(number)
         string_to_be_written = self.additional_gaussian_requirments_implementation_to_inputfile_str(
             string_of_coordinates, template_str, com_constraints)
-        generate_input_file(file_name,input_file_directory ,string_to_be_written)
+        generate_input_file(file_name, input_file_directory, string_to_be_written)
         return file_name
 
     def get_string_of_atoms_and_coordinates(self):
@@ -118,7 +123,7 @@ class System:
 
             elif controls.spherical_placement == "statistically_even":
                 molecule.update_coordinates(*equidistributed_points_generator(controls.sphere_radius))
-                #molecule.print_center_of_mass()
+                # molecule.print_center_of_mass()
         return True
 
     # def change_orientations_of_molecules(self, controls):
@@ -136,39 +141,29 @@ class System:
         for molecule in self.molecules:
             molecule.rotation_xy(uniform(0, math.pi)).rotation_yz(uniform(0, math.pi)).rotation_xz(uniform(0, math.pi))
 
-
-    def add_additinal_constrains(self,number):
+    def add_additinal_constrains(self, number):
         """ add center of mass constrains using GIC
             def :  https://gaussian.com/gic/ ,
                     https://gaussian.com/geom/
                     https://mattermodeling.stackexchange.com/questions/12004/gaussian-16-relaxed-scan-using-jacobi-coordinates-expressed-using-generalized-i/12005#12005
         """
         string = "\n\n"
-        n = 1
-        s = 1
-        f = 0
+
         if number in self.stress_release:
             return string
-        elif self.additinal_constraints:
+        elif self.additinal_constraints and self.controls.ADD_COM_CONST == "True":
             string += self.additinal_constraints
             return string
 
-        def two_or_more(s, f):
+        def list_of_atoms(molecule1):
             """replace dash with comma if there are only 2 atoms in a molecule"""
-            if s + 1 == f:
-                return f"{s},{f}"
-            else:
-                return f"{s}-{f}"
+            number_string = ""
+            for atom in molecule1.atoms:
+                number_string += f"{atom.number},"
+            return number_string[0:-1]
 
-        for molecule in self.molecules:
-            f += len(molecule.atoms)
-            if len(molecule.atoms)==1:
-                string += f"XCm{n} (Inactive) = XCntr({s}) \nYCm{n} (Inactive) = YCntr({s}) \nZCm{n} (Inactive)= ZCntr({s})\n"
-
-            else:
-                string += f"XCm{n} (Inactive) = XCntr({two_or_more(s, f)}) \nYCm{n} (Inactive) = YCntr({two_or_more(s, f)}) \nZCm{n} (Inactive)= ZCntr({two_or_more(s, f)})\n"
-            n += 1
-            s = f + 1
+        for n, molecule in enumerate(self.molecules):
+            string += f"XCm{n+1} (Inactive) = XCntr({list_of_atoms(molecule)}) \nYCm{n+1} (Inactive) = YCntr({list_of_atoms(molecule)}) \nZCm{n+1} (Inactive) = ZCntr({list_of_atoms(molecule)})\n"
 
         n_mol = len(self.molecules)
         for i in range(n_mol - 1):

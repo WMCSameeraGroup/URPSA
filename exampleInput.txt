@@ -1,6 +1,6 @@
 # This is a comment
 [project]
-project_name = test48924
+project_name = test48927
 input_file_name = Test
 
 [controls]
@@ -9,17 +9,16 @@ update_with_optimized_coordinates = True
 step_size = 0.1
 step_count = 40
 stop_distance_factor = 0.4
-stress_release = 0:10:40
+stress_release = -1:50:57
 
-sphere_radius = 4
-# number of iterations needs to run with different orientations
-n_iterations = 100
+
 
 # Total_random or statistically_even or False
 spherical_placement = statistically_even
 
 # add COM constraints = True
-ADD_COM_CONST = True
+ADD_COM_CONST = False
+dynamic_fragment_replacement = True
 
 [gaussian]
 number_of_cores = 8
@@ -48,6 +47,8 @@ H -0.53442410 -2.61684869 0.78457331
 H -0.53442410 -2.61684869 0.7845733
 
 [Additional]
+# use /- instead of = sign when using inside values
+
 constraints = XCm1 (Inactive) /- XCntr(1-6) \
 YCm1 (Inactive) /- YCntr(1-6) \
 ZCm1 (Inactive) /- ZCntr(1-6)\

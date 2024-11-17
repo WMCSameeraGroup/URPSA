@@ -2,7 +2,8 @@ from .constants import MASS,VANDER_WALLS
 
 class Atom:
 
-    def __init__(self,symbol,x,y,z, fixed="False"):
+    def __init__(self, symbol, x, y, z, number, fixed="False"):
+        self.number = number
         self.symbol = symbol
         self.mass = MASS[symbol]
         self.v_radius = VANDER_WALLS[symbol]

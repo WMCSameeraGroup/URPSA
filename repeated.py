@@ -3,14 +3,14 @@ from LogReader.log_file_manager import LogFileManager
 from calculations.calculation_manager import run_calculation
 from LogReader.log_file_reader import find_corresponding_output_file
 from inputFileGeneration.spherical_grid_coordinates import spherical_gird_coordinate_generation
-from inputfile import InputFile
+from setup.inputfile import InputFile
 from calculations.Is_too_close import is_not_highly_repulsive_spherically
 
 from outputFiileWriter.output_writer import OutputWriter
 from utils.ploting import plot_scatter, plot_the_graph
 from system.system import System
 from outputFiileWriter.setup import Setup
-from productCatogarization.catogarize_products import products_writer
+from productCatogarization.catogarize_products import products_writer,get_new_molecules
 from productCatogarization.collection_of_products import productsManager
 
 try:
@@ -33,7 +33,7 @@ for i in range(controls.n_iterations):
     system.random_rotate_molecules()
     output_file_list = []
     print(i)
-    new_name = "Projects/"+controls.project_name + "/" + setup.get_next_folder_name()
+    # new_name = "Projects/"+controls.project_name + "/" + setup.get_next_folder_name()
     new_name = controls.project_name + "/" + setup.get_next_folder_name()
     is_all_calculations_converged = True
     #################################################################################
@@ -62,6 +62,9 @@ for i in range(controls.n_iterations):
             if controls.update_with_optimized_coordinates == "True" and success == 0:
                 print("update_with_optimized_coordinates")
                 system.set_moleculer_coordinates(log.opt_coords)
+                if controls.dynamic_fragment_replacement == "True":
+                    system.replace_molecules(get_new_molecules(system.set_list_of_atom_symbols(), log))
+
 
             OutputWriter(new_name).write_xyz_file(system, log.opt_coords)
         else:

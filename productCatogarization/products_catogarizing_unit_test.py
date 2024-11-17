@@ -14,7 +14,7 @@ class TestGetMolecules(unittest.TestCase):
 
         atoms = [atom1, atom2, atom3, atom4, atom5]
 
-        molecules_list = products.get_molecules(atoms)
+        molecules_list = get_molecules(atoms)
 
         # Expecting 3 molecules: one with two H atoms, one with two O atoms, and one with one C atom
         self.assertEqual(len(molecules_list), 3, f"Expected 3 molecules, got {len(molecules_list)}")
@@ -37,7 +37,7 @@ class TestGetMolecules(unittest.TestCase):
 
         atoms = [atom1, atom2, atom3, atom4, atom5, atom6, atom7, atom8, atom9, atom10]
 
-        molecules_list = products.get_molecules(atoms)
+        molecules_list = get_molecules(atoms)
 
         # Expecting 4 molecules: H2O molecule, CO molecule, CN molecule, and an NOH molecule
         self.assertEqual(len(molecules_list), 4, f"Expected 4 molecules, got {len(molecules_list)}")
@@ -49,7 +49,7 @@ class TestGetMolecules(unittest.TestCase):
         # Edge case: No atoms
         products = products_writer()
         atoms = []
-        molecules_list = products.get_molecules(atoms)
+        molecules_list = get_molecules(atoms)
         self.assertEqual(len(molecules_list), 0, f"Expected 0 molecules, got {len(molecules_list)}")
 
         # Edge case: All atoms too far apart to form molecules
@@ -58,7 +58,7 @@ class TestGetMolecules(unittest.TestCase):
         atom3 = Atom('O', 200, 200, 200)
         atoms = [atom1, atom2, atom3]
 
-        molecules_list = products.get_molecules(atoms)
+        molecules_list = get_molecules(atoms)
         self.assertEqual(len(molecules_list), 3, f"Expected 3 separate molecules, got {len(molecules_list)}")
 
         molecule_sizes = sorted([len(molecule.atoms) for molecule in molecules_list])
@@ -83,10 +83,10 @@ class TestMoleculeFormation(unittest.TestCase):
 
         # Create atoms list
 
-        atom_list = products.get_atom_list(symbols, coords)
+        atom_list = get_atom_list(symbols, coords)
 
         # Call get_molecules function
-        molecules = products.get_molecules(atom_list, factor=1)
+        molecules = get_molecules(atom_list, factor=1)
 
         # Assert on the number of molecules formed
         self.assertEqual(2, len(molecules), "Expected 2 molecules formed")
@@ -110,10 +110,10 @@ class TestMoleculeFormation(unittest.TestCase):
         ]
 
         # Create atoms list
-        atom_list = products.get_atom_list(symbols, coords)
+        atom_list = get_atom_list(symbols, coords)
 
         # Call get_molecules function
-        molecules = products.get_molecules(atom_list, factor=0.9)
+        molecules = get_molecules(atom_list, factor=0.9)
 
         # Assert on the number of molecules formed
         self.assertEqual(1, len(molecules), "Expected 2 molecules formed")

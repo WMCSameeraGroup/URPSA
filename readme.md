@@ -28,31 +28,32 @@ modify the input file to enter the inputs (*Molecules*, step_size, step_count, a
 ```buildoutcfg
 # This is a comment
 [project]
-#define project name this have to be change everytime to a non exisiting name 
-project_name = stable code 4
+project_name = test48927
 input_file_name = Test
 
 [controls]
 # set this as false for now
 update_with_optimized_coordinates = True
-step_size = 0.2
-step_count = 30
+step_size = 0.1
+step_count = 40
 stop_distance_factor = 0.4
+stress_release = -1:50:57
 
-sphere_radius = 4
-# number of iterations needs to run with different orientations
-n_iterations = 10
+
 
 # Total_random or statistically_even or False
 spherical_placement = statistically_even
 
+# add COM constraints = True
+ADD_COM_CONST = False
+dynamic_fragment_replacement = True
 
 [gaussian]
-number_of_cores = 10
-memory = 2GB
+number_of_cores = 8
+memory = 8GB
 #method = #N b3lyp/3-21g opt=AddGIC  nosymm
-method =#N opt(maxcycle=1200,AddGIC) wb97xd/6-31g* scf(maxcyc=1200,xqc) nosymm
-#method =#N opt(maxcycle=200,AddGIC) HF/3-21g* scf(maxcyc=200,xqc) nosymm
+method =#N opt(maxcycle=600,AddGIC) PM6 scf(maxcyc=600,xqc) nosymm
+#method =#N opt(maxcycle=100,AddGIC) HF/3-21g* scf(maxcyc=120,xqc) nosymm
 # use dft
 
 
@@ -73,10 +74,50 @@ H -0.53442410 -2.61684869 0.78457331
 1 = O -0.21607949 -2.16440926 0.00000000\
 H -0.53442410 -2.61684869 0.7845733
 
+[Additional]
+# use /- instead of = sign when using inside values
 
-
+constraints = XCm1 (Inactive) /- XCntr(1-6) \
+YCm1 (Inactive) /- YCntr(1-6) \
+ZCm1 (Inactive) /- ZCntr(1-6)\
+XCm2 (Inactive)  /- XCntr(7)\
+YCm2 (Inactive)  /- YCntr(7) \
+ZCm2 (Inactive) /- ZCntr(7)\
+F1F2(FREEZE) /- sqrt[(XCm1-XCm2)^2+(YCm1-YCm2)^2+(ZCm1-ZCm2)^2]*0.529177
 
 ```
 
+
 ## output data
 project outputs are saved in a directory inside the pwd
+
+## defaults values 
+the default values are stored as a dictionary 
+
+```python
+
+defaults = {
+    "project": {
+        "project_name": "test1",
+        "input_file_name": "Test"
+    },
+    "controls": {
+        "update_with_optimized_coordinates": "True",
+        "step_size": 0.1,
+        "step_count": 40,
+        "stop_distance_factor": 0.4,
+        "stress_release": "0:10:40",
+        "sphere_radius": 4,
+        "n_iterations": 100,
+        "spherical_placement": "statistically_even",
+        "ADD_COM_CONST": "False"
+    },
+    "gaussian": {
+        "number_of_cores": 8,
+        "memory": "8GB",
+        "method": "#N opt(maxcycle=600,AddGIC) PM6 scf(maxcyc=600,xqc) nosymm"
+    }
+}
+
+```
+

@@ -11,7 +11,6 @@ To run the program you need to specify the path of the configuration file to the
 
 the following command can be used to run the program
 ```bash
-
 python3 "/<path-to-URPSA-directory>/repeated.py" exampleInput.txt
 ```
 
@@ -120,4 +119,12 @@ defaults = {
 }
 
 ```
+
+## output format 
+
+
+each reaction path is saved with a folder named as test_00001 and gaussian calculations files(input file, output files) are stored. 
+further a scattor plot of the energy of converged structures as scattor.jpg and a xyz file is produced to see the trajectory. 
+
+
 

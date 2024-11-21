@@ -11,8 +11,8 @@ To run the program you need to specify the path of the configuration file to the
 
 the following command can be used to run the program
 ```bash
-export $URPSA="/<path-to-URPSA-directory>/repeated.py"
-python3 $URPSA exampleInput.txt
+
+python3 "/<path-to-URPSA-directory>/repeated.py" exampleInput.txt
 ```
 
 ## Input change

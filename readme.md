@@ -24,20 +24,31 @@ predefined variables are placed on the left hand side and the values are defined
 variable = value
 ```
 modify the input file to enter the inputs (*Molecules*, step_size, step_count, and etc )
+
+**update_with_optimized_coordinates**: keep the optimized configuration of molecules to the next method.
+**step size:** distance moved towards the center 
+**step_count:** number of steps should move towards the center
+**stop_distance_factor:** the factor that determines distance that the calculation should stop ; factor x (sum of covalent radius)
+**stress_release:** iterations that should be optimized without constraints. input is given as  start: step :end
+**spherical_placement:** how to place the molecular fragments on the hypothetical spherical.
+**ADD_COM_CONST:** whether to add center of mass constraints
+**dynamic_fragment_replacement:** if atoms are closer than given number value.
+
+
 ```buildoutcfg
 # This is a comment
 [project]
 project_name = test48927
-input_file_name = Test
 
 [controls]
 # set this as false for now
 update_with_optimized_coordinates = True
+# in angstrum 
 step_size = 0.1
 step_count = 40
 stop_distance_factor = 0.4
+# stress_release = start: step :end 
 stress_release = -1:50:57
-
 
 
 # Total_random or statistically_even or False
@@ -126,5 +137,19 @@ defaults = {
 each reaction path is saved with a folder named as test_00001 and gaussian calculations files(input file, output files) are stored. 
 further a scattor plot of the energy of converged structures as scattor.jpg and a xyz file is produced to see the trajectory. 
 
+
+## Method overview
+
+This program initializes the molecular fragments on a hypothetical spherical surface at random positions which is specified by the input file.
+and the orientation of the molecular fragments are also randomly changed to ensure all the possible starting positions are sampled,
+![Feature Demo1](doc/assets/eq1.gif)
+
+Then the radius of the is reduced step by step according to the step given in the input file. for each step calculations are made made until either the number of steps(*step_count*) are over or atom are too close than the specified limit.
+
+
+![Feature Demo2](doc/assets/eq2.gif)
+
+After the path was terminated by an exit condition. A randomly chosen new orientation is used to start the new reaction path. 
+Likewise the number of reaction paths are found starting with different orientations until the number of iterations(*n_iterations*) are over as given in the input file.  
 
 

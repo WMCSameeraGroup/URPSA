@@ -150,7 +150,6 @@ class System:
         string = "\n\n"
 
         if number in self.stress_release:
-            print(self.stress_release, number)
             return string
         elif self.additinal_constraints:
             string += self.additinal_constraints

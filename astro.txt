@@ -15,9 +15,6 @@ sphere_radius = 20
 # number of iterations needs to run with different orientations
 n_iterations = 5
 
-# Total_random or statistically_even or False
-spherical_placement = statistically_even
-
 
 [gaussian]
 number_of_cores = 4

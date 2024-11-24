@@ -150,10 +150,34 @@ class System:
         string = "\n\n"
 
         if number in self.stress_release:
+            print(self.stress_release, number)
             return string
-        elif self.additinal_constraints and self.controls.ADD_COM_CONST == "True":
+        elif self.additinal_constraints:
             string += self.additinal_constraints
             return string
+        elif self.controls.ADD_COM_CONST == "True":
+            return self.com_constraints(string)
+        elif self.controls.ADD_SPHERICAL_CONST == "True":
+            return self.spherical_constraints(string)
+
+    def spherical_constraints(self, string):
+        def list_of_atoms(molecule1):
+            """replace dash with comma if there are only 2 atoms in a molecule"""
+            number_string = ""
+            for atom in molecule1.atoms:
+                number_string += f"{atom.number},"
+            return number_string[0:-1]
+
+        for n, molecule in enumerate(self.molecules):
+            string += f"XCm{n + 1} (Inactive) = XCntr({list_of_atoms(molecule)}) \nYCm{n + 1} (Inactive) = YCntr({list_of_atoms(molecule)}) \nZCm{n + 1} (Inactive) = ZCntr({list_of_atoms(molecule)})\n"
+
+        n_mol = len(self.molecules)
+        for i in range(n_mol):
+            i += 1
+            string += f"radius{i}(FREEZE)=sqrt[(XCm{i})^2+(YCm{i})^2+(ZCm{i})^2]*0.529177\n"
+        return string
+
+    def com_constraints(self, string):
 
         def list_of_atoms(molecule1):
             """replace dash with comma if there are only 2 atoms in a molecule"""
@@ -163,7 +187,7 @@ class System:
             return number_string[0:-1]
 
         for n, molecule in enumerate(self.molecules):
-            string += f"XCm{n+1} (Inactive) = XCntr({list_of_atoms(molecule)}) \nYCm{n+1} (Inactive) = YCntr({list_of_atoms(molecule)}) \nZCm{n+1} (Inactive) = ZCntr({list_of_atoms(molecule)})\n"
+            string += f"XCm{n + 1} (Inactive) = XCntr({list_of_atoms(molecule)}) \nYCm{n + 1} (Inactive) = YCntr({list_of_atoms(molecule)}) \nZCm{n + 1} (Inactive) = ZCntr({list_of_atoms(molecule)})\n"
 
         n_mol = len(self.molecules)
         for i in range(n_mol - 1):

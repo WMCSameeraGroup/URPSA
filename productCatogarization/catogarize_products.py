@@ -2,7 +2,7 @@ from atoms.atoms import Atom
 from molecule.molecule import Molecule
 
 
-def get_molecules(atomlist, factor=1.1):
+def get_molecules(atomlist, factor=1.2):
     """ separate system into individual molecules"""
     list_of_molecules = []
 

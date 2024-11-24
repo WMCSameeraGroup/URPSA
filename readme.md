@@ -25,14 +25,14 @@ variable = value
 ```
 modify the input file to enter the inputs (*Molecules*, step_size, step_count, and etc )
 
-**update_with_optimized_coordinates**: keep the optimized configuration of molecules to the next method.
-**step size:** distance moved towards the center 
-**step_count:** number of steps should move towards the center
-**stop_distance_factor:** the factor that determines distance that the calculation should stop ; factor x (sum of covalent radius)
-**stress_release:** iterations that should be optimized without constraints. input is given as  start: step :end
-**spherical_placement:** how to place the molecular fragments on the hypothetical spherical.
-**ADD_COM_CONST:** whether to add center of mass constraints
-**dynamic_fragment_replacement:** if atoms are closer than given number value.
+- **update_with_optimized_coordinates**: keep the optimized configuration of molecules to the next method.
+- **step size:** distance moved towards the center 
+- **step_count:** number of steps should move towards the center
+- **stop_distance_factor:** the factor that determines distance that the calculation should stop ; factor x (sum of covalent radius)
+- **stress_release:** iterations that should be optimized without constraints. input is given as  start: step :end
+- **spherical_placement:** how to place the molecular fragments on the hypothetical spherical.
+- **ADD_COM_CONST:** whether to add center of mass constraints
+- **dynamic_fragment_replacement:** if atoms are closer than given number value.
 
 
 ```buildoutcfg

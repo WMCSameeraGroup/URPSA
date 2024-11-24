@@ -7,16 +7,17 @@ defaults = {
         "update_with_optimized_coordinates": "True",
         "step_size": 0.1,
         "step_count": 40,
-        "stop_distance_factor": 0.4,
-        "stress_release": "0:10:40",
-        "sphere_radius": 4,
-        "n_iterations": 100,
+        "stop_distance_factor": 0.5,
+        "stress_release": "0:1:-1",
+        "sphere_radius": 3,
+        "n_iterations": 10,
         "spherical_placement": "statistically_even",
-        "ADD_COM_CONST": "False"
+        "ADD_COM_CONST": "False",
+        "ADD_SPHERICAL_CONST": "True"
     },
     "gaussian": {
-        "number_of_cores": 8,
-        "memory": "8GB",
-        "method": "#N opt(maxcycle=600,AddGIC) PM6 scf(maxcyc=600,xqc) nosymm"
+        "number_of_cores": 1,
+        "memory": "1GB",
+        "method": "#N opt(maxcycle=200,AddGIC) WB97XD/6-31G* scf(maxcyc=300,xqc) nosymm"
     }
 }

@@ -35,6 +35,7 @@ class InputFile:
         self.is_placed_on_sphere = self.create_spherically_located_molecule_list()
         self.additional_constraints = self.set_additional_constraints()
         self.ADD_COM_CONST = self.config.get("controls", "ADD_COM_CONST")
+        self.ADD_SPHERICAL_CONST = self.config.get("controls", "ADD_SPHERICAL_CONST")
         self.dynamic_fragment_replacement = self.config.get("controls", "dynamic_fragment_replacement")
 
 

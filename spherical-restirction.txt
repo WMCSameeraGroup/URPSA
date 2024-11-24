@@ -1,0 +1,39 @@
+[project]
+project_name = sp2
+input_file_name = Test
+
+[controls]
+# set this as false for now
+update_with_optimized_coordinates = True
+step_size = 0.1
+step_count = 100
+stop_distance_factor = 0.4
+stress_release = -1:401:402
+
+sphere_radius = 10
+# number of iterations needs to run with different orientations
+n_iterations = 5
+
+# Total_random or statistically_even or False
+spherical_placement = statistically_even
+
+
+[gaussian]
+number_of_cores = 4
+memory = 6GB
+#method = #N b3lyp/3-21g opt=AddGIC  nosymm
+method =#N opt(maxcycle=600,AddGIC) PM6 scf(maxcyc=600,xqc) nosymm
+#method =#N opt(maxcycle=100,AddGIC) HF/3-21g* scf(maxcyc=120,xqc) nosymm
+# use dft
+
+[molecules]
+charge = 0
+multiplicity = 1
+number_of_molecules = 2
+
+0 = Si        -0.81102        1.41018        2.80802
+1 = Si         1.57252        4.62311        8.96042
+
+
+[Additional]
+

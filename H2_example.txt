@@ -1,0 +1,35 @@
+[project]
+project_name = H2_example7
+
+
+[controls]
+step_size = 0.1
+step_count = 40
+stop_distance_factor = 0.9
+update_with_optimized_coordinates = True
+
+
+
+# Total_random or statistically_even or False
+spherical_placement = statistically_even
+
+# add COM constraints = True
+ADD_COM_CONST = True
+
+
+[gaussian]
+method =#N opt(maxcycle=200,AddGIC) WB97XD/6-31G* scf(maxcyc=300,xqc)
+
+
+[molecules]
+charge = 0
+multiplicity = 1
+number_of_molecules = 2
+
+0 = H 0.000 0.0000 0.00000000
+
+# add \ to the end of a line if the next line continues
+1 = H 0.00000 0.00000 0.00000000
+
+
+[Additional]

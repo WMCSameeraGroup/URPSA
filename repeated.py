@@ -56,6 +56,8 @@ for i in range(controls.n_iterations):
             output_file_list.append(log)
 
             system.set_scf_done(log.scf_done)
+
+            OutputWriter(new_name).write_xyz_file(system, log.opt_coords)
             if success != 0:
                 print(log.last_lines())
 
@@ -63,14 +65,19 @@ for i in range(controls.n_iterations):
                 print("update_with_optimized_coordinates")
                 system.set_moleculer_coordinates(log.opt_coords)
                 if controls.dynamic_fragment_replacement == "True":
-                    system.replace_molecules(get_new_molecules(system.set_list_of_atom_symbols(), log))
+                    new_molecules = get_new_molecules(system.set_list_of_atom_symbols(), log)
+                    system.replace_molecules(new_molecules)
+                    if len(new_molecules) == 1:
+                        break
 
 
-            OutputWriter(new_name).write_xyz_file(system, log.opt_coords)
+
+
+
         else:
             print(f"{inputFile} is too repulsive to calculate")
             break  # stop if repulsion was encountered
-    plot_the_graph(output_file_list, new_name)
+
     plot_scatter(output_file_list, new_name)
 
     if is_all_calculations_converged:

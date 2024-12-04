@@ -22,7 +22,6 @@ defaults = {
         "method": "#N opt(maxcycle=200,AddGIC) WB97XD/6-31G* scf(maxcyc=300,xqc) nosymm"
     }
 }
-=======
 defaults = {
     "project": {
         "project_name": "test1",
@@ -47,4 +46,3 @@ defaults = {
         "method": "#N opt(maxcycle=200,AddGIC) WB97XD/6-31G* scf(maxcyc=300,xqc) nosymm"
     }
 }
->>>>>>> master

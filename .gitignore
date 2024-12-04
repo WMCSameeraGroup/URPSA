@@ -14,7 +14,10 @@ outputFiles/*
 *.xyz
 *.log
 *.com
+*.chk
 /Projects/*
 !/Projects/.gitignore
 !/projects/
 !/projects/.keep
+astroTry3
+astroTry3/*

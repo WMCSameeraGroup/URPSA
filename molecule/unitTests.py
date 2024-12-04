@@ -1,6 +1,6 @@
 import unittest
 import numpy as np
-from molecule import Molecule  # Import the Atom and Molecule classes from your module
+from molecule import Molecule
 from atoms.atoms import Atom
 
 class TestMolecule(unittest.TestCase):

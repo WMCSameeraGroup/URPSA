@@ -6,13 +6,13 @@ import sys
 class Setup:
 
     def __init__(self,name):
-        self.project_dir = "Projects/"+name
+        # self.project_dir = "Projects/"+name
+        self.project_dir = name
         self.project_exists()
 
     def project_exists(self):
         if not os.path.exists(self.project_dir):
             os.makedirs(self.project_dir)
-
         else:
             print(f"project name '{self.project_dir}' already exists.")
             sys.exit()

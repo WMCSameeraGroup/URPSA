@@ -1,3 +1,0 @@
-"""
-recorde calculated data
-"""

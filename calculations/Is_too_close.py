@@ -1,9 +1,9 @@
 from atoms.atoms import Atom
-from settings import stop_distance_factor, input_file_directory
 
 
-def make_atoms_from_input_file(file, n_origin_atoms):
-    data = read_com(file).split("\n\n")
+
+def make_atoms_from_input_file(file, n_origin_atoms,input_file_directory):
+    data = read_com(file,input_file_directory).split("\n\n")
     atoms_strings = data[1].split('\n')[3:]
     atoms = []
     for atom_string in atoms_strings:
@@ -11,21 +11,21 @@ def make_atoms_from_input_file(file, n_origin_atoms):
     return atoms[0:n_origin_atoms], atoms[n_origin_atoms:]
 
 
-def read_com(file):
+def read_com(file,input_file_directory):
     if "/" in file:  # if full path is given
         with open(file, 'r') as com:
             return com.read()
     else:
-        with open(input_file_directory + '/' + file, 'r') as com:
+        with open(input_file_directory() + '/' + file, 'r') as com:
             return com.read()
 
 
-def is_too_close(origin_atoms, moving_atoms):
+def is_too_close(origin_atoms, moving_atoms, stop_distance_factor=0.5):
     for i in origin_atoms:
         for j in moving_atoms:
 
             if i.distance_between(j) < (
-                    i.v_radius + j.v_radius) * stop_distance_factor:  # todo: stop distance is 0.2 change this by args of sum of vandaval radius
+                    i.v_radius + j.v_radius) * stop_distance_factor:
                 print(i.distance_between(j), i, j)
                 return False
     return True
@@ -52,7 +52,7 @@ def is_too_close_spherical(atoms1, atoms2, stop_distance_fac):
 
 
 
-def is_not_highly_repulsive_spherically(sys, stop_distance_fac=stop_distance_factor):
+def is_not_highly_repulsive_spherically(sys, stop_distance_fac=0.5):
     """
     check the distance between atoms of different molecules
     """
@@ -67,10 +67,3 @@ def is_not_highly_repulsive_spherically(sys, stop_distance_fac=stop_distance_fac
     return True
 
 
-
-
-
-
-
-if __name__ == "__main__":
-    print(is_not_highly_repulsive_spherically("../inputFiles/Test0.com"))

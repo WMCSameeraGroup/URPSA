@@ -1,10 +1,7 @@
 """ go to log files directory starts reading them and log files from log files folder then
  grab the data required.
  """
-# todo: make a input and output file manager class/ run this in another thread to read and plot data while same
-#  calculations are done
 
-from settings import input_file_directory
 import os, re
 
 
@@ -12,7 +9,7 @@ def input_file_validator(file_name):
     return file_name[-3:] == 'com'
 
 
-def get_input_files_list():
+def get_input_files_list(input_file_directory):
     input_files_list = os.listdir(input_file_directory)
     input_files_list = [file for file in input_files_list if input_file_validator(file)]
     return order_input_files(input_files_list)

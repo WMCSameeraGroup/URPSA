@@ -1,14 +1,10 @@
 import unittest
 from unittest.mock import MagicMock
-
-# Assuming Atom and Molecule classes are defined in atoms and molecule modules
-from catogarize_products import *
-
-# Also assume methods like calculate_RMSD(), distance_between(), and others are defined
-
+from catogarize_products import products_writer, Atom, Molecule
 class TestMoleculeFunctions(unittest.TestCase):
 
     def test_get_atom_list(self):
+        products = products_writer()
         symbols = ['H', 'O', 'H']
         opt_coords = [(0, 0, 0), (0, 1, 0), (1, 0, 0)]
 
@@ -21,16 +17,18 @@ class TestMoleculeFunctions(unittest.TestCase):
 
     def test_find_the_formation_of_products(self):
         # Mocking outputfile_list with objects having is_converged and scf_done properties
+        products = products_writer()
         mock_file_1 = MagicMock(is_converged=0, scf_done=5)
         mock_file_2 = MagicMock(is_converged=1, scf_done=3)
         mock_file_3 = MagicMock(is_converged=0, scf_done=2)
 
         file_list = [mock_file_1, mock_file_2, mock_file_3]
 
-        index = find_the_formation_of_products(file_list)
+        index = products.find_the_formation_of_products(file_list)
         self.assertEqual(index, 2, "Expected index 2 as the minimum energy point")
 
     def test_get_molecules(self):
+        products=products_writer()
         atom1 = Atom('H', 0, 0, 0)
         atom2 = Atom('H', 0, 0, 1)
         atom3 = Atom('O', 3, 0, 0)
@@ -47,6 +45,7 @@ class TestMoleculeFunctions(unittest.TestCase):
 
     def test_add_products(self):
         # Mocking atoms and outputfile_list
+        products = products_writer()
         mock_atom1 = Atom('H', 0, 0, 0)
         mock_atom2 = Atom('H', 0, 0, 1)
         atom_symbols = [mock_atom1.symbol,mock_atom2.symbol]
@@ -61,7 +60,7 @@ class TestMoleculeFunctions(unittest.TestCase):
         find_the_formation_of_products = MagicMock(return_value=0)
         Molecule.calculate_RMSD = MagicMock(return_value=0.1)
 
-        add_products(atom_symbols, outputfile_list)
+        products.add_products(atom_symbols, outputfile_list)
 
         Molecule.calculate_RMSD.assert_called()  # Ensure calculate_RMSD was called
 

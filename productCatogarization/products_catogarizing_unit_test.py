@@ -5,6 +5,7 @@ import unittest
 class TestGetMolecules(unittest.TestCase):
 
     def test_simple_molecules(self):
+        products = products_writer()
         atom1 = Atom('H', 0, 0, 0)
         atom2 = Atom('H', 0, 0, 1)
         atom3 = Atom('O', 3, 0, 0)
@@ -22,6 +23,7 @@ class TestGetMolecules(unittest.TestCase):
         self.assertEqual(molecule_sizes, [1, 2, 2], f"Expected molecule sizes [1, 2, 2], got {molecule_sizes}")
 
     def test_complex_molecules(self):
+        products =products_writer()
         atom1 = Atom('H', 0, 0, 0)
         atom2 = Atom('H', 0, 0, 1)
         atom3 = Atom('O', 0.5, 0.5, 1.5)
@@ -45,6 +47,7 @@ class TestGetMolecules(unittest.TestCase):
 
     def test_edge_cases(self):
         # Edge case: No atoms
+        products = products_writer()
         atoms = []
         molecules_list = get_molecules(atoms)
         self.assertEqual(len(molecules_list), 0, f"Expected 0 molecules, got {len(molecules_list)}")
@@ -64,7 +67,9 @@ class TestGetMolecules(unittest.TestCase):
 
 class TestMoleculeFormation(unittest.TestCase):
     def test_molecule_from_coordinates2(self):
+        products = products_writer()
         symbols = ['C', 'H', 'H', 'H', 'O', 'H', 'O', 'H']
+
         coords = [
             [1.9989194392671017, -0.6974175886799965, -2.8895532101609014],
             [1.3971087785500642, -1.2191601656228386, -3.6040520585669413],
@@ -77,6 +82,7 @@ class TestMoleculeFormation(unittest.TestCase):
         ]
 
         # Create atoms list
+
         atom_list = get_atom_list(symbols, coords)
 
         # Call get_molecules function
@@ -90,6 +96,7 @@ class TestMoleculeFormation(unittest.TestCase):
         self.assertEqual(molecule_sizes, [2, 6], "Expected molecule sizes [2, 6]")
 
     def test_molecule_from_coordinates(self):
+        products =products_writer()
         symbols = ['C', 'H', 'H', 'H', 'O', 'H', 'O', 'H']
         coords = [
             [0.369834, -0.573473, -1.337132],

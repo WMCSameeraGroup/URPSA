@@ -202,9 +202,12 @@ class System:
 
 
     def get_energy_gap(self,energy_iter1,energy_iter2):
-        #convert to float:
-        energy_iter1 =float(energy_iter1)
-        energy_iter2 = float(energy_iter2)
+        try:
+            energy_iter1 =float(energy_iter1)
+            energy_iter2 = float(energy_iter2)
+        except ValueError:
+            print("Error with your input file check gaussian log files ")
+            return 0
         energy_gap_in_hartree = energy_iter2 - energy_iter1
         to_kj_mol = hatree2kjmol(energy_gap_in_hartree)
         return to_kj_mol

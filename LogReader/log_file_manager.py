@@ -40,6 +40,7 @@ class LogFileManager:
         else:
             self.scf_done = "could not found"
 
+
     def finish(self):
         self.text = None
 

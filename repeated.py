@@ -1,4 +1,3 @@
-####################################################################################
 import sys
 from LogReader.log_file_manager import LogFileManager
 from calculations.calculation_manager import run_calculation
@@ -8,7 +7,7 @@ from setup.inputfile import InputFile
 from calculations.Is_too_close import is_not_highly_repulsive_spherically
 
 from outputFiileWriter.output_writer import OutputWriter
-from utils.ploting import plot_scatter, plot_the_graph
+from utils.ploting import plot_scatter
 from system.system import System
 from outputFiileWriter.setup import Setup
 from productCatogarization.catogarize_products import products_writer,get_new_molecules
@@ -83,6 +82,7 @@ for i in range(controls.n_iterations):
         else:
             print(f"{inputFile} is too repulsive to calculate")
             break  # stop if repulsion was encountered
+            #todo: possibly a constraint less optimization for relaxation.
 
     plot_scatter(output_file_list, new_name)
 

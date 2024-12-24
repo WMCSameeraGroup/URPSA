@@ -1,5 +1,5 @@
 
-from .constants import MASS,VANDER_WALLS
+from .constants import MASS,COVALENT_RADIUS
 
 class Atom:
 
@@ -7,7 +7,7 @@ class Atom:
         self.number = number
         self.symbol = symbol
         self.mass = MASS[symbol]
-        self.v_radius = VANDER_WALLS[symbol]
+        self.v_radius = COVALENT_RADIUS[symbol]
         self.x = float(x)
         self.y = float(y)
         self.z = float(z)

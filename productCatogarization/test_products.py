@@ -1,6 +1,6 @@
 import unittest
 from unittest.mock import MagicMock
-from catogarize_products import products_writer, Atom, Molecule, get_atom_list
+from catogarize_products import products_writer, Atom, Molecule, get_atom_list, get_molecules
 
 
 class TestMoleculeFunctions(unittest.TestCase):

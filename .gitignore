@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 venv
 venv/*
 __pycache__/
@@ -21,28 +20,5 @@ outputFiles/*
 !/projects/
 !/projects/.keep
 astroTry3
-=======
-venv
-venv/*
-__pycache__/
-__pycache__/*
-*.pyc
-.idea
-.idea/*
-archives/
-archives/*
-inputFiles/*
-inputFiles/
-outputFiles/
-outputFiles/*
-*.xyz
-*.log
-*.com
-*.chk
-/Projects/*
-!/Projects/.gitignore
-!/projects/
-!/projects/.keep
-astroTry3
->>>>>>> master
+
 astroTry3/*

@@ -38,7 +38,8 @@ defaults = {
         "spherical_placement": "statistically_even",
         "ADD_COM_CONST": "True",
         "ADD_SPHERICAL_CONST": "False",
-        "dynamic_fragment_replacement": "False"
+        "dynamic_fragment_replacement": "False",
+        "cutoff_energy_gap":3.0
     },
     "gaussian": {
         "number_of_cores": 1,

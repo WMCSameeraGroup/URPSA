@@ -33,7 +33,7 @@ for i in range(controls.n_iterations):
     system.random_rotate_molecules()
     output_file_list = []
     print(i)
-    # new_name = "Projects/"+controls.project_name + "/" + setup.get_next_folder_name()
+
     new_name = controls.project_name + "/" + setup.get_next_folder_name()
     is_all_calculations_converged = True
     #################################################################################
@@ -58,7 +58,12 @@ for i in range(controls.n_iterations):
             system.set_scf_done(log.scf_done)
 
             OutputWriter(new_name).write_xyz_file(system, log.opt_coords)
-            if success != 0:
+
+            if system.get_energy_gap(output_file_list[0].scf_done,log.scf_done) > controls.cutoff_energy_gap:
+                print("Energy gap between products and reactants is more than the cutoff energy gap \n ignoring the path due to high energy gap :{}".format(system.get_energy_gap(output_file_list[0],log.scf_done)))
+                continue
+
+            if success != 0: # print the error
                 print(log.last_lines())
 
             if controls.update_with_optimized_coordinates == "True" and success == 0:

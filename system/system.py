@@ -1,5 +1,6 @@
 import math
 from random import uniform
+from utils.unit_converters import hatree2kjmol
 
 from PIL.ImImagePlugin import number
 
@@ -198,3 +199,14 @@ class System:
 
     def set_list_of_atom_symbols(self):
         return [a.symbol for a in self.list_of_atoms()]
+
+    def get_energy_gap(self,energy_iter1,energy_iter2):
+        #convert to float:
+        energy_iter1 =float(energy_iter1)
+        energy_iter2 = float(energy_iter2)
+        energy_gap_in_hartree = energy_iter2 - energy_iter1
+        to_kj_mol = hatree2kjmol(energy_gap_in_hartree)
+        return to_kj_mol
+
+
+

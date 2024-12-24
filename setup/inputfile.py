@@ -37,6 +37,7 @@ class InputFile:
         self.ADD_COM_CONST = self.config.get("controls", "ADD_COM_CONST")
         self.ADD_SPHERICAL_CONST = self.config.get("controls", "ADD_SPHERICAL_CONST")
         self.dynamic_fragment_replacement = self.config.get("controls", "dynamic_fragment_replacement")
+        self.cutoff_energy_gap = float(self.config.get("controls", "cutoff_energy_gap"))
 
 
     def set_molecule_list(self):

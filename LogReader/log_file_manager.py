@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 import re
 
 
@@ -135,7 +135,6 @@ class LogFileManager:
                 lines+=str(read[line])
         return lines
 
-=======
 import re
 
 
@@ -272,4 +271,4 @@ class LogFileManager:
                 lines+=str(read[line])
         return lines
 
->>>>>>> master
+

@@ -61,7 +61,9 @@ for i in range(controls.n_iterations):
 
             if system.get_energy_gap(output_file_list[0].scf_done,log.scf_done) > controls.cutoff_energy_gap:
                 print("Energy gap between products and reactants is more than the cutoff energy gap \n ignoring the path due to high energy gap :{}".format(system.get_energy_gap(output_file_list[0].scf_done,log.scf_done)))
-                break
+                system.stress_release.append(iteration+1)
+
+
 
             if success != 0: # print the error
                 print(log.last_lines())

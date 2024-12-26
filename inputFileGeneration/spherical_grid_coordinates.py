@@ -26,14 +26,14 @@ def move_atoms_towards_center(molecule, size):
         spherically_converge_to_center(atom, size)
 
 
-def spherical_gird_coordinate_generation(molecules, step_count=1, step_size=1):
+def push_fragments_to_center(molecules, step_size=1):
     """
     this functions converges atoms to the origin
 
-    :param molecules:
-    :param step_count:
-    :param step_size:
-    :return:
+    :param molecules: (list of molecule objects)
+    :param step_size: (int)
+    :Modify : modify molecules, atoms
+    :return molecules: None
     """
 
     for molecule in molecules:

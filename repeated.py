@@ -4,7 +4,7 @@ from operator import index
 from LogReader.log_file_manager import LogFileManager
 from calculations.calculation_manager import run_calculation
 from LogReader.log_file_reader import find_corresponding_output_file
-from inputFileGeneration.spherical_grid_coordinates import spherical_gird_coordinate_generation
+from inputFileGeneration.spherical_grid_coordinates import push_fragments_to_center
 from setup.inputfile import InputFile
 from calculations.Is_too_close import is_not_highly_repulsive_spherically
 
@@ -40,7 +40,8 @@ for i in range(controls.n_iterations):
     is_all_calculations_converged = True
     #################################################################################
     for iteration in range(controls.step_count):
-        spherical_gird_coordinate_generation(system.molecules, controls.step_count, controls.step_size)
+
+        push_fragments_to_center(system.molecules, controls.step_size)
         inputFile = system.generate_input_file(iteration,new_name)
         if is_not_highly_repulsive_spherically(system, controls.stop_distance_factor):
             success = run_calculation(inputFile,new_name)

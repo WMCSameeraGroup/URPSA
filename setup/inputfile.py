@@ -6,10 +6,15 @@ from setup.inputFileParser import CustomConfigParser
 
 
 class InputFile:
+    """
+    Extracting data from a given input file and filling with default values.
+    """
+
     # get the data from the input file provided or get the missing values from the defaults.py file
-
-
     def __init__(self, file):
+        """
+        :param file: String (path to input file)
+        """
         self.count_of_atom = 1
         self.file = file
         self.config = CustomConfigParser()
@@ -42,36 +47,56 @@ class InputFile:
         self.cutoff_energy_gap = float(self.config.get("controls", "cutoff_energy_gap"))
         self.energy_surpass_options = self.config.get("controls", "energy_surpass_options")
 
-
     def set_molecule_list(self):
+        """
+
+        :return:[] list of molecules
+        """
         molecule_list = []
         for n in range(self.number_of_molecules):
             string = self.config.get('molecules', str(n))
             molecule_list.append(self.set_molecule(string))
 
-        self.list_of_molecules =molecule_list
+        self.list_of_molecules = molecule_list
         self.count_of_atom = 1
         return molecule_list
 
     def set_additional_constraints(self):
+        """
+        get string of constraints from the input file and modify it by changing /- to = this
+        :return (Str): String of constraints
+        """
         if self.config.get('Additional', "constraints"):
             string = self.config.get('Additional', "constraints").replace("/-", "=")
             return string
 
     def set_molecule(self, string):
+        """
+        converts string of data to molecule object
+
+        :param string: input string
+        :return: Molecule object
+        """
         atom_list = []
         for line in string.split("\n"):
             line_data = line.split()
             if len(line_data) >= 4:  # linear convergence
-                atom_list.append(Atom(*line_data,self.count_of_atom))
+                atom_list.append(Atom(*line_data, self.count_of_atom))
                 self.count_of_atom += 1
 
             else:
                 print("incorrect format in inputfile ")
         return Molecule(atom_list)
 
-
     def create_spherically_located_molecule_list(self):
+        """
+        tell what method is used to positions molecules into new random positions of a sphere
+        and modify molecular coordinates.
+        if self.spherical_placement == "False"  then it doesn't modify coordinates.
+
+        Modify: Molecule object positions
+        :return Boolean:
+        """
 
         if self.spherical_placement == "False":
             return False
@@ -83,6 +108,10 @@ class InputFile:
         return True
 
     def set_stress_release(self):
+        """
+        get data from 'controls', 'stress_release' and build a list of numbers with start, step and end.
+        :return list: list of int which says not to put constraints into the optimization.
+        """
         comm = self.config.get('controls', 'stress_release')
         start = comm.split(":")[0]
         step = comm.split(":")[1]
@@ -92,4 +121,3 @@ class InputFile:
 
 if __name__ == "__main__":
     print(InputFile('../exampleInput.txt').list_of_molecules)
-

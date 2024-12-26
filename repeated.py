@@ -80,6 +80,8 @@ for i in range(controls.n_iterations):
                     new_molecules = get_new_molecules(system.set_list_of_atom_symbols(), log)
                     system.replace_molecules(new_molecules)
                     if len(new_molecules) == 1:
+                        # optimize the last observed particle
+
                         break
 
 

@@ -8,7 +8,7 @@ defaults = {
         "update_with_optimized_coordinates": "True",
         "step_size": 0.1,
         "step_count": 40,
-        "stop_distance_factor": 0.5,
+        "stop_distance_factor": 0.8,
         "stress_release": "0:1:-1",
         "sphere_radius": 3,
         "n_iterations": 10,

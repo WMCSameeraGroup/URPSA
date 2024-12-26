@@ -36,21 +36,21 @@ for i in range(controls.n_iterations):
     output_file_list = []
     print(i)
 
-    new_name = controls.project_name + "/" + setup.get_next_folder_name()
+    dir_of_files = controls.project_name + "/" + setup.get_next_folder_name()
     is_all_calculations_converged = True
     #################################################################################
     for iteration in range(controls.step_count):
 
         push_fragments_to_center(system.molecules, controls.step_size)
-        inputFile = system.generate_input_file(iteration,new_name)
+        inputFile = system.generate_input_file(iteration, dir_of_files)
         if is_not_highly_repulsive_spherically(system, controls.stop_distance_factor):
-            success = run_calculation(inputFile,new_name)
+            success = run_calculation(inputFile, dir_of_files)
             if success !=0:
                 is_all_calculations_converged = False
 
             print(success)
             try:
-                log = LogFileManager(find_corresponding_output_file(inputFile),new_name)
+                log = LogFileManager(find_corresponding_output_file(inputFile), dir_of_files)
                 log.is_converged = success
 
             except Exception as e:
@@ -60,7 +60,7 @@ for i in range(controls.n_iterations):
 
             system.set_scf_done(log.scf_done)
 
-            OutputWriter(new_name).write_xyz_file(system, log.opt_coords)
+            OutputWriter(dir_of_files).write_xyz_file(system, log.opt_coords)
 
             if system.get_energy_gap(output_file_list[0].scf_done,log.scf_done) > controls.cutoff_energy_gap:
                 print("Energy gap between products and reactants is more than the cutoff energy gap \n ignoring the path due to high energy gap :{}".format(system.get_energy_gap(output_file_list[0].scf_done,log.scf_done)))
@@ -82,8 +82,19 @@ for i in range(controls.n_iterations):
                     system.replace_molecules(new_molecules)
                     if len(new_molecules) == 1:
                         # optimize the last observed particle
+                        try:
+                            optFile = system.generate_input_file(-1, dir_of_files)
+                            val=run_calculation(optFile, dir_of_files)
+                            final_log = LogFileManager(find_corresponding_output_file(optFile), dir_of_files)
+                            final_log.is_converged = val
+                            output_file_list.append(final_log)
+                            system.set_scf_done(final_log.scf_done)
+                            OutputWriter(dir_of_files).write_xyz_file(system, final_log.opt_coords)
+                        except Exception as e:
+                            print(f"An error occur while optimizing the final fragments :\n{e} ")
 
-                        break
+                        finally:
+                            break
 
 
 
@@ -94,11 +105,11 @@ for i in range(controls.n_iterations):
             break  # stop if repulsion was encountered
             #todo: possibly a constraint less optimization for relaxation.
 
-    plot_scatter(output_file_list, new_name)
+    plot_scatter(output_file_list, dir_of_files)
 
     if is_all_calculations_converged:
         # find products and label them
-        products = products_writer(new_name)
+        products = products_writer(dir_of_files)
         products_molecules=products.get_products_list(system.set_list_of_atom_symbols(), output_file_list)
 
         products_collection.write_product(i,products_molecules)

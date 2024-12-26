@@ -1,4 +1,6 @@
 import sys
+from operator import index
+
 from LogReader.log_file_manager import LogFileManager
 from calculations.calculation_manager import run_calculation
 from LogReader.log_file_reader import find_corresponding_output_file
@@ -15,7 +17,7 @@ from productCatogarization.collection_of_products import productsManager
 
 try:
     file_path = sys.argv[1]
-except:
+except IndexError:
     print("a valid input file is not provided")
     sys.exit()
 
@@ -61,7 +63,10 @@ for i in range(controls.n_iterations):
 
             if system.get_energy_gap(output_file_list[0].scf_done,log.scf_done) > controls.cutoff_energy_gap:
                 print("Energy gap between products and reactants is more than the cutoff energy gap \n ignoring the path due to high energy gap :{}".format(system.get_energy_gap(output_file_list[0].scf_done,log.scf_done)))
-                system.stress_release.append(iteration+1)
+                if controls.energy_surpass_options == "optimize":
+                    system.stress_release.append(iteration+1)
+                elif controls.energy_surpass_options == "exit":
+                    break
 
 
 

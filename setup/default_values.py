@@ -16,7 +16,8 @@ defaults = {
         "ADD_COM_CONST": "True",
         "ADD_SPHERICAL_CONST": "False",
         "dynamic_fragment_replacement": "False",
-        "cutoff_energy_gap":3.0
+        "cutoff_energy_gap":3.0,
+        "energy_surpass_options":"optimize"
     },
     "gaussian": {
         "number_of_cores": 1,

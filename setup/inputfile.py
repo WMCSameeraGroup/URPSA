@@ -6,6 +6,8 @@ from setup.inputFileParser import CustomConfigParser
 
 
 class InputFile:
+    # get the data from the input file provided or get the missing values from the defaults.py file
+
 
     def __init__(self, file):
         self.count_of_atom = 1
@@ -38,6 +40,7 @@ class InputFile:
         self.ADD_SPHERICAL_CONST = self.config.get("controls", "ADD_SPHERICAL_CONST")
         self.dynamic_fragment_replacement = self.config.get("controls", "dynamic_fragment_replacement")
         self.cutoff_energy_gap = float(self.config.get("controls", "cutoff_energy_gap"))
+        self.energy_surpass_options = self.config.get("controls", "energy_surpass_options")
 
 
     def set_molecule_list(self):

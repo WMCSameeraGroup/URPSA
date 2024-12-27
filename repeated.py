@@ -82,19 +82,20 @@ for i in range(controls.n_iterations):
                     system.replace_molecules(new_molecules)
                     if len(new_molecules) == 1:
                         # optimize the last observed particle
-                        try:
-                            optFile = system.generate_input_file(-1, dir_of_files)
-                            val=run_calculation(optFile, dir_of_files)
-                            final_log = LogFileManager(find_corresponding_output_file(optFile), dir_of_files)
-                            final_log.is_converged = val
-                            output_file_list.append(final_log)
-                            system.set_scf_done(final_log.scf_done)
-                            OutputWriter(dir_of_files).write_xyz_file(system, final_log.opt_coords)
-                        except Exception as e:
-                            print(f"An error occur while optimizing the final fragments :\n{e} ")
+                        if controls.optimize_the_final_particle == "True":
+                            try:
+                                optFile = system.generate_input_file(-1, dir_of_files)
+                                val=run_calculation(optFile, dir_of_files)
+                                final_log = LogFileManager(find_corresponding_output_file(optFile), dir_of_files)
+                                final_log.is_converged = val
+                                output_file_list.append(final_log)
+                                system.set_scf_done(final_log.scf_done)
+                                OutputWriter(dir_of_files).write_xyz_file(system, final_log.opt_coords)
+                            except Exception as e:
+                                print(f"An error occur while optimizing the final fragments :\n{e} ")
 
-                        finally:
-                            break
+
+                        break
 
 
 

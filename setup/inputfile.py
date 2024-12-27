@@ -15,6 +15,7 @@ class InputFile:
         """
         :param file: String (path to input file)
         """
+
         self.count_of_atom = 1
         self.file = file
         self.config = CustomConfigParser()
@@ -46,7 +47,7 @@ class InputFile:
         self.dynamic_fragment_replacement = self.config.get("controls", "dynamic_fragment_replacement")
         self.cutoff_energy_gap = float(self.config.get("controls", "cutoff_energy_gap"))
         self.energy_surpass_options = self.config.get("controls", "energy_surpass_options")
-
+        self.optimize_the_final_particle =self.config.get('controls', 'optimize_the_final_particle')
     def set_molecule_list(self):
         """
 

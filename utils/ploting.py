@@ -15,7 +15,7 @@ def plot_scatter(outputFiles, input_file_directory , file_name="scatter.jpg"):
     y_coords = []
     for index, j in enumerate(outputFiles):
         if j.is_converged == 0:
-            x_coords.append(index)
+            x_coords.append(index+1)
             y_coords.append(float(j.scf_done))
             print(index,j.scf_done)
 

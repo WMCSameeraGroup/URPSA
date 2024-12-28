@@ -118,7 +118,7 @@ for i in range(controls.n_iterations):
         products = products_writer(dir_of_files)
         products_molecules=products.get_products_list(system.set_list_of_atom_symbols(), output_file_list)
 
-        products_collection.write_product(i,products_molecules)
+        products_collection.write_product(i+1,products_molecules)
         print("number of similar products found")
         print(products_collection.check_number_of_times_same_products_were_observed(i,products_molecules))
     else:

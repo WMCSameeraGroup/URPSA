@@ -45,10 +45,8 @@ for i in range(controls.n_iterations):
         inputFile = system.generate_input_file(iteration, dir_of_files)
         if is_not_highly_repulsive_spherically(system, controls.stop_distance_factor):
             success = run_calculation(inputFile, dir_of_files)
-            if success !=0:
-                is_all_calculations_converged = False
-                if controls.convergence_error == "exit":
-                    break
+
+
 
 
             print(success)
@@ -76,6 +74,9 @@ for i in range(controls.n_iterations):
 
             if success != 0: # print the error
                 print(log.last_lines())
+                is_all_calculations_converged = False
+                if controls.convergence_error == "exit":
+                    break
 
             if controls.update_with_optimized_coordinates == "True" and success == 0:
                 print("update_with_optimized_coordinates")

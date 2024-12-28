@@ -21,7 +21,7 @@ class InputFile:
         self.config = CustomConfigParser()
         self.config.read(self.file)
         self.project_name = self.config.get('project', 'project_name')
-        self.sphere_radius = int(self.config.get('controls', 'sphere_radius'))
+        self.sphere_radius = float(self.config.get('controls', 'sphere_radius'))
         self.step_size = float(self.config.get('controls', 'step_size'))
         self.step_count = int(self.config.get('controls', 'step_count'))
         self.stop_distance_factor = float(self.config.get('controls', 'stop_distance_factor'))
@@ -48,6 +48,8 @@ class InputFile:
         self.cutoff_energy_gap = float(self.config.get("controls", "cutoff_energy_gap"))
         self.energy_surpass_options = self.config.get("controls", "energy_surpass_options")
         self.optimize_the_final_particle =self.config.get('controls', 'optimize_the_final_particle')
+        self.convergence_error = self.config.get('controls', 'convergence_error')
+
     def set_molecule_list(self):
         """
 

@@ -18,7 +18,9 @@ defaults = {
         "dynamic_fragment_replacement": "False",
         "cutoff_energy_gap":3.0,
         "energy_surpass_options":"exit",
-        "optimize_the_final_particle":"False"
+        "optimize_the_final_particle":"False",
+        "convergence_error":"exit"
+
     },
     "gaussian": {
         "number_of_cores": 1,

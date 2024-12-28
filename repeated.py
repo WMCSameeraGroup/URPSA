@@ -47,6 +47,9 @@ for i in range(controls.n_iterations):
             success = run_calculation(inputFile, dir_of_files)
             if success !=0:
                 is_all_calculations_converged = False
+                if controls.convergence_error == "exit":
+                    break
+
 
             print(success)
             try:

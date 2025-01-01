@@ -86,7 +86,7 @@ class System:
         for molecule in self.molecules:
             n_atoms = molecule.number_of_atoms()
             molecule.xyz = opt_xyz[count: n_atoms + count]
-            molecule.setAtomNewCoords()
+            molecule.set_new_coords_to_atoms()
             count += n_atoms
 
     def to_str(self):

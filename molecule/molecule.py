@@ -7,6 +7,22 @@ class Molecule:
     xyz = []
 
     def __init__(self, list_of_atoms, *args):
+        """
+            Initializes an object with a collection of atoms and calculates its properties.
+
+            This constructor sets up the object using a list of atoms. It stores the
+            coordinates of all atoms in a NumPy array, calculates the center of mass,
+            and initializes the x, y, and z attributes to the center of mass coordinates.
+
+            :param list_of_atoms: A list of `Atom` objects that make up the molecule or structure.
+            :param args: Additional arguments (if any) to be passed for future extensions.
+            :attribute atoms: Stores the input list of `Atom` objects.
+            :attribute xyz: A NumPy array containing the coordinates of all atoms.
+            :attribute center_of_mass: The center of mass of the collection of atoms, calculated upon initialization.
+            :attribute x: The x-coordinate of the center of mass (float).
+            :attribute y: The y-coordinate of the center of mass (float).
+            :attribute z: The z-coordinate of the center of mass (float).
+            """
         self.atoms = list_of_atoms
         self.xyz = np.array([atom.get_coords() for atom in self.atoms])
         self.center_of_mass = self.cal_center_of_mass()

@@ -81,6 +81,16 @@ class Molecule:
         return self
 
     def set_new_coords_to_atoms(self):
+        """
+        Updates the coordinates of all atoms based on the current positions stored in `xyz`.
+
+        This method iterates through each atom and assigns it the corresponding coordinates
+        from the `xyz` list, updating each atom's position accordingly.
+
+        :modify self: Updates the position of each atom in the system using the coordinates
+                      stored in the `xyz` attribute.
+        :return: None
+        """
         for atom, coords in zip(self.atoms, self.xyz):
             atom.update_coordinates(*coords)
 

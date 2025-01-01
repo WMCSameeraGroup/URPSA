@@ -18,7 +18,7 @@ class Molecule:
         rot_mat = np.array([[np.cos(angle), -np.sin(angle), 0], [np.sin(angle), np.cos(angle), 0], [0, 0, 1]])
         rotated_xyz = np.dot(self.xyz, rot_mat.T)  # Transpose of the rotation matrix for proper multiplication
         self.xyz = rotated_xyz
-        self.setAtomNewCoords()
+        self.set_new_coords_to_atoms()
         return self
 
     def print_center_of_mass(self):
@@ -28,37 +28,62 @@ class Molecule:
         rot_mat = np.array([[1, 0, 0], [0, np.cos(angle), -np.sin(angle)], [0, np.sin(angle), np.cos(angle)]])
         rotated_xyz = np.dot(self.xyz, rot_mat.T)
         self.xyz = rotated_xyz
-        self.setAtomNewCoords()
+        self.set_new_coords_to_atoms()
         return self
 
     def rotation_xz(self, angle):
         rot_mat = np.array([[np.cos(angle), 0, np.sin(angle)], [0, 1, 0], [-np.sin(angle), 0, np.cos(angle)]])
         rotated_xyz = np.dot(self.xyz, rot_mat.T)
         self.xyz = rotated_xyz
-        self.setAtomNewCoords()
+        self.set_new_coords_to_atoms()
         return self
 
     def translation_x(self, distance):
+        """
+        Translates the atom's position along the x-axis by a specified distance.
+
+        This method updates the atom's x-coordinate by adding the given distance
+        while keeping the y and z coordinates unchanged.
+
+        :param distance: The distance to translate along the x-axis (float).
+        :modify self: Updates the atom's position by shifting along the x-axis.
+        :return: The updated object instance with the new coordinates.
+        """
         translated_xyz = self.xyz + np.array([distance, 0, 0])
         self.xyz = translated_xyz
-        self.setAtomNewCoords()
+        self.set_new_coords_to_atoms()
         return self
 
     def translation_y(self, distance):
+        """
+        similar to translation_x
+
+        :param distance: The distance to translate along the y-axis (float).
+        :modify self: Updates the atom's position by shifting along the y-axis.
+        :return: The updated object instance with the new coordinates.
+        """
         translated_xyz = self.xyz + np.array([0, distance, 0])
         self.xyz = translated_xyz
-        self.setAtomNewCoords()
+        self.set_new_coords_to_atoms()
         return self
 
     def translation_z(self, distance):
+        """
+         similar to translation_x
+
+        :param distance: The distance to translate along the z-axis (float).
+        :modify self: Updates the atom's position by shifting along the z-axis.
+        :return: The updated object instance with the new coordinates.
+        """
         translated_xyz = self.xyz + np.array([0, 0, distance])
         self.xyz = translated_xyz
-        self.setAtomNewCoords()
+        self.set_new_coords_to_atoms()
         return self
 
-    def setAtomNewCoords(self):
+    def set_new_coords_to_atoms(self):
         for atom, coords in zip(self.atoms, self.xyz):
             atom.update_coordinates(*coords)
+
 
 
     def get_coordinates_of_atoms(self):
@@ -124,7 +149,7 @@ class Molecule:
         """ change the molecule coordinates without the bond distances and angles"""
         self.xyz = self.relative_coordination_matrix() + center_of_mass
         self.cal_center_of_mass()
-        self.setAtomNewCoords()
+        self.set_new_coords_to_atoms()
 
 
 

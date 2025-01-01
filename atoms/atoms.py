@@ -4,6 +4,20 @@ from .constants import MASS,COVALENT_RADIUS
 class Atom:
 
     def __init__(self, symbol, x, y, z, number, fixed="False"):
+        """
+        Initializes an atom object with specific properties.
+
+        This constructor sets the atom's element symbol, coordinates, atomic number,
+        mass, covalent radius, and whether the atom is fixed or not.
+
+        :param symbol: The chemical symbol of the atom (string).
+        :param x: The x-coordinate of the atom (float).
+        :param y: The y-coordinate of the atom (float).
+        :param z: The z-coordinate of the atom (float).
+        :param number: The atomic number of the atom (integer).
+        :param fixed: Specifies whether the atom is fixed in place ("fixed" or "False"). Default is "False" (string).
+        """
+
         self.number = number
         self.symbol = symbol
         self.mass = MASS[symbol]
@@ -12,10 +26,7 @@ class Atom:
         self.y = float(y)
         self.z = float(z)
         self.starting_positions =[float(x),float(y),float(z) ]
-        if fixed == "fixed":
-            self.is_fixed = True
-        else:
-            self.is_fixed = False
+        self.is_fixed = fixed.lower() == "fixed" if isinstance(fixed, str) else bool(fixed)
 
     def __str__(self):
         if self.is_fixed:
@@ -31,6 +42,17 @@ class Atom:
         self.z = float(z)
 
     def distance_between(self, other):
+        """
+        Updates the atom's position to the specified coordinates.
+
+        This method sets the atom's x, y, and z coordinates to the new values provided.
+
+        :param x: The new x-coordinate of the atom (float).
+        :param y: The new y-coordinate of the atom (float).
+        :param z: The new z-coordinate of the atom (float).
+        :modify self: Updates the atom's position with the new coordinates.
+        :return: None
+        """
         diff_x = pow(self.x - other.x, 2)
         diff_y = pow(self.y - other.y, 2)
         diff_z = pow(self.z - other.z, 2)

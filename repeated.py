@@ -88,6 +88,7 @@ for i in range(controls.n_iterations):
                     if len(new_molecules) == 1:
                         # optimize the last observed particle
                         if controls.optimize_the_final_particle == "True":
+                            print("final structure is optimizing.....")
                             try:
                                 optFile = system.generate_input_file(-1, dir_of_files)
                                 val=run_calculation(optFile, dir_of_files)
@@ -96,6 +97,7 @@ for i in range(controls.n_iterations):
                                 output_file_list.append(final_log)
                                 system.set_scf_done(final_log.scf_done)
                                 OutputWriter(dir_of_files).write_xyz_file(system, final_log.opt_coords)
+                                print("final structure is optimized")
                             except Exception as e:
                                 print(f"An error occur while optimizing the final fragments :\n{e} ")
 

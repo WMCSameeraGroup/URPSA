@@ -1,4 +1,4 @@
-
+#todo: make this a text file and use a similar method to read from it
 defaults = {
     "project": {
         "project_name": "test1",

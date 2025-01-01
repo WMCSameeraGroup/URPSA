@@ -1,6 +1,6 @@
 from atoms.atoms import Atom
 from calculations.random_spherical_coords_generator import random_spherical_coordinates_generator, \
-    equidistributed_points_generator
+    generate_random_point_on_sphere
 from molecule.molecule import Molecule
 from setup.inputFileParser import CustomConfigParser
 
@@ -107,7 +107,7 @@ class InputFile:
             if self.spherical_placement == "Total_random":
                 molecule.update_coordinates(*random_spherical_coordinates_generator(self.sphere_radius))
             elif self.spherical_placement == "statistically_even":
-                molecule.update_coordinates(*equidistributed_points_generator(self.sphere_radius))
+                molecule.update_coordinates(*generate_random_point_on_sphere(self.sphere_radius))
         return True
 
     def set_stress_release(self):

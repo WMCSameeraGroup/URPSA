@@ -5,7 +5,7 @@ from utils.unit_converters import hatree2kjmol
 from PIL.ImImagePlugin import number
 
 from calculations.random_spherical_coords_generator import random_spherical_coordinates_generator, \
-    equidistributed_points_generator
+    generate_random_point_on_sphere
 from inputFileGeneration.input_file_writer import file_name_generator
 from inputFileGeneration.input_template import get_input_template
 from inputFileGeneration.write_input_file import generate_input_file
@@ -123,7 +123,7 @@ class System:
                 molecule.update_coordinates(*random_spherical_coordinates_generator(controls.sphere_radius))
 
             elif controls.spherical_placement == "statistically_even":
-                molecule.update_coordinates(*equidistributed_points_generator(controls.sphere_radius))
+                molecule.update_coordinates(*generate_random_point_on_sphere(controls.sphere_radius))
                 # molecule.print_center_of_mass()
         return True
 

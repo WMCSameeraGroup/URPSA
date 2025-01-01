@@ -4,7 +4,10 @@ from math import pi, cos, sin
 
 def random_spherical_coordinates_generator(r: float):
     """ function generates coordinates that fits to the equation X^2 + Y^2 + Z^2 = R^2
-    when input parameter radius was given """
+    when input parameter radius was given
+    :param r: radius of spherical coordinates (float)
+    :return: coordinates of random spherical coordinates
+    """
     x = uniform(-r, r)
     y_max = (r ** 2 - x ** 2) ** 0.5
     y = uniform(-y_max, y_max)
@@ -12,8 +15,14 @@ def random_spherical_coordinates_generator(r: float):
     return x, y, z
 
 
-def equidistributed_points_generator(r):
-    """ this function returns equidistributed points statistically. not exactly """
+def generate_random_point_on_sphere(r: float):
+    """
+    Generates a random point uniformly distributed on the surface of a sphere.
+
+    :param r: Radius of the sphere (float).
+    :return: A tuple (x, y, z) representing the coordinates of the random point on the sphere.
+    """
+
     z = uniform(-r, r)
     phi = uniform(-2 * pi, 2 * pi)
     x = (r ** 2 - z ** 2) ** 0.5 * cos(phi)

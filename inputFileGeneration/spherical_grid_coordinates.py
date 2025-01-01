@@ -4,15 +4,17 @@ from atoms.atoms import Atom
 from molecule.molecule import Molecule
 
 
-def spherically_converge_to_center(molecule, size=1):
+def spherically_converge_to_center(molecule, size=0.1):
     """
-    initial position (x0,y0,z0) is the initial position vector
-    to move the atom in the opposite direction of the position vector (towards origin)
-    unit_vector is multiplied by the size and reduced from the position vector
-    this will give the new position of the molecule or the atom.
-    :param molecule:
-    :param size:
-    :return [x, y, z]:
+    Moves a molecule or atom incrementally toward the origin in a spherical trajectory.
+
+    This function calculates the unit vector of the molecule's current position and moves it
+    closer to the origin by a step size. The new position is updated in the molecule object.
+
+    :param molecule: The molecule object with methods to get and update its coordinates.
+    :param size: Step size for each iteration (float). Default is 0.1.
+    :return: A list [x, y, z] representing the new position of the molecule.
+    ;modify molecule: Updates the molecule's position to the new coordinates.
     """
     position_vector = np.array(molecule.get_coords())
     unit_vector = np.array(molecule.unit_position_vector())

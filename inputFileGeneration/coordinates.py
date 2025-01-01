@@ -1,10 +1,10 @@
 import numpy as np
-from calculations.gravitypoint import gravity_point
+from calculations.center_of_mass import center_of_mass
 
 
 def relative_coordination_matrix(atoms):
     xyz_matrix = np.array([atom.get_coords() for atom in atoms])
-    relative_atom_coords = xyz_matrix - gravity_point(atoms)
+    relative_atom_coords = xyz_matrix - center_of_mass(atoms)
     return relative_atom_coords
 
 

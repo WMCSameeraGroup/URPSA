@@ -1,5 +1,5 @@
 import numpy as np
-from calculations.gravitypoint import gravity_point
+from calculations.center_of_mass import center_of_mass
 
 
 class Molecule:
@@ -9,10 +9,10 @@ class Molecule:
     def __init__(self, list_of_atoms, *args):
         self.atoms = list_of_atoms
         self.xyz = np.array([atom.get_coords() for atom in self.atoms])
-        self.gravity_point = self.cal_gravity_point()
-        self.x = self.gravity_point[0]
-        self.y = self.gravity_point[1]
-        self.z = self.gravity_point[2]
+        self.center_of_mass = self.cal_center_of_mass()
+        self.x = self.center_of_mass[0]
+        self.y = self.center_of_mass[1]
+        self.z = self.center_of_mass[2]
 
     def rotation_xy(self, angle):
         rot_mat = np.array([[np.cos(angle), -np.sin(angle), 0], [np.sin(angle), np.cos(angle), 0], [0, 0, 1]])
@@ -66,13 +66,13 @@ class Molecule:
 
     def add_atom(self, atom):
         self.atoms.append(atom)
-        self.cal_gravity_point()
+        self.cal_center_of_mass()
 
     def number_of_atoms(self):
         return len(self.atoms)
 
-    def cal_gravity_point(self):
-        gp= gravity_point(self.atoms)
+    def cal_center_of_mass(self):
+        gp= center_of_mass(self.atoms)
         self.x = gp[0]
         self.y = gp[1]
         self.z = gp[2]
@@ -88,28 +88,42 @@ class Molecule:
         return self.to_str()
 
     def get_coords(self):
-        return self.gravity_point
+        return self.center_of_mass
 
     def update_coordinates(self, x, y, z):
-        """update coordinates of atoms with movement of gravity point"""
+        """
+        Updates the coordinates of the atoms based on a new center of mass(COM) point.
 
-        new_gravity_point = [x, y, z]
-        change_in_gravity_points = np.array(new_gravity_point) - np.array(self.gravity_point)
-        self.translation_x(change_in_gravity_points[0])
-        self.translation_y(change_in_gravity_points[1])
-        self.translation_z(change_in_gravity_points[2])
-        self.gravity_point = self.cal_gravity_point()
+        This method calculates the displacement between the current COM point
+        and the new specified COM. It then translates the molecule's
+        coordinates accordingly along each axis and updates the COM.
+
+        :param x: New x-coordinate of the COM (float).
+        :param y: New y-coordinate of the COM (float).
+        :param z: New z-coordinate of the COM (float).
+        :modify self: Updates the molecule's position by applying the calculated
+                      translation and recalculates the COM.
+
+        :return: None
+        """
+
+        new_center_of_mass = [x, y, z]
+        change_in_center_of_mass = np.array(new_center_of_mass) - np.array(self.center_of_mass)
+        self.translation_x(change_in_center_of_mass[0])
+        self.translation_y(change_in_center_of_mass[1])
+        self.translation_z(change_in_center_of_mass[2])
+        self.center_of_mass = self.cal_center_of_mass()
 
 
     def relative_coordination_matrix(self):
         xyz_matrix = np.array([atom.get_coords() for atom in self.atoms])
-        relative_atom_coords = xyz_matrix - gravity_point(self.atoms)
+        relative_atom_coords = xyz_matrix - center_of_mass(self.atoms)
         return relative_atom_coords
 
-    def change_gravity_point(self, gravity_point):
+    def change_center_of_mass(self, center_of_mass):
         """ change the molecule coordinates without the bond distances and angles"""
-        self.xyz = self.relative_coordination_matrix() + gravity_point
-        self.cal_gravity_point()
+        self.xyz = self.relative_coordination_matrix() + center_of_mass
+        self.cal_center_of_mass()
         self.setAtomNewCoords()
 
 
@@ -135,12 +149,12 @@ class Molecule:
         """ center of mass is used as the reference point to avoid the bias"""
         sum_of_distances_square = 0
         for atom in self.atoms:
-            sum_of_distances_square += atom.distance_from_center_of_mass(self.gravity_point)**2
+            sum_of_distances_square += atom.distance_from_center_of_mass(self.center_of_mass) ** 2
 
         return (sum_of_distances_square/len(self.atoms))**0.5
 
     def reorient_molecule_to_start(self):
         for atom in self.atoms:
             atom.reorient_atom_to_start()
-        self.cal_gravity_point()
+        self.cal_center_of_mass()
 

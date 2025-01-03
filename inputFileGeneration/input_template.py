@@ -5,7 +5,7 @@ def get_input_template(number, system,inp_dir):
 %chk={inp_dir}/test{number}.chk
 {system.method}
 
-Title{number}
+step{number}
  
 {system.charge} {system.multiplicity}	\n"""
 

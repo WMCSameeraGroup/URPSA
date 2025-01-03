@@ -7,7 +7,7 @@ def setup_input_file(coordinate, template, system):
     return template + coordinate + system.molecules[0].to_str() + "\n\n\n\n"
 
 
-def file_name_generator(number,input_file_name="Pathway"):
+def file_name_generator(number,input_file_name="step"):
     return input_file_name + str(number) + ".com"
 
 

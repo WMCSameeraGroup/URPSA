@@ -47,7 +47,7 @@ class Setup:
             highest_number = extract_number(sorted_dirs[-1])
             next_number = highest_number + 1
 
-        next_folder_name = f"test_{next_number:05d}"
+        next_folder_name = f"Pathway_{next_number:05d}"
         print(f"Next folder name: {next_folder_name}")
 
         return next_folder_name

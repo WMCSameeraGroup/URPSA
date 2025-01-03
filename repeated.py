@@ -45,11 +45,8 @@ for i in range(controls.n_iterations):
         inputFile = system.generate_input_file(iteration, dir_of_files)
         if is_not_highly_repulsive_spherically(system, controls.stop_distance_factor):
             success = run_calculation(inputFile, dir_of_files)
-
-
-
-
             print(success)
+
             try:
                 log = LogFileManager(find_corresponding_output_file(inputFile), dir_of_files)
                 log.is_converged = success
@@ -100,7 +97,6 @@ for i in range(controls.n_iterations):
                                 print("final structure is optimized")
                             except Exception as e:
                                 print(f"An error occur while optimizing the final fragments :\n{e} ")
-
 
                         break
 

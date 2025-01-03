@@ -38,7 +38,7 @@ class TestMoleculeFunctions(unittest.TestCase):
 
         atoms = [atom1, atom2, atom3, atom4]
 
-        # Assuming get_molecules uses the distance and v_radius properties to group atoms into molecules
+        # Assuming get_molecules uses the distance and c_radius properties to group atoms into molecules
         molecules = get_molecules(atoms, factor=1)
 
         self.assertEqual(len(molecules), 3, "Expected 3 molecules formed")

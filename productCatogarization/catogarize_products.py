@@ -18,10 +18,10 @@ def get_molecules(atomlist, factor=1.2):
 
             for atom_in_molecule in molecule.atoms:
                 for alone_atom in atomlist:
-                    # Assuming if atoms are in the same molecule then atoms are closer than the sum of v_radius
+                    # Assuming if atoms are in the same molecule then atoms are closer than the sum of c_radius
                     # between their distance
                     if atom_in_molecule.distance_between(alone_atom) < factor * (
-                            atom_in_molecule.v_radius + alone_atom.v_radius):
+                            atom_in_molecule.c_radius + alone_atom.c_radius):
                         to_remove.append(alone_atom)
                         no_more_atoms_to_add = False
 
@@ -89,11 +89,11 @@ class products_writer:
 
     def find_the_formation_of_products(self, file_list):
         """ find the minimum energy point"""
-        minimum_index = 0
-        for j, i in enumerate(file_list):
-            if i.is_converged == 0 and i.scf_done <= file_list[minimum_index].scf_done:
-                minimum_index = j
-            j += 1
+        minimum_index = -1
+        # for j, i in enumerate(file_list):
+        #     if i.is_converged == 0 and i.scf_done <= file_list[minimum_index].scf_done:
+        #         minimum_index = j
+        #     j += 1
         return minimum_index
 
     def create_if_not(self):

@@ -1,16 +1,9 @@
-from atoms.atoms import Atom
-
-
-
-
-################################### for spherical #####################################
-
 def is_too_close_spherical(atoms1, atoms2, stop_distance_fac):
     """
     Checks if any two atoms from two different molecules are too close to each other.
 
     This function compares the distances between all pairs of atoms from two different molecules.
-    If any pair of atoms is within a critical distance — determined by the sum of their van der Waals
+    If any pair of atoms is within a critical distance — determined by the sum of their covalent
     radii scaled by `stop_distance_fac` — the function returns False, indicating that the atoms are
     too close. Otherwise, it returns True.
 
@@ -23,9 +16,9 @@ def is_too_close_spherical(atoms1, atoms2, stop_distance_fac):
     for i in atoms1:
         for j in atoms2:
             if i.distance_between(j) < (
-                    i.v_radius + j.v_radius) * stop_distance_fac:
-                # check are they from the same molecule
-                print(i.distance_between(j), i, j)
+                    i.c_radius + j.c_radius) * stop_distance_fac:
+                # Debugging output: prints the distance and the atoms that are too close
+                #print(i.distance_between(j), i, j)
                 return False
     return True
 
@@ -48,7 +41,7 @@ def is_not_highly_repulsive_spherically(sys, stop_distance_fac=0.5):
     for molecule_1 in sys.molecules:
         for molecule_2 in sys.molecules:
             if molecule_2 == molecule_1:
-                # if the same molecule
+                # Skip comparing the molecule with itself
                 continue
             if not is_too_close_spherical(molecule_2.atoms, molecule_1.atoms, stop_distance_fac):
                 return False

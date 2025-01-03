@@ -21,7 +21,7 @@ class Atom:
         self.number = number
         self.symbol = symbol
         self.mass = MASS[symbol]
-        self.v_radius = COVALENT_RADIUS[symbol]
+        self.c_radius = COVALENT_RADIUS[symbol]
         self.x = float(x)
         self.y = float(y)
         self.z = float(z)

@@ -14,7 +14,7 @@ sphere_radius = 2.5
 spherical_placement = statistically_even
 
 # add COM constraints = True
-ADD_COM_CONST = True
+ADD_TRUE_COM = True
 
 
 [gaussian]

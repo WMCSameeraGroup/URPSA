@@ -155,10 +155,13 @@ class System:
         elif self.additinal_constraints:
             string += self.additinal_constraints
             return string
+        # todo: change this the architecture is bad if  ADD_COM_CONST is not their then default make it true
         elif self.controls.ADD_COM_CONST == "True":
-            return self.com_constraints(string)
+            return self.true_come_constraints(string)
         elif self.controls.ADD_SPHERICAL_CONST == "True":
             return self.spherical_constraints(string)
+        elif self.controls.ADD_TRUE_COM == "True":
+            return self.true_come_constraints(string)
 
     def spherical_constraints(self, string):
         def list_of_atoms(molecule1):
@@ -188,6 +191,35 @@ class System:
 
         for n, molecule in enumerate(self.molecules):
             string += f"XCm{n + 1} (Inactive) = XCntr({list_of_atoms(molecule)}) \nYCm{n + 1} (Inactive) = YCntr({list_of_atoms(molecule)}) \nZCm{n + 1} (Inactive) = ZCntr({list_of_atoms(molecule)})\n"
+
+        n_mol = len(self.molecules)
+        for i in range(n_mol - 1):
+            i += 1
+            for j in range(n_mol - i):
+                j += 1
+                string += f"F{i}F{i + j}(FREEZE)=sqrt[(XCm{i}-XCm{i + j})^2+(YCm{i}-YCm{i + j})^2+(ZCm{i}-ZCm{i + j})^2]*0.529177\n"
+        return string
+
+    def true_come_constraints(self, string):
+        def list_of_atoms(molecule1):
+            x_string = "SQRT("
+            y_string = "SQRT("
+            z_string = "SQRT("
+            sum_of_mass = 0
+            for atom in molecule1.atoms:
+                sum_of_mass += atom.mass
+            for atom in molecule1.atoms:
+                x_string += f"{atom.mass}*(X({atom.number}))^2+"
+                y_string += f"{atom.mass}*(Y({atom.number}))^2+"
+                z_string += f"{atom.mass}*(Z({atom.number}))^2+"
+            x_string = x_string[0:-1] +f")*{0.529177/sum_of_mass}"
+            y_string = y_string[0:-1] +f")*{0.529177/sum_of_mass}"
+            z_string = z_string[0:-1] +f")*{0.529177/sum_of_mass}"
+            return x_string, y_string , z_string
+
+
+        for n, molecule in enumerate(self.molecules):
+            string += f"XCm{n + 1} (Inactive) = {list_of_atoms(molecule)[0]} \nYCm{n + 1} (Inactive) = {list_of_atoms(molecule)[1]} \nZCm{n + 1} (Inactive) = {list_of_atoms(molecule)[2]}\n"
 
         n_mol = len(self.molecules)
         for i in range(n_mol - 1):

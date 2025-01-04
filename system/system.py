@@ -202,16 +202,16 @@ class System:
 
     def true_come_constraints(self, string):
         def list_of_atoms(molecule1):
-            x_string = "SQRT("
-            y_string = "SQRT("
-            z_string = "SQRT("
+            x_string = "("
+            y_string = "("
+            z_string = "("
             sum_of_mass = 0
             for atom in molecule1.atoms:
                 sum_of_mass += atom.mass
             for atom in molecule1.atoms:
-                x_string += f"{atom.mass}*(X({atom.number}))^2+"
-                y_string += f"{atom.mass}*(Y({atom.number}))^2+"
-                z_string += f"{atom.mass}*(Z({atom.number}))^2+"
+                x_string += f"{atom.mass}*X({atom.number})+"
+                y_string += f"{atom.mass}*Y({atom.number})+"
+                z_string += f"{atom.mass}*Z({atom.number})+"
             x_string = x_string[0:-1] +f")*{0.529177/sum_of_mass}"
             y_string = y_string[0:-1] +f")*{0.529177/sum_of_mass}"
             z_string = z_string[0:-1] +f")*{0.529177/sum_of_mass}"

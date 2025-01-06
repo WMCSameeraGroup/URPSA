@@ -81,7 +81,30 @@ class System:
         return template + string + other + "\n\n\n\n"
 
     def set_moleculer_coordinates(self, opt_xyz):
-        """change molecules to new optimized coordinates """
+        """
+        Update the molecular coordinates of all molecules in the system to new optimized coordinates.
+
+        This function iterates over each molecule in the system and replaces its current
+        atomic coordinates with the corresponding optimized coordinates from the `opt_xyz` list.
+        It also ensures that the new coordinates are set for each atom within the molecule.
+
+        Parameters
+        ----------
+        opt_xyz : list of tuples
+            A list containing the optimized (x, y, z) coordinates for all atoms in the system.
+            The coordinates must be provided in the same order as the atoms in the system.
+
+        Updates
+        -------
+        - Updates the `xyz` attribute of each molecule with the corresponding new coordinates.
+        - Calls `set_new_coords_to_atoms()` on each molecule to propagate the changes to its atoms.
+
+        Note
+        ----
+        The function assumes that `opt_xyz` contains coordinates for all atoms in all molecules
+        in the correct order, and that the number of coordinates matches the total number of atoms
+        across all molecules in the system.
+        """
         count = 0
         for molecule in self.molecules:
             n_atoms = molecule.number_of_atoms()
@@ -157,7 +180,7 @@ class System:
             return string
         # todo: change this the architecture is bad if  ADD_COM_CONST is not their then default make it true
         elif self.controls.ADD_COM_CONST == "True":
-            return self.true_come_constraints(string)
+            return self.com_constraints(string)
         elif self.controls.ADD_SPHERICAL_CONST == "True":
             return self.spherical_constraints(string)
         elif self.controls.ADD_TRUE_COM == "True":

@@ -127,15 +127,6 @@ class System:
                 # molecule.print_center_of_mass()
         return True
 
-    # def change_orientations_of_molecules(self, controls):
-    #     if controls.spherical_placement == "False":
-    #         return False
-    #     for molecule in self.molecules:
-    #         if controls.change_orientation == "Total_random":
-    #             molecule.update_coordinates(*random_spherical_coordinates_generator(controls.sphere_radius))
-    #         elif controls.change_orientation == "statistically_even":
-    #             molecule.update_coordinates(*equidistributed_points_generator(controls.sphere_radius))
-    #     return True
 
     def random_rotate_molecules(self):
 
@@ -157,7 +148,7 @@ class System:
             return string
         # todo: change this the architecture is bad if  ADD_COM_CONST is not their then default make it true
         elif self.controls.ADD_COM_CONST == "True":
-            return self.true_come_constraints(string)
+            return self.constraints_generation(string)
         elif self.controls.ADD_SPHERICAL_CONST == "True":
             return self.spherical_constraints(string)
         elif self.controls.ADD_TRUE_COM == "True":
@@ -180,7 +171,7 @@ class System:
             string += f"radius{i}(FREEZE)=sqrt[(XCm{i})^2+(YCm{i})^2+(ZCm{i})^2]*0.529177\n"
         return string
 
-    def com_constraints(self, string):
+    def constraints_generation(self, string):
 
         def list_of_atoms(molecule1):
             """replace dash with comma if there are only 2 atoms in a molecule"""

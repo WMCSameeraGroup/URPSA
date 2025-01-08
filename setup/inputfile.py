@@ -29,6 +29,7 @@ class InputFile:
         self.multiplicity = int(float(self.config.get('molecules', 'multiplicity')))
         self.number_of_molecules = int(self.config.get('molecules', 'number_of_molecules'))
         self.n_iterations = int(self.config.get('controls', 'n_iterations'))
+        self.consecutive_duplicates_threshold = int(self.config.get('controls', 'consecutive_duplicates_threshold'))
         self.stress_release = self.set_stress_release()
         # self.rotation_random = "random" in self.data.split("\n\n")[4].split()
         # self.rotation_step = self.set_rotation_step()

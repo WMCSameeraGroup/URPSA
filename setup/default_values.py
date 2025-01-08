@@ -19,7 +19,8 @@ defaults = {
         "cutoff_energy_gap":3.0,
         "energy_surpass_options":"exit",
         "optimize_the_final_particle":"True",
-        "convergence_error":"exit"
+        "convergence_error":"exit",
+        "consecutive_duplicates_threshold":10
 
     },
     "gaussian": {

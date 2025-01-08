@@ -122,7 +122,17 @@ for i in range(controls.n_iterations):
 
         # last n products are already been found then we exit
         # read the json file  and see how many times its observed
-        
+        observed_product_counter=0
+        if products_collection.check_number_of_times_same_products_were_observed(i,products_molecules) != 0:
+            observed_product_counter+=1
+        else:
+            # if a new product was observed restart counter
+            observed_product_counter = 0
+
+        if observed_product_counter == controls.consecutive_duplicates_threshold:
+            print("no new products found in the last 10 iterations")
+            break
+
 
 
     else:

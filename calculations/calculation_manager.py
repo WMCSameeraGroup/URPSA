@@ -10,7 +10,7 @@ def run_calculation(input_file,input_file_directory):
             print("running " + input_file)
             # Run Gaussian using subprocess
             process = subprocess.run(gaussian_command, shell=True, check=True, stdout=subprocess.PIPE,
-                                     stderr=subprocess.PIPE, text=True)
+                                     stderr=subprocess.PIPE, universal_newlines=True)
 
             # Check if the Gaussian job completed successfully
             if process.returncode == 0:

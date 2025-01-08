@@ -50,6 +50,7 @@ class InputFile:
         self.energy_surpass_options = self.config.get("controls", "energy_surpass_options")
         self.optimize_the_final_particle =self.config.get('controls', 'optimize_the_final_particle')
         self.convergence_error = self.config.get('controls', 'convergence_error')
+        self.unsuccessful_pathway = self.config.get('controls', 'unsuccessful_pathway')
 
     def set_molecule_list(self):
         """

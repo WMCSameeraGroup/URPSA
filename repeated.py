@@ -1,5 +1,4 @@
 import sys
-from operator import index
 
 from LogReader.log_file_manager import LogFileManager
 from calculations.calculation_manager import run_calculation
@@ -14,6 +13,7 @@ from system.system import System
 from outputFiileWriter.setup import Setup
 from productCatogarization.catogarize_products import products_writer,get_new_molecules
 from productCatogarization.collection_of_products import productsManager
+from utils.transferFiles import move_dir_to_archive, delete_dir
 
 try:
     file_path = sys.argv[1]
@@ -137,8 +137,11 @@ for i in range(controls.n_iterations):
 
 
     else:
-        # todo: delete the file or do something
-        pass
+        if controls.unsuccessfull_pathway == "archive" :
+            move_dir_to_archive(dir_of_files)
+        elif controls.unsuccessfull_pathway == "delete" :
+            delete_dir(dir_of_files)
+
 
 
 

@@ -1,9 +1,10 @@
 import os
 
-def move_dir_to_archive(source_dir,destination_dir):
+def move_dir_to_archive(pathway_dir):
+
     try:
-        os.rename(source_dir, destination_dir)
-        print(f"Moved {source_dir} to {destination_dir}")
+        os.rename(pathway_dir, "Archive/"+pathway_dir)
+        print(f"Moved {pathway_dir} to {"Archive/"+pathway_dir}")
     except FileNotFoundError:
         print("The source directory does not exist.")
     except PermissionError:
@@ -13,7 +14,7 @@ def move_dir_to_archive(source_dir,destination_dir):
 
 
 
-def delete_dir(source_dir,destination_dir):
+def delete_dir(source_dir):
     try:
         os.rmdir(source_dir)
         print(f"Removed {source_dir}")

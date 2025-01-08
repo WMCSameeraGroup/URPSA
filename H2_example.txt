@@ -3,7 +3,7 @@ project_name = H2_example7
 
 
 [controls]
-step_size = 0.1
+step_size = 0.5
 step_count = 40
 stop_distance_factor = 0.9
 update_with_optimized_coordinates = True
@@ -12,6 +12,7 @@ sphere_radius = 2.5
 
 # Total_random or statistically_even or False
 spherical_placement = statistically_even
+
 
 # add COM constraints = True
 ADD_TRUE_COM = True

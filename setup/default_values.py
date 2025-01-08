@@ -16,7 +16,7 @@ defaults = {
         "ADD_COM_CONST": "True",
         "ADD_SPHERICAL_CONST": "False",
         "dynamic_fragment_replacement": "False",
-        "cutoff_energy_gap":12.0,
+        "cutoff_energy_gap":120.0,
         "energy_surpass_options":"exit",
         "optimize_the_final_particle":"True",
         "convergence_error":"exit",

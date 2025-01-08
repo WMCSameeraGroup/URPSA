@@ -18,16 +18,26 @@ class Setup:
             sys.exit()
 
     def check_dir_in_the_project(self):
-        """get all the folders in the directory and sort them by their number 'test_00001' """
+        """Get all folders in the directory and inside the 'archives' folder, then sort them by their number 'test_00001'."""
+        all_dirs = []
 
-        dirs = [d for d in os.listdir(self.project_dir) if os.path.isdir(os.path.join(self.project_dir, d))]
+        # Get folders in the main directory
+        main_dirs = [d for d in os.listdir(self.project_dir) if os.path.isdir(os.path.join(self.project_dir, d))]
+        all_dirs.extend(main_dirs)
+
+        # Check if 'Archive' folder exists and get its subfolders
+        archives_path = os.path.join(self.project_dir, 'Archive')
+        if os.path.exists(archives_path) and os.path.isdir(archives_path):
+            archive_dirs = [d for d in os.listdir(archives_path) if os.path.isdir(os.path.join(archives_path, d))]
+            all_dirs.extend([os.path.join('Archive', d) for d in archive_dirs])
 
         def extract_number(folder_name):
             match = re.search(r'\d+', folder_name)
             return int(match.group()) if match else -1
 
-        sorted_dirs = sorted(dirs, key=extract_number)
+        sorted_dirs = sorted(all_dirs, key=extract_number)
         return sorted_dirs
+
 
     def get_next_folder_number(self):
         """Generate the next folder name in the sequence"""

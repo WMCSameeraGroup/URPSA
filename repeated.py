@@ -130,8 +130,9 @@ for i in range(controls.n_iterations):
             observed_product_counter = 0
 
         if observed_product_counter == controls.consecutive_duplicates_threshold:
-            print("no new products found in the last 10 iterations")
+            print(f"no new products found in the last {observed_product_counter} iterations")
             break
+
 
 
 

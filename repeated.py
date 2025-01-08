@@ -138,7 +138,6 @@ for i in range(controls.n_iterations):
 
     else:
         if controls.unsuccessful_pathway == "archive" :
-            print("Moving directory to archive 1")
             move_dir_to_archive(dir_of_files)
         elif controls.unsuccessful_pathway == "delete" :
             delete_dir(dir_of_files)

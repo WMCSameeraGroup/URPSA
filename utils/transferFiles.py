@@ -1,12 +1,7 @@
 import os
 
 def move_dir_to_archive(pathway_dir):
-    print("Moving directory to archive")
     arc_dir = os.path.join(pathway_dir, '../Archive/', os.path.basename(pathway_dir))
-
-    # Print the path for confirmation
-    print("Archive: ", arc_dir)
-
     # Check if the directory exists, if not, create it
     if not os.path.exists(arc_dir):
         os.makedirs(arc_dir)

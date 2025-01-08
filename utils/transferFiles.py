@@ -1,4 +1,6 @@
 import os
+import shutil
+
 
 def move_dir_to_archive(pathway_dir):
     arc_dir = os.path.join(pathway_dir, '../Archives/', os.path.basename(pathway_dir))
@@ -22,7 +24,7 @@ def move_dir_to_archive(pathway_dir):
 
 def delete_dir(source_dir):
     try:
-        os.rmdir(source_dir)
+        shutil.rmtree(source_dir)
         print(f"Removed {source_dir}")
 
     except FileNotFoundError:

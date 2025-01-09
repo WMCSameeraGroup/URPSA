@@ -54,6 +54,8 @@ class ConfigApp(QtWidgets.QWidget):
             ("Energy Surpass Options", "exit"),
             ("Convergence Error", "exit")
         ])
+
+        #self.unsuccessful = self.create_combobox_section("Unsuccessful", [])
         self.boolean_controls_group = self.create_checkbox_section("Boolean Controls", [
             ("Update with Optimized Coordinates", True),
             ("Add COM Constraints", True),

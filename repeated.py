@@ -89,6 +89,7 @@ for i in range(controls.n_iterations):
                             try:
                                 optFile = system.generate_input_file(-1, dir_of_files)
                                 val=run_calculation(optFile, dir_of_files)
+                                is_all_calculations_converged = False if val != 0 else True
                                 final_log = LogFileManager(find_corresponding_output_file(optFile), dir_of_files)
                                 final_log.is_converged = val
                                 output_file_list.append(final_log)

@@ -1,5 +1,47 @@
+import subprocess
 from PyQt5 import QtWidgets, QtGui
 import sys
+import os
+CONFIG_FILE = "config.txt"
+# Base Section class
+class Section:
+    def __init__(self, title, fields, parent_layout):
+        self.group_box = QtWidgets.QGroupBox(title)
+        self.layout = QtWidgets.QFormLayout()
+        self.inputs = {}
+
+        for field in fields:
+            label, default, field_type = field["label"], field.get("default", ""), field.get("type", str)
+            if field_type == "multiline":
+                widget = QtWidgets.QPlainTextEdit()
+                widget.setPlainText(default)
+            elif field_type == "combo":
+                widget = QtWidgets.QComboBox()
+                widget.addItems(default)
+            else:
+                widget = QtWidgets.QLineEdit()
+                widget.setText(default)
+                if field_type == int:
+                    widget.setValidator(QtGui.QIntValidator())
+                elif field_type == float:
+                    widget.setValidator(QtGui.QDoubleValidator())
+            self.inputs[label] = widget
+            self.layout.addRow(label, widget)
+
+        self.group_box.setLayout(self.layout)
+        parent_layout.addWidget(self.group_box)
+
+    def get_values(self):
+        values = {}
+        for key, widget in self.inputs.items():
+            if isinstance(widget, QtWidgets.QPlainTextEdit):
+                values[key] = widget.toPlainText()
+            elif isinstance(widget, QtWidgets.QComboBox):
+                values[key] = widget.currentText()
+            else:
+                values[key] = widget.text()
+        return values
+
 
 
 class ConfigApp(QtWidgets.QWidget):
@@ -9,67 +51,80 @@ class ConfigApp(QtWidgets.QWidget):
         self.setGeometry(100, 100, 800, 600)
 
         self.tabs = QtWidgets.QTabWidget()
-        self.tabs.currentChanged.connect(self.generate_preview)  # Event to handle tab change
-
-        self.inputs = {}
+        self.sections = {}
 
         # General Tab
         self.general_tab = QtWidgets.QWidget()
         self.general_layout = QtWidgets.QVBoxLayout()
-        self.project_group = self.create_section("Project", [
-            ("Project Name", "test48927")
-        ])
-        self.gaussian_group = self.create_section("Gaussian", [
-            ("Number of Cores", "8", int),
-            ("Memory", "8GB"),
-            ("Method", "#N opt(maxcycle=600,AddGIC) PM6 scf(maxcyc=600,xqc) nosymm")
-        ])
-        self.molecules_group = self.create_section("Molecules", [
-            ("Charge", "0", int),
-            ("Multiplicity", "1", int),
-            ("Number of Molecules", "2", int)
-        ])
-        self.molecules_group_multy_line = self.create_multiline_section("Molecules", "")
 
-        self.general_layout.addWidget(self.project_group)
-        self.general_layout.addWidget(self.gaussian_group)
-        self.general_layout.addWidget(self.molecules_group)
-        self.general_layout.addWidget(self.molecules_group_multy_line)
+        self.sections["Project"] = Section("Project", [
+            {"label": "Project Name", "default": "test48927"}
+        ], self.general_layout)
+
+        self.sections["Gaussian"] = Section("Gaussian", [
+            {"label": "Number of Cores", "default": "8", "type": int},
+            {"label": "Memory", "default": "8GB"},
+            {"label": "Method", "default": "#N opt(maxcycle=600,AddGIC) PM6 scf(maxcyc=600,xqc) nosymm"}
+        ], self.general_layout)
+
+        self.sections["Molecules"] = Section("Molecules", [
+            {"label": "Molecule Data", "default": """0 = C                  1.31988500    0.91615000    0.00000000\
+ H                  1.89112600    0.00761400    0.00000000\
+ H                  1.88382200    1.82866300    0.00000000\
+ C                  0.00000000    0.92731700    0.00000000\
+ H                 -0.50664600    1.87544200    0.00000000\
+ C                 -0.89261300   -0.25132100    0.00000000\
+ H                 -1.94256100   -0.02059200    0.00000000\
+ C                 -0.52415000   -1.51877900    0.00000000\
+ H                  0.50520000   -1.82241000    0.00000000\
+ H                 -1.24967100   -2.30892300    0.00000000\
+
+1 =  C   0.000000    0.657550    0.000000\
+     H  -0.911700    1.224600    0.000000\
+     H  0.911468    1.224949    0.000000\
+     C  0.000000   -0.657550    0.000000\
+     H  0.911700   -1.224600    0.000000\
+     H  -0.911468   -1.224949    0.000000""", "type": "multiline"}
+        ], self.general_layout)
+
         self.general_tab.setLayout(self.general_layout)
+        self.tabs.addTab(self.general_tab, "General")
 
         # Advanced Tab
         self.advanced_tab = QtWidgets.QWidget()
         self.advanced_layout = QtWidgets.QVBoxLayout()
-        self.controls_group = self.create_section("Controls", [
-            ("Step Size", "0.1", float),
-            ("Step Count", "40", int),
-            ("Stop Distance Factor", "0.8", float),
-            ("Stress Release", "0:1:-1"),
-            ("Sphere Radius", "3", float),
-            ("N Iterations", "10", int),
-            ("Spherical Placement", "statistically_even"),
-            ("Cutoff Energy Gap", "3.0", float)
-        ])
-        self.exit_controls_group = self.create_combobox_section("Exit Controls", [
-            ("Energy Surpass Options", "exit"),
-            ("Convergence Error", "exit")
-        ])
 
-        #self.unsuccessful = self.create_combobox_section("Unsuccessful", [])
-        self.boolean_controls_group = self.create_checkbox_section("Boolean Controls", [
-            ("Update with Optimized Coordinates", True),
-            ("Add COM Constraints", True),
-            ("Add Spherical Constraints", False),
-            ("Dynamic Fragment Replacement", False),
-            ("Optimize the Final Particle", True)
-        ])
-        self.additional_group = self.create_multiline_section("Additional", "")
+        self.sections["Controls"] = Section("Controls", [
+            {"label": "Update with Optimized Coordinates", "default": "True"},
+            {"label": "Step Size", "default": "0.1", "type": float},
+            {"label": "Step Count", "default": "40", "type": int},
+            {"label": "Stop Distance Factor", "default": "0.8", "type": float},
+            {"label": "Stress Release", "default": "0:1:-1"},
+            {"label": "Sphere Radius", "default": "3", "type": float},
+            {"label": "N Iterations", "default": "10", "type": int},
+            {"label": "Spherical Placement", "default": ["statistically_even", "random", "custom"], "type": "combo"},
+            {"label": "Add COM Constraints", "default": "True"},
+            {"label": "Add Spherical Constraints", "default": "False"},
+            {"label": "Dynamic Fragment Replacement", "default": "False"},
+            {"label": "Cutoff Energy Gap", "default": "3.0", "type": float},
+            {"label": "Energy Surpass Options", "default": ["exit", "continue"], "type": "combo"},
+            {"label": "Optimize the Final Particle", "default": "True"},
+            {"label": "Convergence Error", "default": ["exit", "warn"], "type": "combo"},
+            {"label": "unsuccessful_pathway", "default": ["archive", "delete"], "type": "combo"}
+        ], self.advanced_layout)
 
-        self.advanced_layout.addWidget(self.controls_group)
-        self.advanced_layout.addWidget(self.exit_controls_group)
-        self.advanced_layout.addWidget(self.boolean_controls_group)
-        self.advanced_layout.addWidget(self.additional_group)
+        self.sections["Additional"] = Section("Additional", [
+            {"label": "Additional Data", "default": """XCm1 (Inactive) /- XCntr(1-6) \
+YCm1 (Inactive) /- YCntr(1-6) \
+ZCm1 (Inactive) /- ZCntr(1-6)\
+XCm2 (Inactive)  /- XCntr(7)\
+YCm2 (Inactive)  /- YCntr(7) \
+ZCm2 (Inactive) /- ZCntr(7)\
+F1F2(FREEZE) /- sqrt[(XCm1-XCm2)^2+(YCm1-YCm2)^2+(ZCm1-ZCm2)^2]*0.529177""", "type": "multiline"}
+        ], self.advanced_layout)
+
         self.advanced_tab.setLayout(self.advanced_layout)
+        self.tabs.addTab(self.advanced_tab, "Advanced")
 
         # Preview Tab
         self.preview_tab = QtWidgets.QWidget()
@@ -78,120 +133,53 @@ class ConfigApp(QtWidgets.QWidget):
         self.preview_text.setReadOnly(True)
         self.preview_layout.addWidget(self.preview_text)
 
+        # Browse and Run Section
+        self.browse_layout = QtWidgets.QHBoxLayout()
+        self.file_path_input = QtWidgets.QLineEdit()
+        self.file_path_input.setPlaceholderText("Select repeated.py")
+        self.browse_button = QtWidgets.QPushButton("Browse")
+        self.browse_button.clicked.connect(self.select_repeated_file)
+        self.browse_layout.addWidget(self.file_path_input)
+        self.browse_layout.addWidget(self.browse_button)
+        self.preview_layout.addLayout(self.browse_layout)
+
+        # Run Calculation Button
+        self.run_button = QtWidgets.QPushButton("Run Calculation")
+        self.run_button.clicked.connect(self.run_calculation)
+        self.preview_layout.addWidget(self.run_button)
+
         self.save_button = QtWidgets.QPushButton("Save File")
         self.save_button.clicked.connect(self.save_file)
         self.preview_layout.addWidget(self.save_button)
 
         self.preview_tab.setLayout(self.preview_layout)
-
-        # Add tabs to the main widget
-        self.tabs.addTab(self.general_tab, "General")
-        self.tabs.addTab(self.advanced_tab, "Advanced")
         self.tabs.addTab(self.preview_tab, "Preview")
 
         # Main layout
         self.main_layout = QtWidgets.QVBoxLayout()
         self.main_layout.addWidget(self.tabs)
+
+        # Submit button
+        self.submit_button = QtWidgets.QPushButton("Submit")
+        self.submit_button.clicked.connect(self.submit)
+        self.main_layout.addWidget(self.submit_button)
+
         self.setLayout(self.main_layout)
 
-    def create_section(self, title, fields):
-        group_box = QtWidgets.QGroupBox(title)
-        layout = QtWidgets.QFormLayout()
+        self.tabs.currentChanged.connect(self.show_preview)
 
-        for field in fields:
-            label, default = field[0], field[1]
-            input_type = field[2] if len(field) > 2 else str
+    def submit(self):
+        config_lines = []
+        for section_name, section_obj in self.sections.items():
+            config_lines.append(f"[{section_name}]")
+            for key, value in section_obj.get_values().items():
+                config_lines.append(f"{key.replace(' ', '_').lower()} = {value}")
+            config_lines.append("")
+        self.preview_text.setText("\n".join(config_lines))
 
-            line_edit = QtWidgets.QLineEdit()
-            line_edit.setText(default)
-            if input_type == int:
-                line_edit.setValidator(QtGui.QIntValidator())
-            elif input_type == float:
-                line_edit.setValidator(QtGui.QDoubleValidator())
-
-            self.inputs[label] = line_edit
-            layout.addRow(label, line_edit)
-
-        group_box.setLayout(layout)
-        return group_box
-
-    def create_combobox_section(self, title, fields):
-        group_box = QtWidgets.QGroupBox(title)
-        layout = QtWidgets.QFormLayout()
-
-        for field in fields:
-            label, default = field[0], field[1]
-            combo_box = QtWidgets.QComboBox()
-            combo_box.addItems(["continue", "exit"])
-            combo_box.setCurrentText(default)
-            self.inputs[label] = combo_box
-            layout.addRow(label, combo_box)
-
-        group_box.setLayout(layout)
-        return group_box
-
-    def create_checkbox_section(self, title, fields):
-        group_box = QtWidgets.QGroupBox(title)
-        layout = QtWidgets.QFormLayout()
-
-        for field in fields:
-            label, default = field[0], field[1]
-            checkbox = QtWidgets.QCheckBox()
-            checkbox.setChecked(default)
-            self.inputs[label] = checkbox
-            layout.addRow(label, checkbox)
-
-        group_box.setLayout(layout)
-        return group_box
-
-    def create_multiline_section(self, title, default_text):
-        group_box = QtWidgets.QGroupBox(title)
-        layout = QtWidgets.QVBoxLayout()
-        text_edit = QtWidgets.QPlainTextEdit()
-        text_edit.setPlainText(default_text)
-        self.inputs[title] = text_edit
-        layout.addWidget(text_edit)
-        group_box.setLayout(layout)
-        return group_box
-
-    def generate_preview(self, index):
-        if index != 2:  # Only generate preview when the Preview tab is clicked
-            return
-
-        config_lines = ""
-
-        # General section
-        config_lines += "[Project]\n"
-        config_lines += f"project_name = {self.inputs['Project Name'].text()}\n\n"
-
-        config_lines += "[Gaussian]\n"
-        config_lines += f"number_of_cores = {self.inputs['Number of Cores'].text()}\n"
-        config_lines += f"memory = {self.inputs['Memory'].text()}\n"
-        config_lines += f"method = {self.inputs['Method'].text()}\n\n"
-
-        # Molecules section
-        config_lines += "[Molecules]\n"
-        config_lines += f"charge = {self.inputs['Charge'].text()}\n"
-        config_lines += f"multiplicity = {self.inputs['Multiplicity'].text()}\n"
-        config_lines += f"number_of_molecules = {self.inputs['Number of Molecules'].text()}\n\n"
-        config_lines += self.inputs["Molecules"].toPlainText() + "\n"
-
-        # Controls section
-        config_lines += "[Controls]\n"
-        for key in self.inputs:
-            if isinstance(self.inputs[key], QtWidgets.QLineEdit):
-                config_lines += f"{key.replace(' ', '_').lower()} = {self.inputs[key].text()}\n"
-            elif isinstance(self.inputs[key], QtWidgets.QCheckBox):
-                config_lines += f"{key.replace(' ', '_').lower()} = {str(self.inputs[key].isChecked()).lower()}\n"
-            elif isinstance(self.inputs[key], QtWidgets.QComboBox):
-                config_lines += f"{key.replace(' ', '_').lower()} = {self.inputs[key].currentText()}\n"
-
-        # Additional section
-        config_lines += "\n[Additional]\n"
-        config_lines += self.inputs["Additional"].toPlainText()
-
-        # Set the preview text
-        self.preview_text.setText(config_lines)
+    def show_preview(self, index):
+        if self.tabs.tabText(index) == "Preview":
+            self.submit()
 
     def save_file(self):
         file_dialog = QtWidgets.QFileDialog()
@@ -199,11 +187,44 @@ class ConfigApp(QtWidgets.QWidget):
         if file_path:
             with open(file_path, "w") as file:
                 file.write(self.preview_text.toPlainText())
+            self.input_file_path = file_path
+
+
+    def select_repeated_file(self):
+        file_dialog = QtWidgets.QFileDialog()
+        file_path, _ = file_dialog.getOpenFileName(self, "Select repeated.py", "", "Python Files (*.py)")
+        if file_path:
+            self.file_path_input.setText(file_path)
+            self.repeated_script_path = file_path
+            self.save_repeated_file_path(file_path)
+
+    def run_calculation(self):
+        if not hasattr(self, 'input_file_path'):
+            QtWidgets.QMessageBox.warning(self, "Error", "Please save the input file before running the calculation.")
+            return
+
+        if not hasattr(self, 'repeated_script_path'):
+            QtWidgets.QMessageBox.warning(self, "Error", "Please select the repeated.py script before running the calculation.")
+            return
+
+        command = f'python3 "{self.repeated_script_path}" "{self.input_file_path}"'
+        subprocess.Popen(command, shell=True)
+
+    def save_repeated_file_path(self, path):
+        with open(CONFIG_FILE, "w") as file:
+            file.write(path)
+
+    def load_repeated_file_path(self):
+        if os.path.exists(CONFIG_FILE):
+            with open(CONFIG_FILE, "r") as file:
+                path = file.read().strip()
+                self.file_path_input.setText(path)
+                self.repeated_script_path = path
 
 
 if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv)
     window = ConfigApp()
     window.show()
-    sys.exit(app.exec())
+    sys.exit(app.exec_())
 

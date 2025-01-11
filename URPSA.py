@@ -48,9 +48,13 @@ class ConfigApp(QtWidgets.QWidget):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Configuration Input")
-        self.setGeometry(100, 100, 800, 600)
 
+        self.setGeometry(100, 100, 600, 600)
+
+        self.scroll_area = QtWidgets.QScrollArea()
         self.tabs = QtWidgets.QTabWidget()
+        self.scroll_area.setWidget(self.tabs)
+        self.scroll_area.setWidgetResizable(True)
         self.sections = {}
 
         # General Tab
@@ -147,7 +151,7 @@ class ConfigApp(QtWidgets.QWidget):
 
         # Main layout
         self.main_layout = QtWidgets.QVBoxLayout()
-        self.main_layout.addWidget(self.tabs)
+        self.main_layout.addWidget(self.scroll_area)
 
         # Submit button
         self.submit_button = QtWidgets.QPushButton("Submit")

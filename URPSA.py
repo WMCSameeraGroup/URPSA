@@ -76,7 +76,7 @@ class ConfigApp(QtWidgets.QWidget):
             {"label": "charge", "default": "-1", "type": int},
             {"label": "multiplicity", "default": "1", "type": int},
             {"label": "number_of_molecules", "default": "5", "type": int},
-            {"label": "Molecule Data", "default": """0 = 0 = C 0.000 0.000 0.0000
+            {"label": "Molecule Data", "default": """0 = C 0.000 0.000 0.0000
 
 1 = C 0.000 0.000 0.000
 
@@ -172,7 +172,9 @@ class ConfigApp(QtWidgets.QWidget):
 
                 if section_name == "Additional" and value == "":
                         continue
-
+                elif section_name == "molecules" and key == "Molecule Data":
+                    config_lines.append(f"{value}")
+                    continue
                 config_lines.append(f"{key.replace(' ', '_').lower()} = {value}")
 
 

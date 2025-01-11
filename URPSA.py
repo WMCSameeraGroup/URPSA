@@ -61,17 +61,17 @@ class ConfigApp(QtWidgets.QWidget):
         self.general_tab = QtWidgets.QWidget()
         self.general_layout = QtWidgets.QVBoxLayout()
 
-        self.sections["Project"] = Section("Project", [
+        self.sections["project"] = Section("project", [
             {"label": "Project Name", "default": "CH4-"}
         ], self.general_layout)
 
-        self.sections["Gaussian"] = Section("Gaussian", [
+        self.sections["gaussian"] = Section("gaussian", [
             {"label": "Number of Cores", "default": "8", "type": int},
             {"label": "Memory", "default": "8GB"},
             {"label": "Method", "default": "#N opt(maxcycle=600,AddGIC) PM6 scf(maxcyc=600,xqc) nosymm"}
         ], self.general_layout)
 
-        self.sections["Molecules"] = Section("Molecules", [
+        self.sections["molecules"] = Section("molecules", [
 
             {"label": "charge", "default": "-1", "type": int},
             {"label": "multiplicity", "default": "1", "type": int},
@@ -94,7 +94,7 @@ class ConfigApp(QtWidgets.QWidget):
         self.advanced_tab = QtWidgets.QWidget()
         self.advanced_layout = QtWidgets.QVBoxLayout()
 
-        self.sections["Controls"] = Section("Controls", [
+        self.sections["controls"] = Section("controls", [
             {"label": "Update with Optimized Coordinates", "default": "True"},
             {"label": "Step Size", "default": "0.1", "type": float},
             {"label": "Step Count", "default": "40", "type": int},

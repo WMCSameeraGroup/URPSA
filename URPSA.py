@@ -212,6 +212,7 @@ class ConfigApp(QtWidgets.QWidget):
             return
 
         command = f'python3 "{self.repeated_script_path}" "{self.input_file_path}"'
+        print(command)
         subprocess.Popen(command, shell=True)
 
     def save_repeated_file_path(self, path):

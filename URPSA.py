@@ -58,7 +58,7 @@ class ConfigApp(QtWidgets.QWidget):
         self.general_layout = QtWidgets.QVBoxLayout()
 
         self.sections["Project"] = Section("Project", [
-            {"label": "Project Name", "default": "test48927"}
+            {"label": "Project Name", "default": "CH4-"}
         ], self.general_layout)
 
         self.sections["Gaussian"] = Section("Gaussian", [
@@ -68,23 +68,19 @@ class ConfigApp(QtWidgets.QWidget):
         ], self.general_layout)
 
         self.sections["Molecules"] = Section("Molecules", [
-            {"label": "Molecule Data", "default": """0 = C                  1.31988500    0.91615000    0.00000000\
- H                  1.89112600    0.00761400    0.00000000\
- H                  1.88382200    1.82866300    0.00000000\
- C                  0.00000000    0.92731700    0.00000000\
- H                 -0.50664600    1.87544200    0.00000000\
- C                 -0.89261300   -0.25132100    0.00000000\
- H                 -1.94256100   -0.02059200    0.00000000\
- C                 -0.52415000   -1.51877900    0.00000000\
- H                  0.50520000   -1.82241000    0.00000000\
- H                 -1.24967100   -2.30892300    0.00000000\
 
-1 =  C   0.000000    0.657550    0.000000\
-     H  -0.911700    1.224600    0.000000\
-     H  0.911468    1.224949    0.000000\
-     C  0.000000   -0.657550    0.000000\
-     H  0.911700   -1.224600    0.000000\
-     H  -0.911468   -1.224949    0.000000""", "type": "multiline"}
+            {"label": "charge", "default": "-1", "type": int},
+            {"label": "multiplicity", "default": "1", "type": int},
+            {"label": "number_of_molecules", "default": "5", "type": int},
+            {"label": "Molecule Data", "default": """0 = 0 = C 0.000 0.000 0.0000
+
+1 = C 0.000 0.000 0.000
+
+2 = C 0.000 0.0000 0.0000
+
+3 = C 0.0000 0.00 0.000
+
+4 = H 0.000 0.000 0.000 """, "type": "multiline"}
         ], self.general_layout)
 
         self.general_tab.setLayout(self.general_layout)
@@ -114,13 +110,7 @@ class ConfigApp(QtWidgets.QWidget):
         ], self.advanced_layout)
 
         self.sections["Additional"] = Section("Additional", [
-            {"label": "Additional Data", "default": """XCm1 (Inactive) /- XCntr(1-6) \
-YCm1 (Inactive) /- YCntr(1-6) \
-ZCm1 (Inactive) /- ZCntr(1-6)\
-XCm2 (Inactive)  /- XCntr(7)\
-YCm2 (Inactive)  /- YCntr(7) \
-ZCm2 (Inactive) /- ZCntr(7)\
-F1F2(FREEZE) /- sqrt[(XCm1-XCm2)^2+(YCm1-YCm2)^2+(ZCm1-ZCm2)^2]*0.529177""", "type": "multiline"}
+            {"label": "Additional Data", "default": "", "type": "multiline"}
         ], self.advanced_layout)
 
         self.advanced_tab.setLayout(self.advanced_layout)
@@ -171,9 +161,17 @@ F1F2(FREEZE) /- sqrt[(XCm1-XCm2)^2+(YCm1-YCm2)^2+(ZCm1-ZCm2)^2]*0.529177""", "ty
     def submit(self):
         config_lines = []
         for section_name, section_obj in self.sections.items():
+
             config_lines.append(f"[{section_name}]")
+
             for key, value in section_obj.get_values().items():
+
+                if section_name == "Additional" and value == "":
+                        continue
+
                 config_lines.append(f"{key.replace(' ', '_').lower()} = {value}")
+
+
             config_lines.append("")
         self.preview_text.setText("\n".join(config_lines))
 
@@ -227,4 +225,3 @@ if __name__ == '__main__':
     window = ConfigApp()
     window.show()
     sys.exit(app.exec_())
-

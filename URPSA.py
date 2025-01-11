@@ -154,9 +154,9 @@ class ConfigApp(QtWidgets.QWidget):
         self.main_layout.addWidget(self.scroll_area)
 
         # Submit button
-        self.submit_button = QtWidgets.QPushButton("Submit")
-        self.submit_button.clicked.connect(self.submit)
-        self.main_layout.addWidget(self.submit_button)
+        # self.submit_button = QtWidgets.QPushButton("Submit")
+        # self.submit_button.clicked.connect(self.submit)
+        # self.main_layout.addWidget(self.submit_button)
 
         self.setLayout(self.main_layout)
 

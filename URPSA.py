@@ -211,7 +211,11 @@ class ConfigApp(QtWidgets.QWidget):
             QtWidgets.QMessageBox.warning(self, "Error", "Please select the repeated.py script before running the calculation.")
             return
 
-        command = f'python3 "{self.repeated_script_path}" "{self.input_file_path}"'
+
+        # Convert absolute path to relative path
+        relative_path = os.path.relpath(self.repeated_script_path, self.input_file_path)
+        # have to change this self.repeated_script_path as it is comming from self.input_file_path
+        command = f'python3 "{relative_path}" "{self.input_file_path}"'
         print(command)
         subprocess.Popen(command, shell=True)
 

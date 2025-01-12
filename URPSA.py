@@ -213,11 +213,10 @@ class ConfigApp(QtWidgets.QWidget):
 
 
         # Convert absolute path to relative path
-        relative_path = os.path.relpath(self.repeated_script_path, self.input_file_path)
+        working_dir = os.path.dirname(self.input_file_path)
         # have to change this self.repeated_script_path as it is comming from self.input_file_path
-        command = f'python3 "{relative_path}" "{self.input_file_path}"'
-        print(command)
-        subprocess.Popen(command, shell=True)
+        command = f'python3 "{self.repeated_script_path}" "{self.input_file_path}"'
+        subprocess.Popen(command, shell=True, cwd=working_dir)
 
     def save_repeated_file_path(self, path):
         with open(CONFIG_FILE, "w") as file:

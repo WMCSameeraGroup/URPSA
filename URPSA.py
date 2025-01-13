@@ -1,3 +1,4 @@
+import platform
 import subprocess
 from PyQt5 import QtWidgets, QtGui
 import sys
@@ -210,12 +211,24 @@ class ConfigApp(QtWidgets.QWidget):
         if not hasattr(self, 'repeated_script_path'):
             QtWidgets.QMessageBox.warning(self, "Error", "Please select the repeated.py script before running the calculation.")
             return
-
+        command = f'cd {self.input_file_path} && python3 "{self.repeated_script_path}" "{self.input_file_path}"'
 
         # Convert absolute path to relative path
         working_dir = os.path.dirname(self.input_file_path)
         # have to change this self.repeated_script_path as it is comming from self.input_file_path
-        command = f'python3 "{self.repeated_script_path}" "{self.input_file_path}"'
+
+        if platform.system() == "Linux":
+            if "g16" not in os.environ:
+                print(f"path to g16 cant be found")
+
+            subprocess.run(
+                ['gnome-terminal', '--', 'bash', '-c', command])
+
+        else:
+            print("operating system is not Linux")
+
+
+
         subprocess.Popen(command, shell=True, cwd=working_dir)
 
     def save_repeated_file_path(self, path):

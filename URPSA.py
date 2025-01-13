@@ -228,9 +228,6 @@ class ConfigApp(QtWidgets.QWidget):
             print("operating system is not Linux")
 
 
-
-        subprocess.Popen(command, shell=True, cwd=working_dir)
-
     def save_repeated_file_path(self, path):
         with open(CONFIG_FILE, "w") as file:
             file.write(path)

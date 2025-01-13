@@ -213,8 +213,6 @@ class ConfigApp(QtWidgets.QWidget):
             return
         command = f'cd {self.input_file_path} && python3 "{self.repeated_script_path}" "{self.input_file_path}"'
 
-        # Convert absolute path to relative path
-        working_dir = os.path.dirname(self.input_file_path)
         # have to change this self.repeated_script_path as it is comming from self.input_file_path
 
         if platform.system() == "Linux":

@@ -91,6 +91,7 @@ for i in range(controls.n_iterations):
 
                                 r_value=run_calculation(optFile, dir_of_files)
                                 if r_value != 0:
+                                    print(r_value)
                                     is_all_calculations_converged = False
 
 
@@ -103,6 +104,7 @@ for i in range(controls.n_iterations):
                                 print("final structure is optimized")
                             except Exception as e:
                                 print(f"An error occur while optimizing the final fragments :\n{e} ")
+                                is_all_calculations_converged = False
 
                         break
 

@@ -88,10 +88,15 @@ for i in range(controls.n_iterations):
                             print("final structure is optimizing.....")
                             try:
                                 optFile = system.generate_input_file(-1, dir_of_files)
-                                val=run_calculation(optFile, dir_of_files)
-                                is_all_calculations_converged = False if val != 0 else True
+
+                                r_value=run_calculation(optFile, dir_of_files)
+                                if r_value != 0:
+                                    is_all_calculations_converged = False
+
+
+
                                 final_log = LogFileManager(find_corresponding_output_file(optFile), dir_of_files)
-                                final_log.is_converged = val
+                                final_log.is_converged = r_value
                                 output_file_list.append(final_log)
                                 system.set_scf_done(final_log.scf_done)
                                 OutputWriter(dir_of_files).write_xyz_file(system, final_log.opt_coords)

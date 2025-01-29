@@ -1,5 +1,5 @@
 [project]
-project_name = methanol+OH-r32
+project_name = methanol+OH-r3
 
 
 

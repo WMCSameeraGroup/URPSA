@@ -40,8 +40,6 @@ for i in range(controls.n_iterations):
     is_all_calculations_converged = True
     #################################################################################
     for iteration in range(controls.step_count):
-        print(controls.step_count)
-
         push_fragments_to_center(system.molecules, controls.step_size)
         inputFile = system.generate_input_file(iteration, dir_of_files)
         if is_not_highly_repulsive_spherically(system, controls.stop_distance_factor):

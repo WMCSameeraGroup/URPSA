@@ -40,6 +40,7 @@ for i in range(controls.n_iterations):
     is_all_calculations_converged = True
     #################################################################################
     for iteration in range(controls.step_count):
+        print(controls.step_count)
 
         push_fragments_to_center(system.molecules, controls.step_size)
         inputFile = system.generate_input_file(iteration, dir_of_files)
@@ -82,14 +83,15 @@ for i in range(controls.n_iterations):
                 if controls.dynamic_fragment_replacement == "True":
                     new_molecules = get_new_molecules(system.set_list_of_atom_symbols(), log)
                     system.replace_molecules(new_molecules)
-                    if len(new_molecules) == 1:
                         # optimize the last observed particle
-                        if controls.optimize_the_final_particle == "True":
+                    if controls.optimize_the_final_particle == "True":
+                        if len(new_molecules) == 1:
                             print("final structure is optimizing.....")
                             try:
                                 optFile = system.generate_input_file(-1, dir_of_files)
 
                                 r_value=run_calculation(optFile, dir_of_files)
+                                print(r_value)
                                 if r_value != 0:
                                     print(r_value)
                                     is_all_calculations_converged = False
@@ -104,7 +106,7 @@ for i in range(controls.n_iterations):
                                 print("final structure is optimized")
                             except Exception as e:
                                 print(f"An error occur while optimizing the final fragments :\n{e} ")
-                                is_all_calculations_converged = False
+
 
                         break
 

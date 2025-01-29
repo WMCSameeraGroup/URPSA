@@ -89,6 +89,7 @@ class LogFileManager:
             self.title = "could not find"
 
     def get_optimized_parameters(self):
+        #todo: only count till the length of atoms
         lines = self.text.split("\n")
         section = False
         parameters = ""

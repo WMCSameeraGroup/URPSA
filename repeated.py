@@ -104,9 +104,7 @@ for i in range(controls.n_iterations):
                                 print("final structure is optimized")
                             except Exception as e:
                                 print(f"An error occur while optimizing the final fragments :\n{e} ")
-
-
-                        break
+                            break
 
 
 

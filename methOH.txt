@@ -1,5 +1,5 @@
 [project]
-project_name = methanol+OH
+project_name = methanol+OH-16
 
 
 
@@ -10,7 +10,8 @@ stop_distance_factor = 0.8
 sphere_radius = 3
 update_with_optimized_coordinates = True
 dynamic_fragment_replacement = True
-
+cutoff_energy_gap = 1000
+optimize_the_final_particle = True
 
 
 # Total_random or statistically_even or False
@@ -23,7 +24,7 @@ ADD_COM_CONST = True
 [gaussian]
 number_of_cores = 6
 memory = 4GB
-method =#N opt(maxcycle=200,AddGIC) pm6 scf(maxcyc=300,xqc)
+method =#N opt(maxcycle=2000,AddGIC) wb97xd/6-31g scf(maxcyc=300,xqc)
 
 
 [molecules]

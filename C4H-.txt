@@ -2,15 +2,12 @@
 project_name = C4H-new8
 
 
-input_file_name = Test
-
 [controls]
 # set this as false for now
 update_with_optimized_coordinates = True
 step_size = 0.1
 step_count = 20
 stop_distance_factor = 0.8
-stress_release = -1:29:30
 dynamic_fragment_replacement = True
 ADD_COM_CONST = True
 

@@ -31,7 +31,8 @@ class Atom:
     def __str__(self):
         if self.is_fixed:
             return f"{self.symbol} -1 {self.x} {self.y} {self.z}"
-        return f"{self.symbol} {self.x} {self.y} {self.z}"
+        return f"{self.symbol} {self.x:.6f} {self.y:.6f} {self.z:.6f}"
+
 
     def get_coords(self):
         return [self.x, self.y, self.z]

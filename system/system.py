@@ -59,8 +59,12 @@ class System:
             atom_list.extend(molecule.atoms)
         return atom_list
 
-    def add_keywords_to_method(self, keywords):
-        self.method += " "+ keywords
+    def add_keyword_to_method(self, keyword):
+        if keyword not in self.method.lower():
+            self.method += " "+ keyword
+
+    def remove_keyword_from_method(self, keyword):
+        self.method = self.method.replace(keyword, "")
 
     def generate_input_file(self, iter_num, input_file_directory):
         """write input file in the inputFiles directory """
@@ -168,8 +172,6 @@ class System:
         string = "\n\n"
 
         if number in self.stress_release:
-            if "opt" not in self.method.lower():
-                self.add_keywords_to_method("OPT")
             return string
         elif self.additinal_constraints:
             string += self.additinal_constraints

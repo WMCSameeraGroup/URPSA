@@ -86,8 +86,9 @@ for i in range(controls.n_iterations):
                         if len(new_molecules) == 1:
                             print("final structure is optimizing.....")
                             try:
+                                system.add_keywords_to_method("OPT")
                                 optFile = system.generate_input_file(-1, dir_of_files)
-
+                                system.
                                 r_value=run_calculation(optFile, dir_of_files)
                                 print(r_value)
                                 if r_value != 0:

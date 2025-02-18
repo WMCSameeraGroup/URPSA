@@ -59,6 +59,9 @@ class System:
             atom_list.extend(molecule.atoms)
         return atom_list
 
+    def add_keywords_to_method(self, keywords):
+        self.method += " "+ keywords
+
     def generate_input_file(self, iter_num, input_file_directory):
         """write input file in the inputFiles directory """
         string_of_coordinates = self.get_string_of_atoms_and_coordinates()
@@ -165,6 +168,8 @@ class System:
         string = "\n\n"
 
         if number in self.stress_release:
+            if "opt" not in self.method.lower():
+                self.add_keywords_to_method("OPT")
             return string
         elif self.additinal_constraints:
             string += self.additinal_constraints

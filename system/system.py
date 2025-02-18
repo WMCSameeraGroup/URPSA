@@ -62,6 +62,8 @@ class System:
     def add_keyword_to_method(self, keyword):
         if keyword not in self.method.lower():
             self.method += " "+ keyword
+            return True
+        return False
 
     def remove_keyword_from_method(self, keyword):
         self.method = self.method.replace(keyword, "")

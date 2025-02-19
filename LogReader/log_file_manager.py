@@ -136,4 +136,7 @@ class LogFileManager:
                 lines+=str(read[line])
         return lines
 
+    def get_freq(self):
+        pass
+
 

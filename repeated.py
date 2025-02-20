@@ -108,6 +108,9 @@ for i in range(controls.n_iterations):
                                 print(f"An error occur while optimizing the final fragments :\n{e} ")
                             break
 
+        if i == controls.n_iterations - 1:
+            is_all_calculations_converged = False
+
 
 
 

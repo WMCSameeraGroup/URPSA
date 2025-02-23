@@ -4,7 +4,7 @@ from atoms.atoms import Atom
 from molecule.molecule import Molecule
 
 
-def spherically_converge_to_center(molecule, size=0.1):
+def spherical_convergence(molecule, size=0.1):
     """
     Moves a molecule or atom incrementally toward the origin in a spherical trajectory.
 
@@ -25,7 +25,7 @@ def spherically_converge_to_center(molecule, size=0.1):
 
 def move_atoms_towards_center(molecule, size):
     for atom in molecule.atoms:
-        spherically_converge_to_center(atom, size)
+        spherical_convergence(atom, size)
 
 
 def push_fragments(molecules, step_size=1):
@@ -39,10 +39,10 @@ def push_fragments(molecules, step_size=1):
     """
 
     for molecule in molecules:
-        spherically_converge_to_center(molecule, step_size)
+        spherical_convergence(molecule, step_size)
 
 
 
 if __name__ == "__main__":
-    print(spherically_converge_to_center(Molecule([Atom("Si", 1, 1, 1)])))
+    print(spherical_convergence(Molecule([Atom("Si", 1, 1, 1)])))
 

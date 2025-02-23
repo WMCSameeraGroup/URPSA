@@ -28,7 +28,7 @@ def move_atoms_towards_center(molecule, size):
         spherically_converge_to_center(atom, size)
 
 
-def push_fragments_to_center(molecules, step_size=1):
+def push_fragments(molecules, step_size=1):
     """
     this functions converges atoms to the origin
 

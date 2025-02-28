@@ -15,7 +15,9 @@ class Setup:
             os.makedirs(self.project_dir)
         else:
             print(f"project name '{self.project_dir}' already exists.")
-            sys.exit()
+            ans = input("Do you want to use the same project? [y/n] ")
+            if ans == "n" or ans == "N":
+                sys.exit(0)
 
     def check_dir_in_the_project(self):
         """Get all folders in the directory and inside the 'archives' folder, then sort them by their number 'test_00001'."""

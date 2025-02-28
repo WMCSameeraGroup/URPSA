@@ -1,4 +1,4 @@
-def is_too_close_spherical(atoms1, atoms2, stop_distance_fac):
+def is_too_close(atoms1, atoms2, stop_distance_fac):
     """
     Checks if any two atoms from two different molecules are too close to each other.
 
@@ -25,7 +25,7 @@ def is_too_close_spherical(atoms1, atoms2, stop_distance_fac):
 
 
 
-def is_not_highly_repulsive_spherically(sys, stop_distance_fac=0.5):
+def is_not_too_closely_placed(sys, stop_distance_fac=0.5):
     """
     Checks if the atoms of different molecules in the system are not too close to each other.
 
@@ -43,7 +43,7 @@ def is_not_highly_repulsive_spherically(sys, stop_distance_fac=0.5):
             if molecule_2 == molecule_1:
                 # Skip comparing the molecule with itself
                 continue
-            if not is_too_close_spherical(molecule_2.atoms, molecule_1.atoms, stop_distance_fac):
+            if not is_too_close(molecule_2.atoms, molecule_1.atoms, stop_distance_fac):
                 return False
 
     return True

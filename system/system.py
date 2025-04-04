@@ -19,14 +19,14 @@ class System:
         self.multiplicity = controls.multiplicity
         self.method = controls.method
         self.number_of_cores = controls.cores
-        self.number_of_atoms = self.cal_number_of_atoms()
         self.iteration = 0
         self.energy = 0.0
         self.memory = controls.memory
         self.stress_release = controls.stress_release
-        self.additinal_constraints = controls.additional_constraints
+        self.additional_constraints = controls.additional_constraints
         self.controls = controls
         self.lattice = controls.lattice
+        self.number_of_atoms = self.cal_number_of_atoms()
 
     def add_molecule(self, molecule):
         self.molecules.append(molecule)
@@ -51,6 +51,8 @@ class System:
         for molecule in self.molecules:
             count += len(molecule.atoms)
         self.number_of_atoms = count
+
+        count += len(self.lattice.atoms)
         return count
 
     def list_of_atoms(self):
@@ -129,6 +131,8 @@ class System:
         string = f"{self.cal_number_of_atoms()}\nEnergy: {self.energy}\n"
         for molecule in self.molecules:
             string += molecule.to_str() + "\n"
+
+        string += self.lattice.to_str() + "\n"
         return string
 
     def string_optimized_coordinates(self, opt_xyz):
@@ -146,6 +150,9 @@ class System:
             n_atoms = molecule.number_of_atoms()
             string += to_str(list_of_atom_symbols, opt_xyz[count: n_atoms + count])
             count += n_atoms
+
+        string += self.lattice.to_str() + "\n"
+        print(string)
         return string
 
     def set_scf_done(self, energy):
@@ -179,8 +186,8 @@ class System:
 
         if number in self.stress_release:
             return string
-        elif self.additinal_constraints:
-            string += self.additinal_constraints
+        elif self.additional_constraints:
+            string += self.additional_constraints
             return string
         # todo: change this the architecture is bad if  ADD_COM_CONST is not their then default make it true
         elif self.controls.ADD_COM_CONST == "True":

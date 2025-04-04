@@ -3,12 +3,12 @@ project_name = H2_example7
 
 
 [controls]
-step_size = 0.5
+step_size = 0.1
 step_count = 40
 stop_distance_factor = 0.9
 update_with_optimized_coordinates = True
 dynamic_fragment_replacement = True
-sphere_radius = 2.5
+sphere_radius = 4.0
 
 # Total_random or statistically_even or False
 spherical_placement = statistically_even

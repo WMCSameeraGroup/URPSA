@@ -79,6 +79,7 @@ for i in range(controls.n_iterations):
                 print("update_with_optimized_coordinates")
                 system.set_moleculer_coordinates(log.opt_coords)
                 if controls.dynamic_fragment_replacement == "True":
+                    print("dynamic_fragment_replacement")
                     new_molecules = get_new_molecules(system.set_list_of_atom_symbols(), log)
                     system.replace_molecules(new_molecules)
                         # optimize the last observed particle
@@ -107,9 +108,6 @@ for i in range(controls.n_iterations):
                             except Exception as e:
                                 print(f"An error occur while optimizing the final fragments :\n{e} ")
                             break
-
-        if i == controls.n_iterations - 1:
-            is_all_calculations_converged = False
 
 
 

@@ -26,6 +26,7 @@ class System:
         self.stress_release = controls.stress_release
         self.additinal_constraints = controls.additional_constraints
         self.controls = controls
+        self.lattice = controls.lattice
 
     def add_molecule(self, molecule):
         self.molecules.append(molecule)
@@ -83,6 +84,9 @@ class System:
         atoms_and_coordinates = ""
         for molecule in self.molecules:
             atoms_and_coordinates += molecule.to_str() + "\n"
+
+        if self.lattice:
+            return atoms_and_coordinates + self.lattice.to_str() + "\n"
 
         return atoms_and_coordinates[:-1]
 

@@ -51,6 +51,25 @@ class InputFile:
         self.optimize_the_final_particle =self.config.get('controls', 'optimize_the_final_particle')
         self.convergence_error = self.config.get('controls', 'convergence_error')
         self.unsuccessful_pathway = self.config.get('controls', 'unsuccessful_pathway')
+        self.lattice = self.get_lattice()
+        print(self.lattice)
+
+
+    def get_lattice(self):
+        string = self.config.get('molecules', 'lattice')
+
+        atom_list = []
+        for line in string.split("\n"):
+            line_data = line.split()
+            if len(line_data) >= 4:  # linear convergence
+                atom_list.append(Atom(*line_data, self.count_of_atom))
+                self.count_of_atom += 1
+
+        lattice = Molecule(atom_list)
+        return lattice
+
+
+
 
     def set_molecule_list(self):
         """
@@ -90,7 +109,7 @@ class InputFile:
                 self.count_of_atom += 1
 
             else:
-                print("incorrect format in inputfile ")
+                print("incorrect atom format in input file ")
         return Molecule(atom_list)
 
     def create_spherically_located_molecule_list(self):

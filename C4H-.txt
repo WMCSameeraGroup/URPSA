@@ -22,10 +22,9 @@ spherical_placement = statistically_even
 [gaussian]
 number_of_cores = 4
 memory = 6GB
-#method = #N b3lyp/3-21g opt=AddGIC  nosymm
-#method =#N wb97xd/def2tzvp scf=(xqc,maxcon=128,maxcyc=512,conver=8) nosymm
-method =#N opt(maxcycle=100,AddGIC) HF/3-21g* scf(maxcyc=120,xqc) nosymm
-# use dft
+
+method =#N wb97xd/def2tzvp scf=(xqc,maxcon=128,maxcyc=512,conver=8) nosymm
+
 
 [molecules]
 charge = -1

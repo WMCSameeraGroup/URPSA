@@ -59,15 +59,19 @@ class InputFile:
         string = self.config.get('molecules', 'lattice')
 
         atom_list = []
-        for line in string.split("\n"):
-            line_data = line.split()
-            if len(line_data) >= 4:  # linear convergence
-                atom_list.append(Atom(*line_data,self.count_of_atom))
-                self.count_of_atom += 1
+        if string:
+            for line in string.split("\n"):
+                line_data = line.split()
+                if len(line_data) >= 4:  # linear convergence
+                    atom_list.append(Atom(*line_data,self.count_of_atom))
+                    self.count_of_atom += 1
 
-        lattice = Molecule(atom_list)
+            lattice = Molecule(atom_list)
 
-        return lattice
+            return lattice
+        else:
+            return ""
+
 
 
 

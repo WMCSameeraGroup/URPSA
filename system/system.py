@@ -51,8 +51,8 @@ class System:
         for molecule in self.molecules:
             count += len(molecule.atoms)
         self.number_of_atoms = count
-
-        count += len(self.lattice.atoms)
+        if self.lattice:
+            count += len(self.lattice.atoms)
         return count
 
     def list_of_atoms(self):
@@ -132,7 +132,8 @@ class System:
         for molecule in self.molecules:
             string += molecule.to_str() + "\n"
 
-        string += self.lattice.to_str() + "\n"
+        if self.lattice:
+            string += self.lattice.to_str() + "\n"
         return string
 
     def string_optimized_coordinates(self, opt_xyz):
@@ -150,9 +151,8 @@ class System:
             n_atoms = molecule.number_of_atoms()
             string += to_str(list_of_atom_symbols, opt_xyz[count: n_atoms + count])
             count += n_atoms
-
-        string += self.lattice.to_str() + "\n"
-        print(string)
+        if self.lattice:
+            string += self.lattice.to_str() + "\n"
         return string
 
     def set_scf_done(self, energy):

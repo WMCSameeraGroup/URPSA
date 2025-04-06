@@ -45,7 +45,10 @@ def is_not_too_closely_placed(sys, stop_distance_fac=0.5):
                 continue
             if not is_too_close(molecule_2.atoms, molecule_1.atoms, stop_distance_fac):
                 return False
-
+        # check each molecule with lattice
+            if sys.lattice:
+                if not is_too_close(molecule_2.atoms, sys.lattice.atoms, stop_distance_fac):
+                    return False
     return True
 
 

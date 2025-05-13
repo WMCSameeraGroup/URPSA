@@ -1,5 +1,5 @@
 [project]
-project_name = H2_example7
+project_name = lattice-nonopt
 
 
 [controls]
@@ -8,7 +8,7 @@ step_count = 40
 stop_distance_factor = 0.9
 update_with_optimized_coordinates = True
 dynamic_fragment_replacement = True
-sphere_radius = 4.0
+sphere_radius = 2.0
 
 # Total_random or statistically_even or False
 spherical_placement = statistically_even
@@ -19,7 +19,7 @@ ADD_TRUE_COM = True
 
 
 [gaussian]
-method =#N opt(maxcycle=200,AddGIC) pm6 scf(maxcyc=300,xqc)
+method =#N PM6 scf(maxcyc=300,xqc)
 
 
 [molecules]

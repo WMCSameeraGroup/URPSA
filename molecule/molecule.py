@@ -37,8 +37,6 @@ class Molecule:
         self.set_new_coords_to_atoms()
         return self
 
-    def print_center_of_mass(self):
-        print([self.x,self.y,self.z])
 
     def rotation_yz(self, angle):
         rot_mat = np.array([[1, 0, 0], [0, np.cos(angle), -np.sin(angle)], [0, np.sin(angle), np.cos(angle)]])
@@ -107,6 +105,8 @@ class Molecule:
                       stored in the `xyz` attribute.
         :return: None
         """
+        # print("from molecule.set_new_coords_to_atoms() ,,,,,,,")
+        # print([i.number for i in self.atoms], self.xyz)
         for atom, coords in zip(self.atoms, self.xyz):
             atom.update_coordinates(*coords)
 
@@ -117,6 +117,7 @@ class Molecule:
 
     def add_atom(self, atom):
         self.atoms.append(atom)
+        self.xyz = np.array([atom.get_coords() for atom in self.atoms])
         self.cal_center_of_mass()
 
     def number_of_atoms(self):

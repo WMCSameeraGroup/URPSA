@@ -80,17 +80,17 @@ for i in range(controls.n_iterations):
                 system.set_moleculer_coordinates(log.opt_coords)
                 if controls.dynamic_fragment_replacement == "True":
                     print("dynamic_fragment_replacement")
-                    new_molecules = get_new_molecules(system.set_list_of_atom_symbols(), log)
+                    new_molecules = get_new_molecules(system.list_of_atoms())
                     system.replace_molecules(new_molecules)
                         # optimize the last observed particle
                     if controls.optimize_the_final_particle == "True":
                         if len(new_molecules) == 1:
                             print("final structure is optimizing.....")
                             try:
-                                added=system.add_keyword_to_method("OPT FREQ")
+                                added=system.add_keyword_to_method("OPT(MaxCycles=500,Cartesian) FREQ")
                                 optFile = system.generate_input_file(-1, dir_of_files)
                                 if added:
-                                    system.remove_keyword_from_method("OPT FREQ")
+                                    system.remove_keyword_from_method("OPT(MaxCycles=500,Cartesian) FREQ")
                                 r_value=run_calculation(optFile, dir_of_files)
                                 print(r_value)
                                 if r_value != 0:
@@ -125,7 +125,7 @@ for i in range(controls.n_iterations):
     if is_all_calculations_converged:
         # find products and label them
         products = products_writer(dir_of_files)
-        products_molecules=products.get_products_list(system.set_list_of_atom_symbols(), output_file_list)
+        products_molecules=products.get_products_list(system.list_of_atoms(), output_file_list)
 
         products_collection.write_product(i+1,products_molecules)
         print("number of similar products found")

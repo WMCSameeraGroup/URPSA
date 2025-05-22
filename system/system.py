@@ -60,7 +60,7 @@ class System:
 
         for molecule in self.molecules:
             atom_list.extend(molecule.atoms)
-        return atom_list
+        return sorted(atom_list, key=lambda atom: atom.number)
 
     def add_keyword_to_method(self, keyword):
         if keyword not in self.method.lower():
@@ -84,11 +84,16 @@ class System:
 
     def get_string_of_atoms_and_coordinates(self):
         atoms_and_coordinates = ""
+        atom_list=[]
         for molecule in self.molecules:
-            atoms_and_coordinates += molecule.to_str() + "\n"
+            for atom in molecule.atoms:
+                atom_list.append(atom)
+        for atom in atom_list:
+            atoms_and_coordinates += str(atom) + "\n"
 
         if self.lattice:
             return atoms_and_coordinates + self.lattice.to_str() + "\n"
+
 
         return atoms_and_coordinates[:-1]
 
@@ -120,37 +125,26 @@ class System:
         in the correct order, and that the number of coordinates matches the total number of atoms
         across all molecules in the system.
         """
-        count = 0
-        for molecule in self.molecules:
-            n_atoms = molecule.number_of_atoms()
-            molecule.xyz = opt_xyz[count: n_atoms + count]
-            molecule.set_new_coords_to_atoms()
-            count += n_atoms
+        print("from system ")
+        print(opt_xyz)
+        for atom,coords in zip(self.list_of_atoms(),opt_xyz):
+            atom.update_coordinates(*coords)
+
 
     def to_str(self):
         string = f"{self.cal_number_of_atoms()}\nEnergy: {self.energy}\n"
-        for molecule in self.molecules:
-            string += molecule.to_str() + "\n"
-
+        for atom in self.list_of_atoms():
+            string += str(atom) + "\n"
         if self.lattice:
             string += self.lattice.to_str() + "\n"
         return string
 
     def string_optimized_coordinates(self, opt_xyz):
-        count = 0
+        # this is for the xyz file not input file
         string = f"{self.cal_number_of_atoms()}\nEnergy: {self.energy}\n"
 
-        def to_str(symbols, coords):
-            str = ""
-            for symbol, coord in zip(symbols, coords):
-                str += f"{symbol} {coord[0]} {coord[1]} {coord[2]}\n"
-            return str
-
-        for molecule in self.molecules:
-            list_of_atom_symbols = [a.symbol for a in molecule.atoms]
-            n_atoms = molecule.number_of_atoms()
-            string += to_str(list_of_atom_symbols, opt_xyz[count: n_atoms + count])
-            count += n_atoms
+        for atom in self.list_of_atoms():
+            string += str(atom) + "\n"
         if self.lattice:
             string += self.lattice.to_str() + "\n"
         return string

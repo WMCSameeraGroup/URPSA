@@ -33,23 +33,18 @@ def get_molecules(atomlist, factor=1.1):
 
         list_of_molecules.append(molecule)
 
+
+
     return list_of_molecules
 
 
-def get_atom_list(symbols, opt_coords):
-    atomList = []
-    xyz = opt_coords
-    n=1
-    for symbol, coord in zip(symbols, xyz):
-        atomList.append(Atom(symbol, *coord,n))
-        n += 1
-
-    return atomList
 
 
-def get_new_molecules(atom_symbols, file):
-    a_list = get_atom_list(atom_symbols, file.opt_coords)
-    return get_molecules(a_list)
+
+def get_new_molecules(atoms):
+    print("in get_new_molecules")
+    print([i.symbol for i in atoms])
+    return get_molecules(atoms)
 
 
 class products_writer:
@@ -71,16 +66,15 @@ class products_writer:
         string = self.get_the_molecular_string(molecules)
         self.write_products_file(string)
 
-    def get_products_list(self, symbols, output_file_list):
+    def get_products_list(self, atoms, output_file_list):
         if len(output_file_list) > 0:
-            return self.add_products(symbols, output_file_list)
+            return self.add_products(atoms, output_file_list)
         else:
             print("no output file is produced")
 
-    def add_products(self, atom_symbols, outputfile_list):
+    def add_products(self, atoms, outputfile_list):
         index = self.find_the_formation_of_products(outputfile_list)
-        atom_list = get_atom_list(atom_symbols, outputfile_list[index].opt_coords)
-        molecules = get_molecules(atom_list)
+        molecules = get_molecules(atoms)
         for molecule in molecules:
             print(f"setp-{index} RMSD- {molecule.calculate_RMSD()}")
 
@@ -88,13 +82,8 @@ class products_writer:
         return molecules
 
     def find_the_formation_of_products(self, file_list):
-        """ find the minimum energy point"""
-        minimum_index = -1
-        # for j, i in enumerate(file_list):
-        #     if i.is_converged == 0 and i.scf_done <= file_list[minimum_index].scf_done:
-        #         minimum_index = j
-        #     j += 1
-        return minimum_index
+        """ find the last object"""
+        return -1
 
     def create_if_not(self):
         try:

@@ -49,6 +49,12 @@ class Atom:
         :modify self: Updates the atom's position with the new coordinates.
         :return: None
         """
+        _ = Atom("C",x,y,z,-1)
+        distance = self.distance_between(_)
+
+        if distance > 0.2:
+            print("Warning: distance is too high...............................................................")
+            print(self.number)
         self.x = float(x)
         self.y = float(y)
         self.z = float(z)

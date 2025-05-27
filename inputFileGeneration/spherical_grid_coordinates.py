@@ -20,7 +20,6 @@ def spherical_convergence(molecule, size=0.1):
     unit_vector = np.array(molecule.unit_position_vector())
     new_position = position_vector - size * unit_vector
     molecule.update_coordinates(*new_position)
-    print(f"{new_position} -new possition atoms {[atom.number for atom in molecule.atoms]}")
     return new_position
 
 

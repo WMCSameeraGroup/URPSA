@@ -60,7 +60,8 @@ class System:
 
         for molecule in self.molecules:
             atom_list.extend(molecule.atoms)
-        return sorted(atom_list, key=lambda atom: atom.number)
+        atom_list=sorted(atom_list, key=lambda atom: atom.number)
+        return atom_list
 
     def add_keyword_to_method(self, keyword):
         if keyword not in self.method.lower():
@@ -85,16 +86,13 @@ class System:
     def get_string_of_atoms_and_coordinates(self):
         atoms_and_coordinates = ""
         atom_list=[]
-        for molecule in self.molecules:
-            for atom in molecule.atoms:
-                atom_list.append(atom)
+        for atom in self.list_of_atoms():
+            atom_list.append(atom)
         for atom in atom_list:
             atoms_and_coordinates += str(atom) + "\n"
 
         if self.lattice:
             return atoms_and_coordinates + self.lattice.to_str() + "\n"
-
-
         return atoms_and_coordinates[:-1]
 
     def additional_gaussian_requirments_implementation_to_inputfile_str(self, string, template, other=""):
@@ -125,8 +123,6 @@ class System:
         in the correct order, and that the number of coordinates matches the total number of atoms
         across all molecules in the system.
         """
-        print("from system ")
-        print(opt_xyz)
         for atom,coords in zip(self.list_of_atoms(),opt_xyz):
             atom.update_coordinates(*coords)
 

@@ -31,9 +31,10 @@ class Atom:
     def __str__(self):
         if self.is_fixed:
             return f"{self.symbol} -1 {self.x} {self.y} {self.z}"
-        return f"{self.symbol} {self.x:.6f} {self.y:.6f} {self.z:.6f}"
+        return f"{self.symbol} {self.x} {self.y} {self.z}"
 
-
+    def to_str(self):
+        return f"{self.symbol} {self.x} {self.y} {self.z}"
     def get_coords(self):
         return [self.x, self.y, self.z]
 
@@ -49,12 +50,7 @@ class Atom:
         :modify self: Updates the atom's position with the new coordinates.
         :return: None
         """
-        _ = Atom("C",x,y,z,-1)
-        distance = self.distance_between(_)
 
-        if distance > 0.2:
-            print("Warning: distance is too high...............................................................")
-            print(self.number)
         self.x = float(x)
         self.y = float(y)
         self.z = float(z)

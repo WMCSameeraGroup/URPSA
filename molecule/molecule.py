@@ -133,7 +133,8 @@ class Molecule:
     def to_str(self):
         str = ""
         for atom in self.atoms:
-            str += atom.__str__() + "\n"
+            str += atom.to_str() + "\n"
+        print(str)
         return str[:-1]
 
     def __str__(self):

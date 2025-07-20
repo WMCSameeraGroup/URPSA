@@ -11,7 +11,7 @@
 pip install Numpy
 pip install Matplotlib
 ```
-
+### Installation 
 ```bash 
 https://github.com/WMCSameeraGroup/URPSA.git
 ```
@@ -25,7 +25,7 @@ the following command can be used to run the program
 python3 "/<path-to-URPSA-directory>/repeated.py" exampleInput.txt
 ```
 
-## Input change
+## Input file configuration
 we have written a simple parser file for the organization of input parameters to the program.
 The sections are *[SECTION]* defined with square brackets. 
 predefined variables are placed on the left hand side and the values are defined by  
@@ -49,7 +49,7 @@ modify the input file to enter the inputs (*Molecules*, step_size, step_count, a
 ```buildoutcfg
 # This is a comment
 [project]
-project_name = test48927
+project_name = Project1
 
 [controls]
 # set this as false for now
@@ -58,12 +58,7 @@ update_with_optimized_coordinates = True
 step_size = 0.1
 step_count = 40
 stop_distance_factor = 0.4
-# stress_release = start: step :end 
-stress_release = -1:50:57
 
-
-# Total_random or statistically_even or False
-spherical_placement = statistically_even
 
 # add COM constraints = True
 ADD_COM_CONST = False
@@ -72,10 +67,7 @@ dynamic_fragment_replacement = True
 [gaussian]
 number_of_cores = 8
 memory = 8GB
-#method = #N b3lyp/3-21g opt=AddGIC  nosymm
 method =#N opt(maxcycle=600,AddGIC) PM6 scf(maxcyc=600,xqc) nosymm
-#method =#N opt(maxcycle=100,AddGIC) HF/3-21g* scf(maxcyc=120,xqc) nosymm
-# use dft
 
 
 
@@ -142,11 +134,11 @@ defaults = {
 
 ```
 
-## output format 
+## Output format 
 
 
-each reaction path is saved with a folder named as test_00001 and gaussian calculations files(input file, output files) are stored. 
-further a scattor plot of the energy of converged structures as scattor.jpg and a xyz file is produced to see the trajectory. 
+Each reaction path is saved with a folder named as Pathway_0001 and gaussian calculations files(input file, output files) are stored. 
+further a scatter plot of the energy of converged structures as scatter.jpg and a xyz file is produced to see the trajectory. 
 
 
 ## Method overview

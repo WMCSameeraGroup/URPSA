@@ -1,8 +1,7 @@
 #todo: make this a text file and use a similar method to read from it
 defaults = {
     "project": {
-        "project_name": "test1",
-        "input_file_name": "Test"
+        "project_name": "new-project",
     },
     "controls": {
         "update_with_optimized_coordinates": "True",

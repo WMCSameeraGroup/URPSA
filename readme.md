@@ -109,8 +109,9 @@ Successfully observed reaction paths would be saved as **Pathways_xxxx** directo
 And inside those folders all the files related to the calculation would be saved.
 Summary of a path is recorded by **output2.xyz** file.
 
-if a pathway was unsuccessful that pathway is either removed or moved to the Archived folder depending on the input option that is given.
-By default, it is Archived. 
+If a pathway was unsuccessful that pathway is either removed or moved to the Archived folder depending on the input option that is given.
+By default, it is Archived.
+
 ---
 ## Default values 
 the default values are stored as a dictionary 

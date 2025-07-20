@@ -1,7 +1,7 @@
 
 # This is a comment
 [project]
-project_name = astroTry3
+project_name = astroTry
 input_file_name = Test
 
 [controls]
@@ -14,7 +14,7 @@ stop_distance_factor = 0.2
 
 sphere_radius = 20
 # number of iterations needs to run with different orientations
-n_iterations = 5
+n_iterations = 10
 
 
 [gaussian]

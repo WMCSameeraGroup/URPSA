@@ -2,6 +2,16 @@
 ## Unbiased Reaction Path Search Algorithm (URPSA)
 ## How to install 
 
+### prerequisites 
+* The program is written on python3.
+* Currently, program only supports the linux operating system.
+* Gaussian 16 has to be installed since calculations are conducted through that.
+* Numpy and matplotlib libraries are used in the program 
+```aiignore
+pip install Numpy
+pip install Matplotlib
+```
+
 ```bash 
 https://github.com/WMCSameeraGroup/URPSA.git
 ```

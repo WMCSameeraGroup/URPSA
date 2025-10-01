@@ -103,6 +103,7 @@ for i in range(controls.n_iterations):
                                 final_log.is_converged = r_value
                                 output_file_list.append(final_log)
                                 system.set_scf_done(final_log.scf_done)
+                                system.set_moleculer_coordinates(final_log.opt_coords)
                                 OutputWriter(dir_of_files).write_xyz_file(system, final_log.opt_coords)
                                 print("final structure is optimized")
                             except Exception as e:

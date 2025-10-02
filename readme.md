@@ -10,7 +10,10 @@
 ```aiignore
 pip install Numpy
 pip install Matplotlib
+#for the use of GUI
+pip install pyqt5
 ```
+
 ---
 ### Installation 
 ```bash 

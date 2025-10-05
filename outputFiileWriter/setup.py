@@ -68,7 +68,10 @@ class Setup:
         return len(sorted_dirs)+1
 
     def get_next_folder_name(self):
-        """Generate the next folder name in the sequence"""
+        """Generate the next folder name in the sequence
+        find the highest number in the existing folder names and increment it by one.
+        :return str: The next folder name in the format 'Pathway_00001'.
+        """
         sorted_dirs = self.check_dir_in_the_project()
         if not sorted_dirs:
             next_number = 1

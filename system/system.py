@@ -12,6 +12,23 @@ from inputFileGeneration.write_input_file import generate_input_file
 
 
 class System:
+    """ System class contains all the molecules in the system and their properties
+    :Attributes:
+    molecules (list): list of Molecule objects in the system
+    charge (int): total charge of the system
+    multiplicity (int): total multiplicity of the system
+    method (str): method to be used in the calculation
+    number_of_cores (int): number of cores to be used in the calculation
+    iteration (int): current iteration number
+    energy (float): total energy of the system
+    memory (int): memory to be used in each calculation
+    stress_release (list): list of iteration numbers where stress release is applied
+    additional_constraints (str): additional constraints to be added to the input file
+    controls (Controls): Controls object containing all the control parameters
+    lattice (Lattice): Lattice object containing the lattice parameters
+    number_of_atoms (int): total number of atoms in the system
+
+    """
 
     def __init__(self, controls):
         self.molecules = []
@@ -29,24 +46,39 @@ class System:
         self.number_of_atoms = self.cal_number_of_atoms()
 
     def add_molecule(self, molecule):
+        """ add a molecule to the system
+        :param molecule: Molecule
+            molecule to be added to the system
+        """
         self.molecules.append(molecule)
 
     def replace_molecules(self, molecules):
-        print(len(molecules))
+        """ replace the molecules in the system with new molecules
+        :param molecules: list of Molecule
+        list of new molecules to be added to the system"""
         self.remove_all_molecules()
         self.add_list_of_molecules(molecules)
 
     def add_list_of_molecules(self, list):
+        """ add a list of molecules to the system
+        :param list: list of Molecule
+        list of molecules to be added to the system"""
         self.molecules += list
 
     def remove_all_molecules(self):
+        """ remove all molecules from the system """
         self.molecules = []
 
     def reorient_molecules_to_start(self):
+        """ reorient all molecules to their initial orientation """
         for molecule in self.molecules:
             molecule.reorient_molecule_to_start()
 
     def cal_number_of_atoms(self):
+        """ calculate the total number of atoms in the system
+        :return: int
+            total number of atoms in the system
+        """
         count = 0
         for molecule in self.molecules:
             count += len(molecule.atoms)
@@ -56,6 +88,10 @@ class System:
         return count
 
     def list_of_atoms(self):
+        """ return a list of all atoms in the system
+        :return: list of Atom
+            list of all atoms in the system
+        """
         atom_list = []
 
         for molecule in self.molecules:
@@ -64,16 +100,34 @@ class System:
         return atom_list
 
     def add_keyword_to_method(self, keyword):
+        """ add a keyword to the method if it is not already present
+        this is useful for adding OPT or FREQ keywords to the method
+        :param keyword: str
+            keyword to be added to the method
+        :return: bool
+            True if the keyword was added, False if it was already present
+        """
         if keyword not in self.method.lower():
             self.method += " "+ keyword
             return True
         return False
 
     def remove_keyword_from_method(self, keyword):
+        """ remove a keyword from the method if it is present
+        :param keyword: str
+            keyword to be removed from the method
+        """
         self.method = self.method.replace(keyword, "")
 
     def generate_input_file(self, iter_num, input_file_directory):
-        """write input file in the inputFiles directory """
+        """writing an input file is controlled in this method
+        :param iter_num: int
+            current iteration number
+        :param input_file_directory: str
+            directory where the input file will be written
+        :return: str
+            name of the input file
+        """
         string_of_coordinates = self.get_string_of_atoms_and_coordinates()
         template_str = get_input_template(iter_num, self, input_file_directory)
         file_name = file_name_generator(iter_num)
@@ -84,6 +138,10 @@ class System:
         return file_name
 
     def get_string_of_atoms_and_coordinates(self):
+        """ get the string of atoms and coordinates in the system
+        :return: str
+            string of atoms and coordinates in the system
+        """
         atoms_and_coordinates = ""
         atom_list=[]
         for atom in self.list_of_atoms():
@@ -96,6 +154,16 @@ class System:
         return atoms_and_coordinates[:-1]
 
     def additional_gaussian_requirments_implementation_to_inputfile_str(self, string, template, other=""):
+        """ add additional requirements to the input file string
+        :param string: str
+            string of atoms and coordinates in the system
+        :param template: str
+            input file template
+        :param other: str
+            additional constraints to be added to the input file
+        :return: str
+            string to be written in the input file
+        """
         return template + string + other + "\n\n\n\n"
 
     def set_moleculer_coordinates(self, opt_xyz):
@@ -128,6 +196,19 @@ class System:
 
 
     def to_str(self):
+        """ return a string representation of the system
+        :return: str
+        string representation of the system
+        example:
+        5
+        Energy: -150.0
+        C 0.0 0.0 0.0
+        H 0.0 0.0 1.0
+        H 1.0 0.0 0.0
+        O 0.0 0.0 0.0
+        H 0.0 0.0 1.0
+        Lattice parameters...
+        """
         string = f"{self.cal_number_of_atoms()}\nEnergy: {self.energy}\n"
         for atom in self.list_of_atoms():
             string += str(atom) + "\n"
@@ -136,6 +217,17 @@ class System:
         return string
 
     def string_optimized_coordinates(self, opt_xyz):
+        """ return a string representation of the optimized coordinates used in xyz file
+        1. number of atoms
+        2. energy of the system
+        3. list of atoms with their optimized coordinates
+        4. lattice parameters if present
+        5. return the string representation of the optimized coordinates
+        :param opt_xyz: list of tuples
+            list of optimized coordinates
+        :return: str
+            string representation of the optimized coordinates
+        """
         # this is for the xyz file not input file
         string = f"{self.cal_number_of_atoms()}\nEnergy: {self.energy}\n"
 
@@ -146,9 +238,19 @@ class System:
         return string
 
     def set_scf_done(self, energy):
+        """ set the energy of the system after scf is done
+        :param energy: float
+            energy of the system
+        """
         self.energy = energy
 
     def re_orient_molecules(self, controls):
+        """ re orient the molecules in the system
+        :param controls: Controls
+            Controls object containing all the control parameters
+        :return: bool
+            True if the molecules were re oriented, False otherwise
+        """
         if controls.spherical_placement == "False":
             return False
         for molecule in self.molecules:
@@ -162,6 +264,10 @@ class System:
 
 
     def random_rotate_molecules(self):
+        """ randomly rotate all molecules in the system
+        using euler angles from 0 to pi
+        :return: None
+        """
 
         for molecule in self.molecules:
             molecule.rotation_xy(uniform(0, math.pi)).rotation_yz(uniform(0, math.pi)).rotation_xz(uniform(0, math.pi))
@@ -258,6 +364,14 @@ class System:
 
 
     def get_energy_gap(self,energy_iter1,energy_iter2):
+        """ get the energy gap between two iterations in kj/mol
+        :param energy_iter1: float
+        energy of the first iteration in hartree
+        :param energy_iter2: float
+        energy of the second iteration in hartree
+        :return: float
+        energy gap between the two iterations in kj/mol
+        """
         try:
             energy_iter1 =float(energy_iter1)
             energy_iter2 = float(energy_iter2)

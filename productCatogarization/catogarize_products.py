@@ -32,7 +32,6 @@ def get_molecules(atomlist, factor=1.1):
                     atomlist.remove(atom)  # Ensure atom is in atomlist before attempting to remove
 
         list_of_molecules.append(molecule)
-    print(list_of_molecules)
     return list_of_molecules
 
 
@@ -44,6 +43,16 @@ def get_new_molecules(atoms):
 
 
 class products_writer:
+    """ write the products to products.txt file
+    save number of atoms, RMSD, xyz coordinates for each molecule observed.
+    and count the number of times the same products were observed
+    which is used to exit the repeated calculations if the same products were observed over and over again.
+
+    :Attributes:
+        file (str): path to the products.txt file
+        indent (int): indentation level for JSON formatting (default is 4)
+
+    """
     def __init__(self, input_file_directory, file="products.txt"):
         self.file = input_file_directory + "/" + file
 

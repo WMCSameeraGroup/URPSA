@@ -14,6 +14,37 @@ class InputFile:
     def __init__(self, file):
         """
         :param file: String (path to input file)
+        :Attributes:
+            file (str): path to the input file
+            config (CustomConfigParser): ConfigParser object to read the input file
+            project_name (str): name of the project
+            sphere_radius (float): radius of the sphere
+            step_size (float): step size for pushing molecules
+            step_count (int): number of steps to push molecules
+            stop_distance_factor (float): factor to determine when to stop pushing molecules
+            charge (int): total charge of the system
+            multiplicity (int): multiplicity of the system
+            number_of_molecules (int): number of different molecules in the system
+            n_iterations (int): number of iterations to perform
+            consecutive_duplicates_threshold (int): threshold for consecutive duplicate products
+            stress_release (list): list of iterations where stress release is applied
+            spherical_placement (str): method for placing molecules on the sphere
+            method (str): computational method to be used in Gaussian calculations
+            cores (str): number of CPU cores to be used in Gaussian calculations
+            memory (str): amount of memory to be used in Gaussian calculations
+            list_of_molecules (list): list of Molecule objects representing the molecules in the system
+            update_with_optimized_coordinates (str): whether to update coordinates with optimized ones from Gaussian
+            is_placed_on_sphere (bool): whether molecules are placed on the sphere
+            additional_constraints (str): additional constraints for Gaussian calculations
+            ADD_COM_CONST (str): whether to add center of mass constraints
+            ADD_SPHERICAL_CONST (str): whether to add spherical constraints
+            dynamic_fragment_replacement (str): whether to enable dynamic fragment replacement
+            cutoff_energy_gap (float): energy gap threshold for considering a pathway valid
+            energy_surpass_options (str): options for handling energy surpass situations ("optimize" or "exit")
+            optimize_the_final_particle (str): whether to optimize the final particle after placement
+            convergence_error (str): action to take on convergence error ("exit" or "continue")
+            unsuccessful_pathway (str): action to take on unsuccessful pathway ("exit" or "continue")
+            lattice (Molecule or str): lattice structure if provided, otherwise an empty string
         """
 
         self.count_of_atom = 1
@@ -31,8 +62,6 @@ class InputFile:
         self.n_iterations = int(self.config.get('controls', 'n_iterations'))
         self.consecutive_duplicates_threshold = int(self.config.get('controls', 'consecutive_duplicates_threshold'))
         self.stress_release = self.set_stress_release()
-        # self.rotation_random = "random" in self.data.split("\n\n")[4].split()
-        # self.rotation_step = self.set_rotation_step()
         self.spherical_placement = self.config.get('controls', 'spherical_placement')
         self.method = self.config.get('gaussian', 'method')
         self.cores = self.config.get('gaussian', 'number_of_cores')
@@ -56,6 +85,19 @@ class InputFile:
 
 
     def get_lattice(self):
+        """
+        get the lattice from the input file if provided
+        this is optional and can be used for when a fixed structure is needed to perform the calculations on top of it.
+        :rtype: Molecule
+        1. if lattice is provided in the input file, convert it to a Molecule object and return it
+        2. if lattice is not provided, return an empty string
+        3. example:
+        lattice:
+        C 0.0 0.0 0.0
+        H 0.0 0.0 1.0
+        H 1.0 0.0 0.0
+        :return:
+        """
         string = self.config.get('molecules', 'lattice')
 
         atom_list = []
@@ -78,8 +120,14 @@ class InputFile:
 
     def set_molecule_list(self):
         """
-
-        :return:[] list of molecules
+        get the list of molecules from the input file and convert them to Molecule objects
+        :rtype: list
+        1. loop over the number of molecules
+        2. get the string of each molecule from the input file
+        3. convert the string to a Molecule object using set_molecule method
+        4. append the Molecule object to the list
+        5. return the list of Molecule objects
+        :return:[molecule]: list of Molecule objects
         """
         molecule_list = []
         for n in range(self.number_of_molecules):

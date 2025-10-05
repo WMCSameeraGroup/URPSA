@@ -3,6 +3,51 @@ from setup.default_values import defaults
 
 
 class CustomConfigParser:
+    """
+    A simple configuration file parser that supports sections, key-value pairs,
+    comments, and multiline values.
+    1. Sections are defined by [section_name].
+    2. Key-value pairs are defined by key=value.
+    3. Comments start with # or ; and are ignored.
+    4. Multiline values are supported using a backslash (\) at the end of a line.
+    5. The parser reads the configuration file and stores the data in a nested dictionary.
+    6. The get method retrieves values with support for default values if the key or section is missing.
+    7. Example configuration file:
+        # This is a comment
+        [General]
+        key1=value1
+        key2=value2 line1 \
+        value2 line2
+        ; Another comment
+        [Settings]
+        option1=option_value1
+        option2=option_value2
+    8. Example usage:
+        config = CustomConfigParser()
+        config.read('config.txt')
+        value = config.get('General', 'key2')
+    9. This will return 'value2 line1 \nvalue2 line2'
+    10. If 'key2' or 'General' section is missing, it will return the default value if defined in defaults.py.
+    11. The defaults.py file should contain a dictionary named 'defaults' with default values.
+    12. Example defaults.py:
+        defaults = {
+            'General': {
+                'key1': 'default_value1',
+                'key2': 'default_value2'
+            },
+            'Settings': {
+                'option1': 'default_option_value1'
+            }
+        }
+    13. This parser does not handle nested sections or complex data types.
+    14. It is designed for simplicity and ease of use in basic configuration scenarios.
+    15. Error handling is minimal; it assumes the configuration file is well-formed.
+    16. The parser can be extended to include more features as needed.
+    17. when a = have to be passed in the value it should be escaped like this \-
+    and that will be converted back to =
+    18. The parser is case-sensitive for section names and keys.
+    19. Leading and trailing whitespace around keys and values are stripped.
+    """
     def __init__(self):
         self.data = {}
 

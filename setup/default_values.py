@@ -14,7 +14,7 @@ defaults = {
         "spherical_placement": "statistically_even",
         "ADD_COM_CONST": "True",
         "ADD_SPHERICAL_CONST": "False",
-        "dynamic_fragment_replacement": "False",
+        "dynamic_fragment_replacement": "True",
         "cutoff_energy_gap":120.0,
         "energy_surpass_options":"exit",
         "optimize_the_final_particle":"True",

@@ -35,8 +35,8 @@ for i in range(controls.n_iterations):
     system.random_rotate_molecules()
     output_file_list = []
     print(i)
-
-    dir_of_files = controls.project_name + "/" + setup.get_next_folder_name()
+    pathway_name = setup.get_next_folder_name()
+    dir_of_files = controls.project_name + "/" + pathway_name
     is_all_calculations_converged = True
     #################################################################################
     for iteration in range(controls.step_count):
@@ -57,7 +57,7 @@ for i in range(controls.n_iterations):
 
             system.set_scf_done(log.scf_done)
 
-            OutputWriter(dir_of_files,f"Pathway_{i+1:05d}.xyz").write_xyz_file(system, log.opt_coords)
+            OutputWriter(dir_of_files,f"{pathway_name}.xyz").write_xyz_file(system, log.opt_coords)
 
             if system.get_energy_gap(output_file_list[0].scf_done,log.scf_done) > controls.cutoff_energy_gap:
                 is_all_calculations_converged = False
@@ -104,7 +104,7 @@ for i in range(controls.n_iterations):
                                 output_file_list.append(final_log)
                                 system.set_scf_done(final_log.scf_done)
                                 system.set_moleculer_coordinates(final_log.opt_coords)
-                                OutputWriter(dir_of_files,f"Pathway_{i+1:05d}.xyz").write_xyz_file(system, final_log.opt_coords)
+                                OutputWriter(dir_of_files,f"{pathway_name}.xyz").write_xyz_file(system, final_log.opt_coords)
                                 print("final structure is optimized")
                             except Exception as e:
                                 print(f"An error occur while optimizing the final fragments :\n{e} ")

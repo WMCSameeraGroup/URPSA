@@ -2,6 +2,38 @@ import re
 
 
 class LogFileManager:
+    """
+    This class is responsible for reading and extracting data from Gaussian log files.
+    It extracts optimized coordinates,
+    SCF energy, and other relevant information.
+    It also provides methods to check if the calculation converged and if the structure is optimized.
+    Attributes:
+        file (str): The name of the log file to be read.
+        input_file_directory (str): The directory where the log file is located.
+        text (str): The content of the log file.
+        opt_coords (list): The optimized coordinates extracted from the log file.
+        scf_done (str): The SCF energy extracted from the log file.
+        is_converged (bool): Indicates if the calculation converged.
+        is_optimized (bool): Indicates if the structure is optimized (no imaginary frequencies).
+        z_matrix (str): The initial Z-matrix extracted from the log file.
+        title (str): The title of the calculation extracted from the log file.
+        optimized_parameters (str): The optimized parameters extracted from the log file.
+    Methods:
+        get_data(): Reads the log file and extracts relevant data.
+        read_log(): Reads the content of the log file.
+        is_valid(): Checks if the log file is a valid Gaussian log file.
+        is_optimized_exp(): Checks if the structure is optimized based on frequencies.
+        get_scf_done(): Extracts the SCF energy from the log file.
+        finish(): Cleans up resources after data extraction.
+        write_data_to_the_data_file(): Writes extracted data to a data file.
+        is_not_converged(): Checks if the calculation did not converge.
+        get_initial_z_matrix(): Extracts the initial Z-matrix from the log file.
+        get_title(): Extracts the title of the calculation from the log file.
+        get_optimized_parameters(): Extracts the optimized parameters from the log file.
+        optimized_coordinates(): Extracts the optimized coordinates from the log file.
+        last_lines(): Returns the last few lines of the log file for error checking.
+        get_freq(): Placeholder for frequency extraction method.
+    """
     def __init__(self, file_name, input_file_directory):
         self.file = file_name
         self.input_file_directory =input_file_directory
@@ -25,6 +57,9 @@ class LogFileManager:
         return "Gaussian" in self.text
 
     def is_optimized_exp(self):
+        """Check if the structure is optimized based on frequencies.
+        Returns:
+            ""bool: True if the structure is optimized (no imaginary frequencies), False otherwise."""
         pattern = r"Frequencies --\s+(-?\d+\.\d+)"
         result = re.search(pattern, self.text)
         first_frequency = re.findall(r"(-?\d+\.\d+)", result.group())
@@ -32,6 +67,13 @@ class LogFileManager:
         return float(first_frequency[0]) > 0
 
     def get_scf_done(self):
+        """Extract the SCF energy from the log file.
+        the SCF energy is typically found in lines starting with "SCF Done: E(RB3LYP) = ..." likewise
+        and the pattern is matched using regular expressions.
+        last occurrence of the SCF energy is considered in case of multiple occurrences.
+        Returns:
+            str: The SCF energy as a string, or "could not found" if not found.
+            """
         scf_match = re.findall(r'SCF Done: .*', self.text)
 
         if scf_match:
@@ -42,11 +84,9 @@ class LogFileManager:
 
 
     def finish(self):
+        """Cleans up resources after data extraction. as log can be large"""
         self.text = None
 
-    def write_data_to_the_data_file(self):
-        with open("data.txt", 'a') as file:
-            file.write(f"{self.file}\t{self.scf_done} \n")
 
     def is_not_converged(self):
         # for energy calculations
@@ -108,6 +148,13 @@ class LogFileManager:
         return parameters
 
     def optimized_coordinates(self):
+        """Extract the optimized coordinates from the log file.
+        the optimized coordinates are typically found in the "Standard orientation" section of the log file.
+        The method uses regular expressions to locate and extract the coordinates.
+
+        Returns:
+            list: A list of optimized coordinates, where each coordinate is represented as a list of floats [x, y, z].
+        """
         coordinates = []
         # Define the regex pattern to find the "Standard orientation" section
         pattern = re.compile(
@@ -128,6 +175,8 @@ class LogFileManager:
             raise ValueError("Optimized coordinates section not found in the log file")
 
     def last_lines(self):
+        """Returns the last few lines of the log file for error checking."""
+
         lines=""
 
         with open(self.log_file_name(), 'r') as file:

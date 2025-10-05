@@ -1,3 +1,8 @@
+"""
+Main script to run repeated calculations
+"""
+
+
 import sys
 
 from LogReader.log_file_manager import LogFileManager
@@ -28,6 +33,28 @@ setup = Setup(controls.project_name)
 
 products_collection = productsManager(controls.project_name+"/")
 for i in range(controls.n_iterations):
+    """ main loop for the repeated calculations
+        1-place the molecules in random positions
+        2- re-orient them
+        3- random rotation
+        4- push them towards the origin 0,0,0 step by step
+        5- generate input file and run the calculation
+        6- read the output file and check if its converged
+        7- if the calculation is not converged then ignore the path
+        8- if converged and the energy gap between current system and reactants is checked
+        9- if the energy gap is higher than the cutoff energy gap then ignore the path
+        10- if converged and the energy gap is lower than the cutoff energy gap then update the coordinates
+        11- if dynamic fragment replacement is true then check if new molecules are formed
+        12- if new molecules are formed then replace the old molecules with the new ones
+        13- check how many molecules are in the system
+        14- if only one molecule is left then optimize it if optimize_the_final_particle is true
+        15- get the final products
+        16- check how many times the same products are observed
+        17- if the same products are observed for n times then exit the loop
+        18- if the path is ignored then move the folder to archive or delete it based on the user input
+        19- repeat the process for given iterations
+        
+    """
     system.remove_all_molecules()
     controls.set_molecule_list()
     system.add_list_of_molecules(controls.list_of_molecules)
@@ -97,8 +124,6 @@ for i in range(controls.n_iterations):
                                     print(r_value)
                                     is_all_calculations_converged = False
 
-
-
                                 final_log = LogFileManager(find_corresponding_output_file(optFile), dir_of_files)
                                 final_log.is_converged = r_value
                                 output_file_list.append(final_log)
@@ -110,11 +135,6 @@ for i in range(controls.n_iterations):
                                 print(f"An error occur while optimizing the final fragments :\n{e} ")
                             break
 
-
-
-
-
-
         else:
             print(f"{inputFile} is too repulsive to calculate")
             is_all_calculations_converged = False
@@ -125,6 +145,7 @@ for i in range(controls.n_iterations):
 
     if is_all_calculations_converged:
         # find products and label them
+        #todo: fix the atom count issue
         products = products_writer(dir_of_files)
         products_molecules=products.get_products_list(system.list_of_atoms(), output_file_list)
 
@@ -144,8 +165,6 @@ for i in range(controls.n_iterations):
         if observed_product_counter == controls.consecutive_duplicates_threshold:
             print(f"no new products found in the last {observed_product_counter} iterations")
             break
-
-
 
 
     else:

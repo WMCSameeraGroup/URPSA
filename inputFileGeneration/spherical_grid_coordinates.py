@@ -24,6 +24,12 @@ def spherical_convergence(molecule, size=0.1):
 
 
 def move_atoms_towards_center(molecule, size):
+    """
+    Moves all atoms in a molecule incrementally toward the origin in a spherical trajectory.
+    :param molecule:
+    :param size:
+    :return:
+    """
     for atom in molecule.atoms:
         spherical_convergence(atom, size)
 

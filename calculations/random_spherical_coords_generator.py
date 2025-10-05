@@ -56,6 +56,19 @@ def exact_equidistributed_point_generator(r, N):
 
 
 def spherical_coordinates_to_xyz(r, theta, phi):
+    """
+    converts spherical coordinates to cartesian coordinates
+    1. Calculate the x-coordinate using the formula: x = r * sin(theta) * cos(phi)
+    2. Calculate the y-coordinate using the formula: y = r * sin(theta) * sin(phi)
+    3. Calculate the z-coordinate using the formula: z = r * cos(theta)
+    4. Return the coordinates as a list [x, y, z]
+    :param r:
+    :param theta:
+    :param phi:
+    :return: list [x, y, z]
+    :rtype: list
+    :example: [1.0, 2.0, 3.0]
+    """
     x = r * sin(theta) * cos(phi)
     y = r * sin(theta) * sin(phi)
     z = r * cos(theta)

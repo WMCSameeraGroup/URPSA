@@ -30,7 +30,12 @@ class Molecule:
         self.y = self.center_of_mass[1]
         self.z = self.center_of_mass[2]
 
-    def rotation_xy(self, angle):
+    def rotation_xy(self, angle: float):
+        """
+        Rotates the atom's position around the z-axis by a specified angle.
+        :param angle:
+        :return:
+        """
         rot_mat = np.array([[np.cos(angle), -np.sin(angle), 0], [np.sin(angle), np.cos(angle), 0], [0, 0, 1]])
         rotated_xyz = np.dot(self.xyz, rot_mat.T)  # Transpose of the rotation matrix for proper multiplication
         self.xyz = rotated_xyz
@@ -38,14 +43,24 @@ class Molecule:
         return self
 
 
-    def rotation_yz(self, angle):
+    def rotation_yz(self, angle: float):
+        """
+        Rotates the atom's position around the x-axis by a specified angle.
+        :param angle:
+        :return:
+        """
         rot_mat = np.array([[1, 0, 0], [0, np.cos(angle), -np.sin(angle)], [0, np.sin(angle), np.cos(angle)]])
         rotated_xyz = np.dot(self.xyz, rot_mat.T)
         self.xyz = rotated_xyz
         self.set_new_coords_to_atoms()
         return self
 
-    def rotation_xz(self, angle):
+    def rotation_xz(self, angle: float):
+        """
+        Rotates the: atom's position around the y-axis by a specified angle.
+        :param angle:
+        :return:
+        """
         rot_mat = np.array([[np.cos(angle), 0, np.sin(angle)], [0, 1, 0], [-np.sin(angle), 0, np.cos(angle)]])
         rotated_xyz = np.dot(self.xyz, rot_mat.T)
         self.xyz = rotated_xyz
@@ -111,19 +126,24 @@ class Molecule:
             atom.update_coordinates(*coords)
 
 
-
-    def get_coordinates_of_atoms(self):
-        return np.array([atom.get_coords() for atom in self.atoms])
-
     def add_atom(self, atom):
+        """ add an atom to the molecule and update the center of mass
+        :param atom: Atom object to be added to the molecule.
+        :modify self: Adds the atom to the molecule's atom list and recalculates the center of mass.
+        to update the parameters x,y,z,center_of_mass and xyz
+        :return: None"""
         self.atoms.append(atom)
         self.xyz = np.array([atom.get_coords() for atom in self.atoms])
         self.cal_center_of_mass()
 
     def number_of_atoms(self):
+        """ returns the number of atoms in the molecule
+        :return: int: Number of atoms in the molecule."""
         return len(self.atoms)
 
     def cal_center_of_mass(self):
+        """ calculates the center of mass of the molecule
+        :return: list: A list containing the x, y, z coordinates of the center of mass."""
         gp= center_of_mass(self.atoms)
         self.x = gp[0]
         self.y = gp[1]
@@ -131,6 +151,9 @@ class Molecule:
         return gp
 
     def to_str(self):
+        """ returns the string representation of the molecule in xyz format
+        :return: str: A string containing the number of atoms, a blank line, and the
+                      xyz coordinates of each atom in the molecule."""
         str = ""
         for atom in self.atoms:
             str += atom.to_str() + "\n"
@@ -138,9 +161,13 @@ class Molecule:
         return str[:-1]
 
     def __str__(self):
+        """ returns the string representation of the molecule in xyz format
+        :return: str: A string containing the number of atoms, a blank line, and the
+                      xyz coordinates of each atom in the molecule."""
         return self.to_str()
 
     def get_coords(self):
+        """ returns the coordinates of the molecule's center of mass"""
         return self.center_of_mass
 
     def update_coordinates(self, x, y, z):
@@ -169,12 +196,15 @@ class Molecule:
 
 
     def relative_coordination_matrix(self):
+        """ return the coordination matrix of the molecule relative to its center of mass"""
         xyz_matrix = np.array([atom.get_coords() for atom in self.atoms])
         relative_atom_coords = xyz_matrix - center_of_mass(self.atoms)
         return relative_atom_coords
 
     def change_center_of_mass(self, center_of_mass):
-        """ change the molecule coordinates without the bond distances and angles"""
+        """ change the molecule coordinates without the bond distances and angles to a new center of mass
+        :param center_of_mass: list: A list containing the new x, y, z coordinates of the center of mass."""
+
         self.xyz = self.relative_coordination_matrix() + center_of_mass
         self.cal_center_of_mass()
         self.set_new_coords_to_atoms()
@@ -183,23 +213,34 @@ class Molecule:
 
 
     def distance_between(self, other):
+        """ returns the distance between two molecules based on their center of mass
+         :param other: Molecule object to calculate the distance to.
+         :return: float: The Euclidean distance between the centers of mass of the two molecules."""
         diff_x = pow(self.x - other.x, 2)
         diff_y = pow(self.y - other.y, 2)
         diff_z = pow(self.z - other.z, 2)
         return pow(diff_z + diff_x + diff_y, 0.5)
 
     def unit_position_vector(self):
+        """
+        returns the unit vector of the molecule based on its center of mass
+        :return: list of float: A list containing the x, y, z components of the unit position vector.
+        """
         magnitude = (self.x ** 2 + self.y ** 2 + self.z ** 2) ** 0.5
         return [self.x / magnitude, self.y / magnitude, self.z / magnitude]
 
     def distance_from_origin(self):
+        """ returns the distance of the molecule from the origin based on its center of mass
+        :return: float: The Euclidean distance from the origin (0,0,0) to the center of mass of the molecule."""
         diff_x = pow(self.x, 2)
         diff_y = pow(self.y, 2)
         diff_z = pow(self.z, 2)
         return pow(diff_z + diff_x + diff_y, 0.5)
 
     def calculate_RMSD(self):
-        """ center of mass is used as the reference point to avoid the bias"""
+        """ center of mass is used as the reference point to avoid the bias
+        returns the root mean square deviation (RMSD) of the molecule based on its atoms' distances from the center of mass
+        :return: float: The RMSD value calculated from the distances of each atom to the center of mass."""
         sum_of_distances_square = 0
         for atom in self.atoms:
             sum_of_distances_square += atom.distance_from_center_of_mass(self.center_of_mass) ** 2
@@ -207,6 +248,7 @@ class Molecule:
         return (sum_of_distances_square/len(self.atoms))**0.5
 
     def reorient_molecule_to_start(self):
+        """ reorient the molecule to its initial orientation and recalculate the center of mass"""
         for atom in self.atoms:
             atom.reorient_atom_to_start()
         self.cal_center_of_mass()

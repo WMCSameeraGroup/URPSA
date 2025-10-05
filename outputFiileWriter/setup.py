@@ -4,9 +4,14 @@ import sys
 
 
 class Setup:
+    """
+    Handles project directory setup and management.
 
-    def __init__(self,name):
-        # self.project_dir = "Projects/"+name
+    Args:
+        name (str): Name of the project directory.
+    """
+
+    def __init__(self, name):
         self.project_dir = name
         self.project_exists()
 
@@ -15,7 +20,23 @@ class Setup:
             os.makedirs(self.project_dir)
         else:
             print(f"project name '{self.project_dir}' already exists.")
-            ans = input("Do you want to use the same project? [y/n] ")
+            try:
+                import threading
+
+                def get_input():
+                    nonlocal ans
+                    ans = input("Do you want to use the same project? [y/n] ")
+
+                ans = None
+                t = threading.Thread(target=get_input)
+                t.start()
+                t.join(timeout=30)
+                if ans is None:
+                    print("No answer received in 30 seconds. Defaulting to 'Y'.")
+                    ans = "Y"
+            except Exception as e:
+                print("Error during input:", e)
+                ans = "Y"
             if ans == "n" or ans == "N":
                 sys.exit(0)
 

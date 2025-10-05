@@ -32,6 +32,7 @@ def get_molecules(atomlist, factor=1.1):
                     atomlist.remove(atom)  # Ensure atom is in atomlist before attempting to remove
 
         list_of_molecules.append(molecule)
+    print(list_of_molecules)
     return list_of_molecules
 
 

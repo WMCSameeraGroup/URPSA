@@ -18,7 +18,6 @@ def random_spherical_coordinates_generator(r: float):
 def generate_random_point_on_sphere(r: float):
     """
     Generates a random point uniformly distributed on the surface of a sphere.
-
     :param r: Radius of the sphere (float).
     :return: A tuple (x, y, z) representing the coordinates of the random point on the sphere.
     """

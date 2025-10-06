@@ -27,7 +27,7 @@ class OutputWriter:
                 with open(self.file, "w") as _:
                     pass
 
-        def write_xyz_file(self, sys, opt_xyz):
+        def write_xyz_file(self, sys, opt_xyz: str):
             """
             Writes optimized coordinates to the output file in XYZ format.
 

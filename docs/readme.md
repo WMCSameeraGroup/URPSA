@@ -11,10 +11,7 @@
 pip install Numpy
 pip install Matplotlib
 #for the use of GUI
-# tkinter is usually pre-installed with python if not use the following command
-sudo apt install python3-tk # for debian based systems
-# for other systems please refer to https://tkdocs.com/tutorial/install.html
-
+pip install pyqt5
 ```
 
 ---
@@ -157,13 +154,7 @@ defaults = {
 
 ```
 
-## Output format 
 
-
-Each reaction path is saved with a folder named as Pathway_0001 and gaussian calculations files(input file, output files) are stored. 
-further a scatter plot of the energy of converged structures as scatter.jpg and a xyz file is produced to see the trajectory. 
-
----
 
 ## Methodology
 
@@ -172,7 +163,7 @@ further a scatter plot of the energy of converged structures as scatter.jpg and 
 The **Unbiased Reaction Path Search Algorithm (URPSA)** is an automated method for discovering reaction pathways through the systematic exploration of possible interactions between molecular fragments. The process is designed to minimize reliance on human intuition by providing a structured approach to identifying new pathways.
 
 > The workflow of the URPSA is illustrated in the diagram below.  
-> _![Workflow of the URPSA](doc/assets/diagram.png)_
+> _![Workflow of the URPSA](assets/diagram.png)_
 
 The process begins by placing user-defined molecular fragments randomly on the surface of a sphere. These fragments are then gradually moved toward the center to encourage interactions. At each step, the system checks for atomic repulsions and discards any unphysical configurations.
 
@@ -189,8 +180,8 @@ The entire process is automated through **Python**, while quantum mechanical cal
 The calculation begins by randomly placing user-defined fragments (atoms or molecules) on the surface of a sphere of a given radius. Each fragment has an equal probability of being positioned at any point on the surface.
 
 > _Note: Overlapping placements are automatically discarded in a later step._
-![Feature Demo1](doc/assets/eq1.gif)
-![Feature Demo2](doc/assets/eq2.gif)
+![Feature Demo1](assets/eq1.gif)
+![Feature Demo2](assets/eq2.gif)
 The goal of spherical placement is to expose the potential energy surface (PES) to diverse orientations, thereby increasing the chances of discovering non-trivial interactions.
 
 ---

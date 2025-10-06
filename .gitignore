@@ -20,7 +20,10 @@ outputFiles/*
 !/projects/
 !/projects/.keep
 astroTry3
-
+site/*
+site
+*.yml
+index.md
 astroTry3/*
 todo.txt
 test.py

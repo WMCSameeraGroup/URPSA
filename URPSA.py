@@ -1,79 +1,80 @@
+import tkinter as tk
+from tkinter import ttk, filedialog, messagebox
 import platform
 import subprocess
-from PyQt5 import QtWidgets, QtGui
-import sys
 import os
+
 CONFIG_FILE = "config.txt"
-# Base Section class
+
+
 class Section:
-    def __init__(self, title, fields, parent_layout):
-        self.group_box = QtWidgets.QGroupBox(title)
-        self.layout = QtWidgets.QFormLayout()
+    def __init__(self, master, title, fields):
+        self.frame = ttk.LabelFrame(master, text=title)
         self.inputs = {}
 
-        for field in fields:
-            label, default, field_type = field["label"], field.get("default", ""), field.get("type", str)
-            if field_type == "multiline":
-                widget = QtWidgets.QPlainTextEdit()
-                widget.setPlainText(default)
-            elif field_type == "combo":
-                widget = QtWidgets.QComboBox()
-                widget.addItems(default)
-            else:
-                widget = QtWidgets.QLineEdit()
-                widget.setText(default)
-                if field_type == int:
-                    widget.setValidator(QtGui.QIntValidator())
-                elif field_type == float:
-                    widget.setValidator(QtGui.QDoubleValidator())
-            self.inputs[label] = widget
-            self.layout.addRow(label, widget)
+        for i, field in enumerate(fields):
+            label_text = field["label"]
+            default = field.get("default", "")
+            field_type = field.get("type", str)
 
-        self.group_box.setLayout(self.layout)
-        parent_layout.addWidget(self.group_box)
+            ttk.Label(self.frame, text=label_text).grid(row=i, column=0, sticky="w", padx=5, pady=3)
+
+            if field_type == "multiline":
+                text_widget = tk.Text(self.frame, width=50, height=6)
+                text_widget.insert("1.0", default)
+                text_widget.grid(row=i, column=1, padx=5, pady=3)
+                self.inputs[label_text] = text_widget
+            elif field_type == "combo":
+                combo = ttk.Combobox(self.frame, values=default, state="readonly")
+                combo.current(0)
+                combo.grid(row=i, column=1, padx=5, pady=3)
+                self.inputs[label_text] = combo
+            else:
+                entry = ttk.Entry(self.frame)
+                entry.insert(0, default)
+                entry.grid(row=i, column=1, padx=5, pady=3)
+                self.inputs[label_text] = entry
 
     def get_values(self):
         values = {}
-        for key, widget in self.inputs.items():
-            if isinstance(widget, QtWidgets.QPlainTextEdit):
-                values[key] = widget.toPlainText()
-            elif isinstance(widget, QtWidgets.QComboBox):
-                values[key] = widget.currentText()
+        for label, widget in self.inputs.items():
+            if isinstance(widget, tk.Text):
+                values[label] = widget.get("1.0", "end-1c").strip()
+            elif isinstance(widget, ttk.Combobox):
+                values[label] = widget.get()
             else:
-                values[key] = widget.text()
+                values[label] = widget.get()
         return values
 
 
-
-class ConfigApp(QtWidgets.QWidget):
+class ConfigApp(tk.Tk):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("Configuration Input")
+        self.title("Configuration Input")
+        self.geometry("750x700")
 
-        self.setGeometry(100, 100, 600, 600)
+        self.notebook = ttk.Notebook(self)
+        self.notebook.pack(expand=True, fill="both")
 
-        self.scroll_area = QtWidgets.QScrollArea()
-        self.tabs = QtWidgets.QTabWidget()
-        self.scroll_area.setWidget(self.tabs)
-        self.scroll_area.setWidgetResizable(True)
         self.sections = {}
 
-        # General Tab
-        self.general_tab = QtWidgets.QWidget()
-        self.general_layout = QtWidgets.QVBoxLayout()
+        # === General Tab ===
+        self.general_tab = ttk.Frame(self.notebook)
+        self.notebook.add(self.general_tab, text="General")
 
-        self.sections["project"] = Section("project", [
+        self.sections["project"] = Section(self.general_tab, "Project", [
             {"label": "Project Name", "default": "CH4-"}
-        ], self.general_layout)
+        ])
+        self.sections["project"].frame.pack(fill="x", padx=10, pady=5)
 
-        self.sections["gaussian"] = Section("gaussian", [
+        self.sections["gaussian"] = Section(self.general_tab, "Gaussian", [
             {"label": "Number of Cores", "default": "8", "type": int},
             {"label": "Memory", "default": "8GB"},
             {"label": "Method", "default": "#N opt(maxcycle=600,AddGIC) PM6 scf(maxcyc=600,xqc) nosymm"}
-        ], self.general_layout)
+        ])
+        self.sections["gaussian"].frame.pack(fill="x", padx=10, pady=5)
 
-        self.sections["molecules"] = Section("molecules", [
-
+        self.sections["molecules"] = Section(self.general_tab, "Molecules", [
             {"label": "charge", "default": "-1", "type": int},
             {"label": "multiplicity", "default": "1", "type": int},
             {"label": "number_of_molecules", "default": "5", "type": int},
@@ -86,16 +87,14 @@ class ConfigApp(QtWidgets.QWidget):
 3 = C 0.0000 0.00 0.000
 
 4 = H 0.000 0.000 0.000 """, "type": "multiline"}
-        ], self.general_layout)
+        ])
+        self.sections["molecules"].frame.pack(fill="x", padx=10, pady=5)
 
-        self.general_tab.setLayout(self.general_layout)
-        self.tabs.addTab(self.general_tab, "General")
+        # === Advanced Tab ===
+        self.advanced_tab = ttk.Frame(self.notebook)
+        self.notebook.add(self.advanced_tab, text="Advanced")
 
-        # Advanced Tab
-        self.advanced_tab = QtWidgets.QWidget()
-        self.advanced_layout = QtWidgets.QVBoxLayout()
-
-        self.sections["controls"] = Section("controls", [
+        self.sections["controls"] = Section(self.advanced_tab, "Controls", [
             {"label": "Update with Optimized Coordinates", "default": "True"},
             {"label": "Step Size", "default": "0.1", "type": float},
             {"label": "Step Count", "default": "40", "type": int},
@@ -112,134 +111,104 @@ class ConfigApp(QtWidgets.QWidget):
             {"label": "Optimize the Final Particle", "default": "True"},
             {"label": "Convergence Error", "default": ["exit", "warn"], "type": "combo"},
             {"label": "unsuccessful_pathway", "default": ["archive", "delete"], "type": "combo"}
-        ], self.advanced_layout)
+        ])
+        self.sections["controls"].frame.pack(fill="x", padx=10, pady=5)
 
-        self.sections["Additional"] = Section("Additional", [
+        self.sections["Additional"] = Section(self.advanced_tab, "Additional", [
             {"label": "Additional Data", "default": "", "type": "multiline"}
-        ], self.advanced_layout)
+        ])
+        self.sections["Additional"].frame.pack(fill="x", padx=10, pady=5)
 
-        self.advanced_tab.setLayout(self.advanced_layout)
-        self.tabs.addTab(self.advanced_tab, "Advanced")
+        # === Preview Tab ===
+        self.preview_tab = ttk.Frame(self.notebook)
+        self.notebook.add(self.preview_tab, text="Preview")
 
-        # Preview Tab
-        self.preview_tab = QtWidgets.QWidget()
-        self.preview_layout = QtWidgets.QVBoxLayout()
-        self.preview_text = QtWidgets.QTextEdit()
-        self.preview_text.setReadOnly(True)
-        self.preview_layout.addWidget(self.preview_text)
+        self.preview_text = tk.Text(self.preview_tab, wrap="word", height=25)
+        self.preview_text.pack(fill="both", expand=True, padx=10, pady=10)
 
-        # Browse and Run Section
-        self.browse_layout = QtWidgets.QHBoxLayout()
-        self.file_path_input = QtWidgets.QLineEdit()
-        self.file_path_input.setPlaceholderText("Select repeated.py")
-        self.browse_button = QtWidgets.QPushButton("Browse")
-        self.browse_button.clicked.connect(self.select_repeated_file)
-        self.browse_layout.addWidget(self.file_path_input)
-        self.browse_layout.addWidget(self.browse_button)
-        self.preview_layout.addLayout(self.browse_layout)
+        self.browse_frame = ttk.Frame(self.preview_tab)
+        self.browse_frame.pack(fill="x", padx=10, pady=5)
 
-        # Run Calculation Button
-        self.run_button = QtWidgets.QPushButton("Run Calculation")
-        self.run_button.clicked.connect(self.run_calculation)
-        self.preview_layout.addWidget(self.run_button)
+        self.file_path_input = ttk.Entry(self.browse_frame)
+        self.file_path_input.insert(0, "Select repeated.py")
+        self.file_path_input.pack(side="left", expand=True, fill="x", padx=5)
 
-        self.save_button = QtWidgets.QPushButton("Save File")
-        self.save_button.clicked.connect(self.save_file)
-        self.preview_layout.addWidget(self.save_button)
+        ttk.Button(self.browse_frame, text="Browse", command=self.select_repeated_file).pack(side="left")
 
-        self.preview_tab.setLayout(self.preview_layout)
-        self.tabs.addTab(self.preview_tab, "Preview")
+        ttk.Button(self.preview_tab, text="Run Calculation", command=self.run_calculation).pack(pady=5)
+        ttk.Button(self.preview_tab, text="Save File", command=self.save_file).pack(pady=5)
 
-        # Main layout
-        self.main_layout = QtWidgets.QVBoxLayout()
-        self.main_layout.addWidget(self.scroll_area)
+        # Bind tab switch
+        self.notebook.bind("<<NotebookTabChanged>>", self.show_preview)
 
-        # Submit button
-        # self.submit_button = QtWidgets.QPushButton("Submit")
-        # self.submit_button.clicked.connect(self.submit)
-        # self.main_layout.addWidget(self.submit_button)
-
-        self.setLayout(self.main_layout)
-
-        self.tabs.currentChanged.connect(self.show_preview)
+        self.load_repeated_file_path()
 
     def submit(self):
         config_lines = []
         for section_name, section_obj in self.sections.items():
-
             config_lines.append(f"[{section_name}]")
-
             for key, value in section_obj.get_values().items():
-
                 if section_name == "Additional" and value == "":
-                        continue
+                    continue
                 elif section_name == "molecules" and key == "Molecule Data":
-                    config_lines.append(f"{value}")
+                    config_lines.append(value)
                     continue
                 config_lines.append(f"{key.replace(' ', '_').lower()} = {value}")
-
-
             config_lines.append("")
-        self.preview_text.setText("\n".join(config_lines))
+        self.preview_text.delete("1.0", "end")
+        self.preview_text.insert("1.0", "\n".join(config_lines))
 
-    def show_preview(self, index):
-        if self.tabs.tabText(index) == "Preview":
+    def show_preview(self, event):
+        tab = self.notebook.tab(self.notebook.select(), "text")
+        if tab == "Preview":
             self.submit()
 
     def save_file(self):
-        file_dialog = QtWidgets.QFileDialog()
-        file_path, _ = file_dialog.getSaveFileName(self, "Save Configuration File", "", "Text Files (*.txt)")
+        file_path = filedialog.asksaveasfilename(defaultextension=".txt", filetypes=[("Text Files", "*.txt")])
         if file_path:
-            with open(file_path, "w") as file:
-                file.write(self.preview_text.toPlainText())
+            with open(file_path, "w") as f:
+                f.write(self.preview_text.get("1.0", "end-1c"))
             self.input_file_path = file_path
-
+            messagebox.showinfo("Saved", f"Configuration saved to {file_path}")
 
     def select_repeated_file(self):
-        file_dialog = QtWidgets.QFileDialog()
-        file_path, _ = file_dialog.getOpenFileName(self, "Select repeated.py", "", "Python Files (*.py)")
+        file_path = filedialog.askopenfilename(filetypes=[("Python Files", "*.py")])
         if file_path:
-            self.file_path_input.setText(file_path)
+            self.file_path_input.delete(0, "end")
+            self.file_path_input.insert(0, file_path)
             self.repeated_script_path = file_path
             self.save_repeated_file_path(file_path)
 
     def run_calculation(self):
         if not hasattr(self, 'input_file_path'):
-            QtWidgets.QMessageBox.warning(self, "Error", "Please save the input file before running the calculation.")
+            messagebox.showwarning("Error", "Please save the input file before running the calculation.")
             return
-
         if not hasattr(self, 'repeated_script_path'):
-            QtWidgets.QMessageBox.warning(self, "Error", "Please select the repeated.py script before running the calculation.")
+            messagebox.showwarning("Error", "Please select the repeated.py script before running the calculation.")
             return
-        command = f'cd {self.input_file_path} && python3 "{self.repeated_script_path}" "{self.input_file_path}"'
 
-        # have to change this self.repeated_script_path as it is comming from self.input_file_path
+        command = f'cd "{os.path.dirname(self.input_file_path)}" && python "{self.repeated_script_path}" "{self.input_file_path}"'
 
         if platform.system() == "Linux":
             if "g16" not in os.environ:
-                print(f"path to g16 cant be found")
-
-            subprocess.run(
-                ['gnome-terminal', '--', 'bash', '-c', command])
-
+                print("Path to g16 not found")
+            subprocess.run(['gnome-terminal', '--', 'bash', '-c', command])
         else:
-            print("operating system is not Linux")
-
+            os.system(command)
 
     def save_repeated_file_path(self, path):
-        with open(CONFIG_FILE, "w") as file:
-            file.write(path)
+        with open(CONFIG_FILE, "w") as f:
+            f.write(path)
 
     def load_repeated_file_path(self):
         if os.path.exists(CONFIG_FILE):
-            with open(CONFIG_FILE, "r") as file:
-                path = file.read().strip()
-                self.file_path_input.setText(path)
+            with open(CONFIG_FILE, "r") as f:
+                path = f.read().strip()
+                self.file_path_input.delete(0, "end")
+                self.file_path_input.insert(0, path)
                 self.repeated_script_path = path
 
 
-if __name__ == '__main__':
-    app = QtWidgets.QApplication(sys.argv)
-    window = ConfigApp()
-    window.show()
-    sys.exit(app.exec_())
+if __name__ == "__main__":
+    app = ConfigApp()
+    app.mainloop()

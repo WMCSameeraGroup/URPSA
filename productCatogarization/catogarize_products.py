@@ -1,8 +1,7 @@
-from atoms.atoms import Atom
 from molecule.molecule import Molecule
 
 
-def get_molecules(atomlist, factor=1.1):
+def get_molecules(atomlist, factor):
     """ separate system into individual molecules"""
     list_of_molecules = []
 
@@ -38,8 +37,8 @@ def get_molecules(atomlist, factor=1.1):
 
 
 
-def get_new_molecules(atoms):
-    return get_molecules(atoms)
+def get_new_molecules(atoms,factor):
+    return get_molecules(atoms,factor)
 
 
 class products_writer:
@@ -71,15 +70,15 @@ class products_writer:
         string = self.get_the_molecular_string(molecules)
         self.write_products_file(string)
 
-    def get_products_list(self, atoms, output_file_list):
+    def get_products_list(self, atoms, output_file_list,factor):
         if len(output_file_list) > 0:
-            return self.add_products(atoms, output_file_list)
+            return self.add_products(atoms, output_file_list,factor)
         else:
             print("no output file is produced")
 
-    def add_products(self, atoms, outputfile_list):
+    def add_products(self, atoms, outputfile_list,factor):
         index = self.find_the_formation_of_products(outputfile_list)
-        molecules = get_molecules(atoms)
+        molecules = get_molecules(atoms, factor)
         for molecule in molecules:
             print(f"setp-{index} RMSD- {molecule.calculate_RMSD()}")
 

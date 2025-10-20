@@ -16,21 +16,22 @@ class Section:
             label_text = field["label"]
             default = field.get("default", "")
             field_type = field.get("type", str)
+            extra_attrs = field.get("attributes", {})  # New: extra widget attributes
 
-            ttk.Label(self.frame, text=label_text).grid(row=i, column=0, sticky="w", padx=5, pady=3)
+            ttk.Label(self.frame, text=label_text).grid(row=i, column=0, sticky="w", padx=5, pady=3,)
 
             if field_type == "multiline":
-                text_widget = tk.Text(self.frame, width=50, height=6)
+                text_widget = tk.Text(self.frame, width=50, height=6, **extra_attrs)
                 text_widget.insert("1.0", default)
                 text_widget.grid(row=i, column=1, padx=5, pady=3)
                 self.inputs[label_text] = text_widget
             elif field_type == "combo":
-                combo = ttk.Combobox(self.frame, values=default, state="readonly")
+                combo = ttk.Combobox(self.frame, values=default, state="readonly", **extra_attrs)
                 combo.current(0)
                 combo.grid(row=i, column=1, padx=5, pady=3)
                 self.inputs[label_text] = combo
             else:
-                entry = ttk.Entry(self.frame)
+                entry = ttk.Entry(self.frame, **extra_attrs)
                 entry.insert(0, default)
                 entry.grid(row=i, column=1, padx=5, pady=3)
                 self.inputs[label_text] = entry
@@ -50,7 +51,7 @@ class Section:
 class ConfigApp(tk.Tk):
     def __init__(self):
         super().__init__()
-        self.title("Configuration Input")
+        self.title("URPSA Configuration")
         self.geometry("750x700")
 
         self.notebook = ttk.Notebook(self)
@@ -68,8 +69,8 @@ class ConfigApp(tk.Tk):
         self.sections["project"].frame.pack(fill="x", padx=10, pady=5)
 
         self.sections["gaussian"] = Section(self.general_tab, "Gaussian", [
-            {"label": "Number of Cores", "default": "8", "type": int},
-            {"label": "Memory", "default": "8GB"},
+            {"label": "Number of Cores", "default": "1", "type": int},
+            {"label": "Memory", "default": "1GB"},
             {"label": "Method", "default": "#N opt(maxcycle=600,AddGIC) PM6 scf(maxcyc=600,xqc) nosymm"}
         ])
         self.sections["gaussian"].frame.pack(fill="x", padx=10, pady=5)

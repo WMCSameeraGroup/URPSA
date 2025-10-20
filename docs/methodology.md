@@ -32,7 +32,8 @@ The goal of spherical placement is to expose the potential energy surface (PES) 
 ### Push Fragments Toward the Centre
 
 Each fragment is moved inward toward the center of the coordinate system by a linear distance. This is performed by calculating the position vector of the fragment's center of mass and reducing it by a user-defined step size, effectively pushing fragments closer to encourage interaction.
-
+> _![URPSA process ](assets/eq1.gif)_
+> _![URPSA process ](assets/eq2.gif)_
 ---
 
 ### Check for Small Inter-Atomic Distances

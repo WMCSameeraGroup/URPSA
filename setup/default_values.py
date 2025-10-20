@@ -20,7 +20,8 @@ defaults = {
         "optimize_the_final_particle":"True",
         "convergence_error":"exit",
         "consecutive_duplicates_threshold":5,
-        "unsuccessful_pathway":"archive"
+        "unsuccessful_pathway":"archive",
+        "fragment_detection_factor":1.1
 
 
     },

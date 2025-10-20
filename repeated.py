@@ -107,7 +107,7 @@ for i in range(controls.n_iterations):
                 system.set_moleculer_coordinates(log.opt_coords)
                 if controls.dynamic_fragment_replacement == "True":
                     print("dynamic_fragment_replacement")
-                    new_molecules = get_new_molecules(system.list_of_atoms())
+                    new_molecules = get_new_molecules(system.list_of_atoms(),factor=controls.fragment_detection_factor)
                     system.replace_molecules(new_molecules)
                         # optimize the last observed particle
                     if controls.optimize_the_final_particle == "True":
@@ -147,7 +147,7 @@ for i in range(controls.n_iterations):
         # find products and label them
         #todo: fix the atom count issue
         products = products_writer(dir_of_files)
-        products_molecules=products.get_products_list(system.list_of_atoms(), output_file_list)
+        products_molecules=products.get_products_list(system.list_of_atoms(), output_file_list,controls.fragment_detection_factor)
 
         products_collection.write_product(i+1,products_molecules)
         print("number of similar products found")

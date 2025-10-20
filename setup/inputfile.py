@@ -74,6 +74,7 @@ class InputFile:
         self.additional_constraints = self.set_additional_constraints()
         self.ADD_COM_CONST = self.config.get("controls", "ADD_COM_CONST")
         self.ADD_SPHERICAL_CONST = self.config.get("controls", "ADD_SPHERICAL_CONST")
+        self.fragment_detection_factor = float(self.config.get('controls', 'fragment_detection_factor'))
         self.dynamic_fragment_replacement = self.config.get("controls", "dynamic_fragment_replacement")
         self.cutoff_energy_gap = float(self.config.get("controls", "cutoff_energy_gap"))
         self.energy_surpass_options = self.config.get("controls", "energy_surpass_options")

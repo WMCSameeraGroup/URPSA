@@ -9,9 +9,11 @@
 pip install Numpy
 pip install Matplotlib
 #for the use of GUI
-pip install pyqt5
-```
+# tkinter is usually pre-installed with python if not use the following command
+sudo apt install python3-tk # for debian based systems
+# for other systems please refer to https://tkdocs.com/tutorial/install.html
 
+```
 ---
 ### Installation 
 ```bash 
@@ -27,6 +29,9 @@ the following command can be used to run the program
 python3 "/<path-to-URPSA-directory>/repeated.py" exampleInput.txt
 ```
 ---
+
+
+
 
 
 

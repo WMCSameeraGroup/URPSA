@@ -74,13 +74,15 @@ class LogFileManager:
         Returns:
             str: The SCF energy as a string, or "could not found" if not found.
             """
-        scf_match = re.findall(r'SCF Done: .*', self.text)
 
-        if scf_match:
-            self.scf_done = re.findall(r'-?\d+\.\d+', scf_match[-1])[0]
-            return self.scf_done
-        else:
-            self.scf_done = "could not found"
+        scf_match = re.findall(r'SCF Done: .*', self.text)
+        if len(scf_match) == 0:
+            scf_match = re.findall(r'Energy= .*', self.text)
+
+        self.scf_done = re.findall(r'-?\d+\.\d+', scf_match[-1])[0]
+        return self.scf_done
+
+
 
 
     def finish(self):

@@ -1,7 +1,7 @@
 # CH3OH + OH- Input File
 
-# Example Input File: CH3OH + OH-
-# This example shows the structure of an input file for the CH3OH + OH- project. Sections,comments, and parameters are included for clarity.
+### Example Input File: CH3OH + OH-
+### This example shows the structure of an input file for the CH3OH + OH- project. Sections,comments, and parameters are included for clarity.
 ### Sample Input
 
 

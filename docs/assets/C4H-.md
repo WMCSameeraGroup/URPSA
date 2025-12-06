@@ -1,8 +1,8 @@
 # Configuration file for C4H- cluster generation
-# Comments start with a # symbol and are ignored by the parser
-# Sections are defined in square brackets []
-# Key-value pairs are defined with an equals sign (=)
-# Use backslashes (\) to continue lines if necessary    
+### Comments start with a # symbol and are ignored by the parser
+### Sections are defined in square brackets []
+### Key-value pairs are defined with an equals sign (=)
+### Use backslashes (\) to continue lines if necessary    
 
 
 ```ini

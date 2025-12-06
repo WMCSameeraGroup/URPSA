@@ -37,6 +37,7 @@ class LogFileManager:
     def __init__(self, file_name, input_file_directory):
         self.file = file_name
         self.input_file_directory =input_file_directory
+        self.scf_list = None
         self.get_data()
 
     def get_data(self):
@@ -66,7 +67,7 @@ class LogFileManager:
         self.is_optimized = float(first_frequency[0]) > 0
         return float(first_frequency[0]) > 0
 
-    def get_scf_done(self):
+    def get_scf_done(self, only_last_struc=False):
         """Extract the SCF energy from the log file.
         the SCF energy is typically found in lines starting with "SCF Done: E(RB3LYP) = ..." likewise
         and the pattern is matched using regular expressions.
@@ -75,12 +76,22 @@ class LogFileManager:
             str: The SCF energy as a string, or "could not found" if not found.
             """
 
+
         scf_match = re.findall(r'SCF Done: .*', self.text)
         if len(scf_match) == 0:
             scf_match = re.findall(r'Energy= .*', self.text)
 
-        self.scf_done = re.findall(r'-?\d+\.\d+', scf_match[-1])[0]
-        return self.scf_done
+        if only_last_struc == False:
+            scf_list  = []
+            for match in scf_match:
+                scf_list.append(re.findall(r'-?\d+\.\d+', match)[0])
+            self.scf_done = scf_list[-1]
+            self.scf_list = scf_list
+            return scf_list
+        else:
+            self.scf_done = re.findall(r'-?\d+\.\d+', scf_match[-1])[0]
+            return self.scf_done
+
 
 
 
@@ -149,7 +160,7 @@ class LogFileManager:
         self.optimized_parameters = parameters
         return parameters
 
-    def optimized_coordinates(self):
+    def optimized_coordinates(self,only_last_struc=False):
         """Extract the optimized coordinates from the log file.
         the optimized coordinates are typically found in the "Standard orientation" section of the log file.
         The method uses regular expressions to locate and extract the coordinates.
@@ -157,22 +168,39 @@ class LogFileManager:
         Returns:
             list: A list of optimized coordinates, where each coordinate is represented as a list of floats [x, y, z].
         """
-        coordinates = []
+
+
         # Define the regex pattern to find the "Standard orientation" section
         pattern = re.compile(
             r'Input orientation:[\s\S]*?---------------------------------------------------------------------[\s\S]*?---------------------------------------------------------------------([\s\S]*?)---------------------------------------------------------------------')
 
         # Search for the pattern
         matches = pattern.findall(self.text)
+        coordinates_section = matches[-1].strip()
         if matches:
-            coordinates_section = matches[-1].strip()
-            # Extract coordinates using regex
-            coord_pattern = re.compile(r'^\s*\d+\s+\d+\s+\d+\s+(-?\d+\.\d+)\s+(-?\d+\.\d+)\s+(-?\d+\.\d+)',
-                                       re.MULTILINE)
-            for coord_match in coord_pattern.finditer(coordinates_section):
-                x, y, z = map(float, coord_match.groups())
-                coordinates.append([x, y, z])
-            return coordinates
+            if only_last_struc == True:
+                coordinates = []
+
+                # Extract coordinates using regex
+                coord_pattern = re.compile(r'^\s*\d+\s+\d+\s+\d+\s+(-?\d+\.\d+)\s+(-?\d+\.\d+)\s+(-?\d+\.\d+)',
+                                           re.MULTILINE)
+                for coord_match in coord_pattern.finditer(coordinates_section):
+                    x, y, z = map(float, coord_match.groups())
+                    coordinates.append([x, y, z])
+                return coordinates
+            else:
+                all_intermediates =[]
+                for coord in matches:
+                    coordinates = []
+                    coord_pattern = re.compile(r'^\s*\d+\s+\d+\s+\d+\s+(-?\d+\.\d+)\s+(-?\d+\.\d+)\s+(-?\d+\.\d+)',
+                                               re.MULTILINE)
+                    for coord_match in coord_pattern.finditer(coord):
+                        x, y, z = map(float, coord_match.groups())
+                        coordinates.append([x, y, z])
+                    all_intermediates.append(coordinates)
+                return all_intermediates
+
+
         else:
             raise ValueError("Optimized coordinates section not found in the log file")
 

@@ -191,8 +191,10 @@ class System:
         in the correct order, and that the number of coordinates matches the total number of atoms
         across all molecules in the system.
         """
-        for atom,coords in zip(self.list_of_atoms(),opt_xyz):
-            atom.update_coordinates(*coords)
+        if len(opt_xyz) != len(self.list_of_atoms()):
+            opt_xyz = opt_xyz[-1]
+            for atom,coords in zip(self.list_of_atoms(),opt_xyz):
+                atom.update_coordinates(*coords)
 
 
     def to_str(self):
@@ -216,25 +218,37 @@ class System:
             string += self.lattice.to_str() + "\n"
         return string
 
-    def string_optimized_coordinates(self, opt_xyz):
+    def string_optimized_coordinates(self, opt_xyz, scf_list=None):
         """ return a string representation of the optimized coordinates used in xyz file
         1. number of atoms
         2. energy of the system
         3. list of atoms with their optimized coordinates
         4. lattice parameters if present
         5. return the string representation of the optimized coordinates
+        :param scf_list: list 0f scf_values
         :param opt_xyz: list of tuples
             list of optimized coordinates
         :return: str
             string representation of the optimized coordinates
         """
         # this is for the xyz file not input file
-        string = f"{self.cal_number_of_atoms()}\nEnergy: {self.energy}\n"
 
-        for atom in self.list_of_atoms():
-            string += str(atom) + "\n"
-        if self.lattice:
-            string += self.lattice.to_str() + "\n"
+        if scf_list is None:
+            scf_list = [self.energy]
+        string = ""
+        for energy,struct in zip(scf_list, opt_xyz):
+            string += f"{self.cal_number_of_atoms()}\nEnergy: {energy}\n"
+            string += self.convert_xyz_to_string(struct) + "\n"
+            if self.lattice:
+                string += self.lattice.to_str() + "\n"
+
+        return string
+
+    def convert_xyz_to_string(self, opt_xyz):
+        string = ""
+
+        for atom,coords in zip(self.list_of_atoms(),opt_xyz):
+            string +=  f"{atom.symbol}   { coords[0]} {coords[1]} {coords[2]}"+ "\n"
         return string
 
     def set_scf_done(self, energy):

@@ -66,57 +66,71 @@ class productsManager:
 
         return dict
 
-    def check_number_of_times_same_products_were_observed(self,iter,moleculs):
-        """ check how many times the same products were observed using RMSD
+    def check_number_of_times_same_products_were_observed(self, iter, molecules, energy,
+                                                          rmsd_tol=0.05, energy_tol=1e-3):
+        """
+        Check how many times equivalent products have appeared before,
+        comparing both RMSDs and energies.
+
         :param iter: int
-            current iteration number
-        :param moleculs: list of Molecule objects
-            list of molecules to compare with the products in the file
+            Current iteration number.
+        :param molecules: list[Molecule]
+            Newly generated product molecules.
+        :param energy: float
+            Total energy of the new product set.
+        :param rmsd_tol: float
+            Allowed RMSD deviation.
+        :param energy_tol: float
+            Allowed energy deviation.
         :return: int
-            number of times the same products were observed
-        :rtype: int
-        :example: 3
+            Count of previous matching product sets.
         """
 
-        if moleculs is None:
+        if molecules is None:
             return -1
+
+        # Compute RMSDs for the current products
+        current_rmsds = [m.calculate_RMSD() for m in molecules]
+
         number_of_times = 0
-        current_rmsds = [molecule.calculate_RMSD() for molecule in moleculs]
         data = self.read()
 
-
         for i in range(iter):
-            rmsd_list = []
             try:
-                for j in data[str(i)]['molecules']:
-                    rmsd_list.append(j["RMSD"])
-                    if self.almost_equal_RMSD(current_rmsds, rmsd_list):
-                        number_of_times += 1
-            except:
-                    pass
+                entry = data[str(i)]
+                stored_molecules = entry["molecules"]
+                stored_energy = entry.get("energy", None)
 
+                # Collect RMSDs from stored molecules
+                stored_rmsds = [mol["RMSD"] for mol in stored_molecules]
+
+                # RMSD match?
+                rmsd_match = self.lists_almost_equal(current_rmsds, stored_rmsds, rmsd_tol)
+
+                # Energy match?
+                energy_match = (stored_energy is not None and
+                                abs(float(stored_energy) - float(energy)) <= float(energy_tol))
+
+                if rmsd_match and energy_match:
+                    number_of_times += 1
+
+            except KeyError:
+                continue
 
         return number_of_times
 
-
-    def almost_equal_RMSD(self, list1, list2,possible_change=0.05):
-        """ check if two lists of RMSD values are almost equal
-        :param list1: list of float
-            first list of RMSD values
-        :param list2: list of float
-            second list of RMSD values
-        :param possible_change: float
-            maximum allowed difference between two RMSD values to be considered almost equal
-        :return: bool
-            True if the two lists are almost equal, False otherwise
-        :rtype: bool
+    def lists_almost_equal(self, list1, list2, tol):
         """
-        for i, j in zip(list1,list2):
-            if i < j:
-                if i+possible_change < j:
-                    return False
-            else:
-                if i+possible_change > j:
-                    return False
+        Check whether two lists of values match within a tolerance.
+        Lengths must match.
+        """
+        if len(list1) != len(list2):
+            return False
+
+        for a, b in zip(list1, list2):
+            if abs(a - b) > tol:
+                return False
+
         return True
+
 

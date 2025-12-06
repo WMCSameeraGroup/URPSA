@@ -27,14 +27,16 @@ class OutputWriter:
                 with open(self.file, "w") as _:
                     pass
 
-        def write_xyz_file(self, sys, opt_xyz: str):
+        def write_xyz_file(self, sys, opt_xyz: str, scf_list=None):
             """
             Writes optimized coordinates to the output file in XYZ format.
 
             Args:
                 sys: Object with string_optimized_coordinates method.
                 opt_xyz: Optimized coordinates to write.
+                :param scf_list: list of scf objects to write.
             """
             self.create_if_not()
             with open(self.file, "a") as f:
-                f.write(sys.string_optimized_coordinates(opt_xyz))
+                text =sys.string_optimized_coordinates(opt_xyz,scf_list)
+                f.write(text)

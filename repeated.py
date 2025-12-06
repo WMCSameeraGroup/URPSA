@@ -100,7 +100,11 @@ for i in range(controls.n_iterations):
                 print(log.last_lines())
                 is_all_calculations_converged = False
                 if controls.convergence_error == "exit":
+                    print("calculation did not converge \n exiting the pathway due to convergence error")
                     break
+                else:
+                    print("calculation did not converge \n continuing to the next step due to convergence error option")
+                    continue
 
             if controls.update_with_optimized_coordinates == "True" and success == 0:
                 print("update_with_optimized_coordinates")
@@ -111,8 +115,14 @@ for i in range(controls.n_iterations):
                     system.replace_molecules(new_molecules)
                         # optimize the last observed particle
                     if controls.optimize_the_final_particle == "True":
-                        if len(new_molecules) == 1:
+                        infinite_repetition = False
+                        if len(output_file_list)>2:
+                            print("repetition check ",output_file_list[-2].scf_done, log.scf_done)
+                            print(output_file_list[-2].scf_done == log.scf_done)
+                            infinite_repetition = bool(output_file_list[-2].scf_done == log.scf_done)
+                        if len(new_molecules) == 1 or infinite_repetition:
                             print("final structure is optimizing.....")
+
                             try:
                                 added=system.add_keyword_to_method("OPT(MaxCycles=500) FREQ")
                                 optFile = system.generate_input_file(-1, dir_of_files)
@@ -129,7 +139,7 @@ for i in range(controls.n_iterations):
                                 output_file_list.append(final_log)
                                 system.set_scf_done(final_log.scf_done)
                                 system.set_moleculer_coordinates(final_log.opt_coords)
-                                OutputWriter(dir_of_files,f"{pathway_name}.xyz").write_xyz_file(system, final_log.opt_coords)
+                                OutputWriter(dir_of_files,f"{pathway_name}.xyz").write_xyz_file(system, final_log.opt_coords, final_log.scf_list)
                                 print("final structure is optimized")
                             except Exception as e:
                                 print(f"An error occur while optimizing the final fragments :\n{e} ")
@@ -147,16 +157,16 @@ for i in range(controls.n_iterations):
         # find products and label them
         #todo: fix the atom count issue
         products = products_writer(dir_of_files)
-        products_molecules=products.get_products_list(system.list_of_atoms(), output_file_list,controls.fragment_detection_factor)
+        products_molecules=products.get_products_list(system, output_file_list,controls.fragment_detection_factor)
 
-        products_collection.write_product(i+1,products_molecules)
+        products_collection.write_product(i+1,products_molecules,system.energy)
         print("number of similar products found")
-        print(products_collection.check_number_of_times_same_products_were_observed(i,products_molecules))
+        print(products_collection.check_number_of_times_same_products_were_observed(i,products_molecules,system.energy))
 
         # last n products are already been found then we exit
         # read the json file  and see how many times its observed
         observed_product_counter=0
-        if products_collection.check_number_of_times_same_products_were_observed(i,products_molecules) != 0:
+        if products_collection.check_number_of_times_same_products_were_observed(i,products_molecules,system.energy) != 0:
             observed_product_counter+=1
         else:
             # if a new product was observed restart counter

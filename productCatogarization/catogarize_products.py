@@ -70,17 +70,17 @@ class products_writer:
         string = self.get_the_molecular_string(molecules)
         self.write_products_file(string)
 
-    def get_products_list(self, atoms, output_file_list,factor):
+    def get_products_list(self, sys, output_file_list,factor):
         if len(output_file_list) > 0:
-            return self.add_products(atoms, output_file_list,factor)
+            return self.add_products(sys.list_of_atoms(), output_file_list,factor,sys.energy)
         else:
             print("no output file is produced")
 
-    def add_products(self, atoms, outputfile_list,factor):
+    def add_products(self, atoms, outputfile_list,factor, scf=0):
         index = self.find_the_formation_of_products(outputfile_list)
         molecules = get_molecules(atoms, factor)
         for molecule in molecules:
-            print(f"setp-{index} RMSD- {molecule.calculate_RMSD()}")
+            print(f"setp-{index} energy- {scf} RMSD- {molecule.calculate_RMSD()}")
 
         self.save_products(molecules)
         return molecules

@@ -23,13 +23,14 @@ def plot_scatter(outputFiles, input_file_directory , file_name="scatter.jpg"):
     :param file_name: name of the plot file
     :return: None
     """
-    x_coords = []
+
     y_coords = []
-    for index, j in enumerate(outputFiles):
+    for  j in outputFiles:
         if j.is_converged == 0:
-            x_coords.append(index+1)
-            y_coords.append(float(j.scf_done))
-            print(index,j.scf_done)
+            y_coords.extend([float(val) for val in j.scf_list])
+
+    x_coords = [i for i in range(len(y_coords))]
+
 
     plt.scatter(x_coords,y_coords)
     plt.ylabel("Energy/AU")
